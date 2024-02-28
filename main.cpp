@@ -17,7 +17,7 @@ using namespace std;
 //	}
 //	return temp;
 //}
-//
+// 
 //char* tochar(string s) {
 //    char* text = new char[s.size() + 1]; // C?p phát b? nh? d?ng
 //    for (int i = 0; i < s.size(); ++i) {
@@ -260,7 +260,7 @@ void studentManagement(listStudent &ls){
 
 int main(){
 	
-	initwindow(LPOINTX, LPOINTY);
+	initwindow(500, LPOINTY);
 	
 	// tao tien xu ly, khai bao
 	string nameFileListStudent = "studentlist.txt";
