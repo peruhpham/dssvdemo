@@ -1,56 +1,63 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-const int UP = 72; 
-const int DOWN = 80;
-const int ET = 13;
-const int ESC = 27;
-const int SPACE = 32;
-const int BP = 8; // backspace
-const int SPOINTX = 0;
-const int SPOINTY = 0;
-const int LPOINTX = 1350;
-const int LPOINTY = 700;
+#define UP 72
+#define DOWN 80
+#define LEFT 75
+#define RIGHT 77
+#define ET 13
+#define ESC 27
+#define SPACE 32
+#define BP 8 // backspace
+#define SPOINTX 0
+#define SPOINTY 0
+#define LPOINTX 1350
+#define LPOINTY 700
 
-const int HEADSPOINTX = 0;
-const int HEADSPOINTY = 0;
-const int HEADLPOINTX = 1350;
-const int HEADLPOINTY = 60; // chinh sua
+#define HEADSPOINTX 0
+#define HEADSPOINTY 0
+#define HEADLPOINTX 1350
+#define HEADLPOINTY 60 // chinh sua
 
-const int MENUSPOINTX = 0;
-const int MENUSPOINTY = 70;
-const int MENULPOINTX = 320;
-const int MENULPOINTY = 280;
+#define MENUSPOINTX 0
+#define MENUSPOINTY 70
+#define MENULPOINTX 320
+#define MENULPOINTY 280
 
-const int BOTTSPOINTX = 0;
-const int BOTTSPOINTY = 600;
-const int BOTTLPOINTX = 1350;
-const int BOTTLPOINTY = 600;
+#define BOTTSPOINTX 0
+#define BOTTSPOINTY 600
+#define BOTTLPOINTX 1350
+#define BOTTLPOINTY 600
 
-const int NOTISPOINTX = 400; // notice
-const int NOTISPOINTY = 150;
-const int NOTILPOINTX = 1010;
-const int NOTILPOINTY = 350;
+#define NOTISPOINTX 400 // notice
+#define NOTISPOINTY 150
+#define NOTILPOINTX 1010
+#define NOTILPOINTY 350
 
-const int LISTSPOINTX = 340;
-const int LISTSPOINTY = 70;
-const int LISTLPOINTX = 1350;
-const int LISTLPOINTY = 600;
+#define LISTSPOINTX 340
+#define LISTSPOINTY 70
+#define LISTLPOINTX 1350
+#define LISTLPOINTY 600
 
-const int TABLSPOINTX = 342;
-const int TABLSPOINTY = 190;
-const int TABLLPOINTX = 1350;
-const int TABLLPOINTY = 430;
+#define TABLSPOINTX 342
+#define TABLSPOINTY 190
+#define TABLLPOINTX 1350
+#define TABLLPOINTY 430
 
-const int BOXSPOINTX = LISTSPOINTX + 280;
-const int BOXSPOINTY = LISTSPOINTY + 70;
-const int BOXLPOINTX = LISTSPOINTX + 480;
-const int BOXLPOINTY = LISTSPOINTY + 100;
+#define BOXSPOINTX LISTSPOINTX + 280
+#define BOXSPOINTY LISTSPOINTY + 70
+#define BOXLPOINTX LISTSPOINTX + 480
+#define BOXLPOINTY LISTSPOINTY + 100
 
-const int FORMSPOINTX = TABLSPOINTX;
-const int FORMSPOINTY = TABLLPOINTY + 40;
-const int FORMLPOINTX = TABLLPOINTX;
-const int FORMLPOINTY = TABLLPOINTY + 80;
+#define FORMSPOINTX TABLSPOINTX
+#define FORMSPOINTY TABLLPOINTY + 40
+#define FORMLPOINTX TABLLPOINTX
+#define FORMLPOINTY TABLLPOINTY + 80
+
+int clickInScore(int x, int y, int left, int top, int right, int bot){ // nhan chuot trai vao pham vi
+	if((left <= x && x <= right) && (top <= y && y <= bot)) return 1;
+	return 0;
+}
 
 void setDefault(){
 	setbkcolor(15); // mac dinh nen la mau trang
@@ -126,6 +133,97 @@ void resetText(){ // reset thong bao mac dinh khong co gi
 	setDefault();
 }
 
+void highlightInforStudentBox(int num, int COLOR){
+	switch(num){
+		case 1:
+			setcolor(COLOR);
+			rectangle(FORMSPOINTX, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY);
+			setDefault();
+			break;
+		case 2:			
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY);
+			setDefault();
+			break;
+		case 3:		
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY);
+			setDefault();
+			break;
+		case 4:	
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY);
+			setDefault();
+			break;
+		case 5:
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY);
+			setDefault();
+			break;
+		case 6:
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY);
+			setDefault();
+			break;
+		case 7:
+			setfillstyle(SOLID_FILL, COLOR);
+			bar(TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // to nhat muc add
+			setbkcolor(COLOR);
+			setcolor(BLACK);
+			outtextxy(TABLSPOINTX + 930, FORMSPOINTY + 10, "Add");
+			setDefault();
+			break;
+	}
+}
+
+void highlightEditInforStudentBox(int num, int COLOR){
+	switch(num){
+		case 1:
+			setcolor(COLOR);
+			rectangle(FORMSPOINTX, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY);
+			setDefault();
+			break;
+		case 2:			
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY);
+			setDefault();
+			break;
+		case 3:		
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY);
+			setDefault();
+			break;
+		case 4:	
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY);
+			setDefault();
+			break;
+		case 5:
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY);
+			setDefault();
+			break;
+		case 6:
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY);
+			setDefault();
+			break;
+		case 7:
+			setcolor(COLOR);
+			rectangle(TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY);
+			setDefault();
+			break;
+		case 8:
+			setfillstyle(SOLID_FILL, COLOR);
+			bar(FORMSPOINTX, TABLLPOINTY + 100, TABLSPOINTX + 145, TABLLPOINTY + 140); 
+			setbkcolor(COLOR);
+			setcolor(BLACK);
+			outtextxy(FORMSPOINTX + 30, TABLLPOINTY + 110, "Update");
+			
+			setDefault();
+			break;
+	}
+}
 void createHeader(){
 	setfillstyle(SOLID_FILL, LIGHTBLUE); // tao trang head 
 	bar(HEADSPOINTX, HEADSPOINTY, HEADLPOINTX, HEADLPOINTY); // tao hinh chu nhat to san mau nen
@@ -137,35 +235,6 @@ void createHeader(){
 	setDefault();
 }
 
-void createFormStudent(){
-	setfillstyle(SOLID_FILL, WHITE);
-	bar(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // xoa sach khong gian
-	
-	setfillstyle(SOLID_FILL, BLUE);
-	bar(TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY);
-	setcolor(LIGHTGRAY);
-	rectangle(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // tao khung hinh chu nhat
-	
-	line(TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY); // tao duong ke doc
-	line(TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY);	
-	line(TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY);	
-	line(TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY);	
-	line(TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY);	
-	line(TABLSPOINTX + 900, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY);
-	
-	setcolor(BLACK);
-	outtextxy(TABLSPOINTX + 10, FORMSPOINTY - 25, "Mssv");
-	outtextxy(TABLSPOINTX + 155, FORMSPOINTY - 25, "Ho");
-	outtextxy(TABLSPOINTX + 375, FORMSPOINTY - 25, "Ten");
-	outtextxy(TABLSPOINTX + 520, FORMSPOINTY - 25, "Phai");
-	outtextxy(TABLSPOINTX + 620, FORMSPOINTY - 25, "Sdt");
-	outtextxy(TABLSPOINTX + 765, FORMSPOINTY - 25, "Khoa");
-	
-	setbkcolor(BLUE);
-	outtextxy(TABLSPOINTX + 930, FORMSPOINTY + 10, "Add");
-	
-	setDefault();	
-}
 void createBottom(){
 	setlinestyle(0, 0, 2); // tao trang bottom
 	line(BOTTSPOINTX, BOTTSPOINTY, BOTTLPOINTX, BOTTLPOINTY); // tao duong ke 
@@ -174,7 +243,7 @@ void createBottom(){
 	setDefault();
 }
 
-void createBox(int COLOR, char *text){
+void createBox(int COLOR, char *text){ // tao muc nhap (MSSV)
 	
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLSPOINTX + 5, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY + 2); // xoa sach du lieu trong box
@@ -345,6 +414,80 @@ void createList(){ // tao khung nho ben trong
 	setDefault();
 }
 
+void createFormEditStudent(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // xoa sach khong gian
+	
+	setcolor(LIGHTGRAY);
+	rectangle(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // tao khung hinh chu nhat
+	
+	line(TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY); // tao duong ke doc
+	line(TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY);	
+	line(TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY);	
+	line(TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY);	
+	line(TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY);	
+	line(TABLSPOINTX + 900, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY);
+	
+	setcolor(BLACK);
+	outtextxy(TABLSPOINTX + 10, FORMSPOINTY - 25, "Mssv");
+	outtextxy(TABLSPOINTX + 155, FORMSPOINTY - 25, "Ho");
+	outtextxy(TABLSPOINTX + 375, FORMSPOINTY - 25, "Ten");
+	outtextxy(TABLSPOINTX + 520, FORMSPOINTY - 25, "Phai");
+	outtextxy(TABLSPOINTX + 620, FORMSPOINTY - 25, "Sdt");
+	outtextxy(TABLSPOINTX + 765, FORMSPOINTY - 25, "Ma lop");
+	outtextxy(TABLSPOINTX + 910, FORMSPOINTY - 25, "Khoa");
+	
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(FORMSPOINTX, TABLLPOINTY + 100, TABLSPOINTX + 145, TABLLPOINTY + 140);
+	
+	setbkcolor(LIGHTBLUE);
+	outtextxy(FORMSPOINTX + 30, TABLLPOINTY + 110, "Update");
+	setDefault();
+}
+void createFormStudent(){ // createTypeInforStudentBox : tao khung nhap thong tin student
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // xoa sach khong gian
+	
+	setcolor(LIGHTGRAY);
+	rectangle(FORMSPOINTX, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // tao khung hinh chu nhat
+	
+	line(TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY); // tao duong ke doc
+	line(TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY);	
+	line(TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY);	
+	line(TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY);	
+	line(TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY);	
+	line(TABLSPOINTX + 900, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY);
+	
+	setcolor(BLACK);
+	outtextxy(TABLSPOINTX + 10, FORMSPOINTY - 25, "Mssv");
+	outtextxy(TABLSPOINTX + 155, FORMSPOINTY - 25, "Ho");
+	outtextxy(TABLSPOINTX + 375, FORMSPOINTY - 25, "Ten");
+	outtextxy(TABLSPOINTX + 520, FORMSPOINTY - 25, "Phai");
+	outtextxy(TABLSPOINTX + 620, FORMSPOINTY - 25, "Sdt");
+	outtextxy(TABLSPOINTX + 765, FORMSPOINTY - 25, "Khoa");
+	
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY); // Tao muc add
+	setbkcolor(LIGHTBLUE);
+	outtextxy(TABLSPOINTX + 930, FORMSPOINTY + 10, "Add");
+	
+	setDefault();	
+}
+
+
+void drawEditStudent(){
+	
+	// an (xoa) cac muc them, xoa thong tin
+	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+	bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+	setDefault();
+	
+	createFormEditStudent();
+	
+	setDefault();
+}
 
 void drawInsertStudent(){
 	

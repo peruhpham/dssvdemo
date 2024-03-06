@@ -4,6 +4,16 @@
 
 using namespace std;
 
+int isSubString(string subtext, string text){ // kiem tra xau con 
+	int s = subtext.size();
+	for(int i = 0; i < s; i++){
+		if(subtext[i] != text[i]) return 0;
+	}
+	return 1;
+}
+
+
+
 int stringtoint(string s){
 	int temp = 0;
 	for(int i = 1; i <= s.size(); i++){

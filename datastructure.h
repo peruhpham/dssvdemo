@@ -1,6 +1,7 @@
-#ifndef DECLAREDATASTRUCTURE_H
-#define DECLAREDATASTRUCTURE_H
+#ifndef DATASTRUCTURE_H
+#define DATASTRUCTURE_H
 
+// khai bao tat ca cau truct du lieu, cac ham thao tac voi cau truc du lieu : nhap, xoa
 
 using namespace std;
 
@@ -30,22 +31,43 @@ struct listStudent{
 	}
 };
 
-void addLast(listStudent &ls,student x){
-    ptrStudent p = new nodeStudent(x);
-   
-    if(ls.size == 0){
-        ls.head = p;
-        ls.size += 1;
-    }
-    else{
-        ptrStudent last = ls.head;
-        while(last->next != NULL){
-            last = last->next;
-        }
-        last->next = p;
-        ls.size += 1;
-    }
+void addStudent(listStudent &ls,student x){ // chen co thu tu
+    ptrStudent newnode = new nodeStudent(x);
+    ptrStudent cur = ls.head;
+    
+    if(cur == NULL){ // truong hop rong
+    	ls.head = newnode;
+    	return;
+	}
+	for(cur; cur->next != NULL && cur->next->value.id <= x.id; cur = cur->next);
+	
+	if(cur->value.id > x.id){
+		newnode->next = ls.head;
+		ls.head = newnode;
+		return;
+	}
+	if(cur->value.id < x.id){
+		newnode->next = cur->next;
+		cur->next = newnode;
+		return;
+	}
+	return;
 }
+
+void uploadStudent(listStudent &ls, student s){
+	ptrStudent cur = ls.head;
+	if(cur == NULL){
+		return;
+	}
+	while(cur != NULL){
+		if(isSubString(s.id, cur->value.id)){
+			cur->value = s;
+			return;
+		}
+		cur = cur->next;
+	}
+}
+
 
 // doc file 
 void readListStudent(listStudent &ls, string nameFileListStudent){
@@ -73,7 +95,7 @@ void readListStudent(listStudent &ls, string nameFileListStudent){
         getline(ss, temp, '#');
         
         e.year = stringtoint(temp);
-        addLast(ls,e);
+        addStudent(ls,e);
     }
     f.close();
 }
