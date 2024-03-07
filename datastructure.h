@@ -5,6 +5,9 @@
 
 using namespace std;
 
+const int MAXLISTCLASS = 50;
+
+// danh sach sinh vien 
 struct student{    
     string id, firstName, lastName;
 	string gender, phone, idClass;
@@ -68,16 +71,38 @@ void uploadStudent(listStudent &ls, student s){
 	}
 }
 
+void removeStudent(listStudent &ls, student s){
+	ptrStudent cur = ls.head;
+	ptrStudent prev = NULL;
+	
+	if(cur == NULL){
+		return;
+	}
+	if(cur->value.id == s.id){
+		ls.head = cur->next;
+		delete cur;
+		return;
+	}
+	while(cur != NULL && cur->value.id != s.id){
+		prev = cur;
+		cur = cur->next;
+	}
+	
+	if(cur == NULL) return; // khong tim thay du lieu
+	
+	prev->next = cur->next;
+	delete cur;
+}
 
 // doc file 
 void readListStudent(listStudent &ls, string nameFileListStudent){
     ifstream f;
     f.open(nameFileListStudent, ios::in);
     if(!f.is_open()){
-        cout << "fail open!" << endl;
+        cout << "failed open list student!" << endl;
         return;
     }
-    cout << "complete open!" << endl; // doc file
+    cout << "completed open list student!" << endl; // doc file
     
     student e;
     while(!f.eof()){
@@ -110,6 +135,53 @@ void displayStudentList(listStudent ls){
         p = p->next;
     }
 }
+
+
+// danh sach lop hoc 
+
+struct listClass{
+	int size;
+	string idClass[MAXLISTCLASS]; // danh sach id lop hoc
+	listClass(){
+		this->size = 0;
+	}
+};
+
+int addClass(listClass &lc,  string idClass){
+	if(lc.size == MAXLISTCLASS) return 0;
+	lc.idClass[lc.size] = idClass;
+	lc.size += 1;
+	return 1;
+}
+
+void displayListClass(listClass &lc){
+	for(int i = 0; i < lc.size; i++){
+		cout << lc.idClass[i] << endl;
+	}
+}
+
+void readListClass(listClass &lc, string nameFileListClass){
+	ifstream f;
+	f.open(nameFileListClass, ios::in);
+	if(!f.is_open()){
+		cout << "failed open list class!" << endl;
+		return;
+	}
+	cout << "completed open list class!" << endl;
+	
+	string idClass;
+	
+	while(!f.eof()){
+		getline(f, idClass);
+		addClass(lc, idClass);
+	}
+	f.close();
+}
+
+
+
+
+
 
 // cay nhi phan 
 

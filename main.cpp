@@ -3,9 +3,10 @@
 #include <conio.h>
 #include <stdio.h>
 #include <bits/stdc++.h>
-#include "display.h"
+#include <string>
 #include "datahanding.h"
 #include "datastructure.h"
+#include "display.h"
 #include "studentmanagement.h"
 
 using namespace std;
@@ -15,9 +16,14 @@ int main(){
 	initwindow(LPOINTX, LPOINTY);
 	
 	// tao tien xu ly, khai bao
-	string nameFileListStudent = "D:\\Documents\\C++\\ProjectTemp\\data\\studentlist.txt";
+	string nameFileListStudent = "data\\studentlist.txt";
+	string nameFileListClass = "data\\classlist.txt";
+	
 	listStudent ls;
+	listClass lc;
+	
 	readListStudent(ls, nameFileListStudent);
+	readListClass(lc, nameFileListClass);
 	
 //	getch();
 	int selected = 1;
@@ -29,7 +35,7 @@ int main(){
 				switch(selected){
 //					case 1: 
 					case 2:
-						studentManagement(ls);
+						studentManagement(ls, lc);
 						createMenu(selected);	
 						break;
 //					case 3:

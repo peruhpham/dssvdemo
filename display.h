@@ -54,6 +54,8 @@
 #define FORMLPOINTX TABLLPOINTX
 #define FORMLPOINTY TABLLPOINTY + 80
 
+
+
 int clickInScore(int x, int y, int left, int top, int right, int bot){ // nhan chuot trai vao pham vi
 	if((left <= x && x <= right) && (top <= y && y <= bot)) return 1;
 	return 0;
@@ -278,6 +280,44 @@ int createNotice(char *text1, char* text2){
 	return 0;
 }
 
+void createScrollBar(int firstStudent, int sizeClass){
+	// tao thanh cuon 
+	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(LISTSPOINTX - 17, LISTSPOINTY, LISTSPOINTX - 5, LISTLPOINTY - 2); // xoa du lieu
+	
+	setcolor(LIGHTGRAY);
+	rectangle(LISTSPOINTX - 17, LISTSPOINTY, LISTSPOINTX - 5, LISTLPOINTY - 2);
+	
+	setfillstyle(SOLID_FILL, LIGHTGRAY);
+	
+	int x1 = LISTSPOINTX - 11, x2 = LISTSPOINTX - 17, x3 = LISTSPOINTX - 5;
+	int y1 = LISTSPOINTY, y2 = LISTSPOINTY + 8, y3 = LISTSPOINTY + 8;
+
+	int poly[8] = {x1, y1, x2, y2, x3, y3, x1, y1};
+	fillpoly(3, poly);
+	
+	x1 = LISTSPOINTX - 11; x2 = LISTSPOINTX - 17; x3 = LISTSPOINTX - 5;
+	y1 = LISTLPOINTY - 2; y2 = LISTLPOINTY - 10; y3 = LISTLPOINTY - 10;
+	  
+	int poly2[8] = {x1, y1, x2, y2, x3, y3, x1, y1};
+	fillpoly(3, poly2);
+	
+	int part = ceil((float)sizeClass / 12);
+	
+	int dy = (LISTLPOINTY - LISTSPOINTY - 22) / part ;
+	
+	int currentPart = ceil((float)firstStudent / 12);
+	
+	int y = LISTSPOINTY + 11;
+	
+	y += dy * (currentPart - 1);
+	
+	bar(LISTSPOINTX - 17, y,LISTSPOINTX - 5, y + dy);
+	
+	setDefault();
+}
+
 void createMenu(int selected){
 	
 	// tao menu 1
@@ -474,7 +514,42 @@ void createFormStudent(){ // createTypeInforStudentBox : tao khung nhap thong ti
 	setDefault();	
 }
 
-
+void createListStudentWithClass(){
+	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 10); // xoa ta ca thong tin truoc do
+	
+	setcolor(LIGHTGRAY);
+	rectangle(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 10); // tao khung to ben ngoai
+	
+	setfillstyle(SOLID_FILL, LIGHTBLUE); // tao thanh taskbar
+	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 40);
+	
+	int Y = LISTSPOINTY + 80; // tao duong ke ngang
+	for(int i = 1; i <= 11; i++){
+		line(LISTSPOINTX, Y, LISTLPOINTX, Y);
+		Y += 40;
+	}
+	
+	line(LISTSPOINTX + 145, LISTSPOINTY, LISTSPOINTX + 145, LISTLPOINTY - 10); // tao duong ke doc
+	line(LISTSPOINTX + 365, LISTSPOINTY, LISTSPOINTX + 365, LISTLPOINTY - 10);	
+	line(LISTSPOINTX + 510, LISTSPOINTY, LISTSPOINTX + 510, LISTLPOINTY - 10);	
+	line(LISTSPOINTX + 610, LISTSPOINTY, LISTSPOINTX + 610, LISTLPOINTY - 10);	
+	line(LISTSPOINTX + 755, LISTSPOINTY, LISTSPOINTX + 755, LISTLPOINTY - 10);	
+	line(LISTSPOINTX + 900, LISTSPOINTY, LISTSPOINTX + 900, LISTLPOINTY - 10);
+	
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 10, "Mssv");
+	outtextxy(LISTSPOINTX + 155, LISTSPOINTY + 10, "Ho");
+	outtextxy(LISTSPOINTX + 375, LISTSPOINTY + 10, "Ten");
+	outtextxy(LISTSPOINTX + 520, LISTSPOINTY + 10, "Phai");
+	outtextxy(LISTSPOINTX + 620, LISTSPOINTY + 10, "Sdt");
+	outtextxy(LISTSPOINTX + 765, LISTSPOINTY + 10, "Ma lop");
+	outtextxy(LISTSPOINTX + 910, LISTSPOINTY + 10, "Khoa");
+	
+	setDefault();
+}
 void drawEditStudent(){
 	
 	// an (xoa) cac muc them, xoa thong tin
@@ -488,7 +563,6 @@ void drawEditStudent(){
 	
 	setDefault();
 }
-
 void drawInsertStudent(){
 	
 	// an (xoa) cac muc sua, xoa thong tin 
@@ -523,6 +597,32 @@ void drawUpdateStudent(){
 	setDefault();
 }
 
+void drawDisplayStudentWithClass(listClass &lc, int currentClass, int selected){
+	// ve bang liet ke danh sach lop
+	
+	int ClASSPOINTX = MENUSPOINTX + 150, CLASLPOINTX = MENUSPOINTX + 290;
+	int CLASSPOINTY = MENUSPOINTY + 155, CLASLPOINTY = MENUSPOINTY + 155;
+	
+	int firstClass = currentClass - selected; // lop hien tai in ra o vi tri selected do do tim cac lop truoc do de in ra cac muc truoc do
+	
+	for(int i = firstClass; i < firstClass + 8 ; i++){
+		
+		if(i < lc.size && i == currentClass){ // neu i dang la lop hien tai thi in ra mau xanh
+			setcolor(LIGHTBLUE);
+			outtextxy(ClASSPOINTX + 20, CLASSPOINTY -25, tochar(lc.idClass[i]));
+		}
+		else if(i < lc.size){ // neu i khac voi lop hien tai thi in ra mau den
+			setcolor(BLACK);
+			outtextxy(ClASSPOINTX + 20, CLASSPOINTY -25, tochar(lc.idClass[i]));
+		}
+		setcolor(LIGHTGRAY);
+		line(ClASSPOINTX, CLASSPOINTY, CLASLPOINTX, CLASLPOINTY);
+		CLASSPOINTY += 30;
+		CLASLPOINTY += 30;
+	}
+	// ve cac duong ke trong danh sach lop
+	setDefault();
+}
 void drawStudentManagement(int selected){
 	char text[50] = "Quan ly sinh vien";
 	
@@ -568,6 +668,39 @@ void drawStudentManagement(int selected){
 	line(MENUSPOINTX + 10, MENUSPOINTY + 125, MENUSPOINTX + 290, MENUSPOINTY + 125);
 //	line(MENUSPOINTX + 10,  MENUSPOINTY + 165, MENUSPOINTX + 290, MENUSPOINTY + 165);
 //	line(MENUSPOINTX + 10, MENUSPOINTY + 205, MENUSPOINTX + 290, MENUSPOINTY + 205);
+
+	setDefault();
+}
+
+void drawDeleteStudent(string text, int selected){
+	
+	setbkcolor(WHITE);
+	setcolor(LIGHTRED);
+	outtextxy(FORMSPOINTX + 10, FORMSPOINTY + 10, tochar(text));
+	setcolor(BLACK);
+	
+	if(selected == 1){ /// tao muc yes / no 
+		setbkcolor(LIGHTBLUE);
+		setfillstyle(SOLID_FILL, LIGHTBLUE);
+		bar(TABLSPOINTX + 695, FORMSPOINTY, TABLSPOINTX + 805, FORMLPOINTY);
+		outtextxy(TABLSPOINTX + 735, FORMSPOINTY + 10, "Co");
+		
+		setbkcolor(LIGHTGRAY);
+		setfillstyle(SOLID_FILL, LIGHTGRAY);
+		bar(TABLSPOINTX + 805, FORMSPOINTY, TABLSPOINTX + 915, FORMLPOINTY);
+		outtextxy(TABLSPOINTX + 825, FORMSPOINTY + 10, "Khong");
+	}
+	else if(selected == 2){
+		setbkcolor(LIGHTGRAY);
+		setfillstyle(SOLID_FILL, LIGHTGRAY);
+		bar(TABLSPOINTX + 695, FORMSPOINTY, TABLSPOINTX + 805, FORMLPOINTY);
+		outtextxy(TABLSPOINTX + 735, FORMSPOINTY + 10, "Co");
+		
+		setbkcolor(LIGHTBLUE);
+		setfillstyle(SOLID_FILL, LIGHTBLUE);
+		bar(TABLSPOINTX + 805, FORMSPOINTY, TABLSPOINTX + 915, FORMLPOINTY);
+		outtextxy(TABLSPOINTX + 825, FORMSPOINTY + 10, "Khong");
+	}
 
 	setDefault();
 }

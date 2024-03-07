@@ -6,21 +6,55 @@
 void outtextwith(int line, student s, int COLOR){ // outtext voi chi so dong line
 	
 	setcolor(COLOR);
-	int y = 0;
-	if(line == 1) y = TABLSPOINTY + 50;
-	else if(line == 2) y = TABLSPOINTY + 100;
-	else if(line == 3) y = TABLSPOINTY + 150;
-	else y = TABLSPOINTY + 200;
+	int Y = 0;
+	if(line == 1) Y = TABLSPOINTY + 50;
+	else if(line == 2) Y = TABLSPOINTY + 100;
+	else if(line == 3) Y = TABLSPOINTY + 150;
+	else Y = TABLSPOINTY + 200;
 	
-	outtextxy(TABLSPOINTX + 5, y, tochar(s.id));
-	outtextxy(TABLSPOINTX + 150, y, tochar(s.firstName));
-	outtextxy(TABLSPOINTX + 370, y, tochar(s.lastName));
-	outtextxy(TABLSPOINTX + 515, y, tochar(s.gender));
-	outtextxy(TABLSPOINTX + 615, y, tochar(s.phone));
-	outtextxy(TABLSPOINTX + 760, y, tochar(s.idClass));
-	outtextxy(TABLSPOINTX + 905, y, tochar(to_string(s.year)));
+	outtextxy(TABLSPOINTX + 5, Y, tochar(s.id));
+	outtextxy(TABLSPOINTX + 150, Y, tochar(s.firstName));
+	outtextxy(TABLSPOINTX + 370, Y, tochar(s.lastName));
+	outtextxy(TABLSPOINTX + 515, Y, tochar(s.gender));
+	outtextxy(TABLSPOINTX + 615, Y, tochar(s.phone));
+	outtextxy(TABLSPOINTX + 760, Y, tochar(s.idClass));
+	outtextxy(TABLSPOINTX + 905, Y, tochar(to_string(s.year)));
 	
 	setDefault();
+}
+
+void outtextby(int line, student s, int COLOR){
+	setcolor(COLOR);
+	
+	int Y = LISTSPOINTY + 10;
+	
+	for(int i = 1; i <= 12; i++){
+		if(line == i % 12){
+			Y += 40 * i;
+			break;
+		}
+	}
+	
+	outtextxy(LISTSPOINTX + 5, Y, tochar(s.id));
+	outtextxy(LISTSPOINTX + 150, Y, tochar(s.firstName));
+	outtextxy(LISTSPOINTX + 370, Y, tochar(s.lastName));
+	outtextxy(LISTSPOINTX + 515, Y, tochar(s.gender));
+	outtextxy(LISTSPOINTX + 615, Y, tochar(s.phone));
+	outtextxy(LISTSPOINTX + 760, Y, tochar(s.idClass));
+	outtextxy(LISTSPOINTX + 905, Y, tochar(to_string(s.year)));
+	
+	setDefault();
+}
+
+int getSizeClass(listStudent ls, string idClass){
+	int s = 0;
+	ptrStudent p = ls.head;
+	
+	while(p != NULL){
+		if(isSubString(idClass, p->value.idClass)) s += 1;
+		p = p->next;
+	}
+	return s;
 }
 
 int isEmptyBox(int num, string idStudent, string firstName, string lastName, string gender, string phone, string year){
@@ -145,7 +179,9 @@ ptrStudent findClass(listStudent &ls, string idClass, int &finded){ // tim ma lo
 	return firstStudent; // tra ve sinh vien dau tien duoc tim kiem
 }
 
-ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass){ // tim sinh vien dung sau sinh vien hien tai co ma lop idclass
+
+
+ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass){ // tim cac sinh vien dung sau sinh vien hien tai co ma lop idclass
 	int cnt = 1;
 	ptrStudent p = ls.head;
 	ptrStudent firstStudent = NULL;
@@ -166,6 +202,29 @@ ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass)
 	}
 	return firstStudent;
 }
+
+void findListStudentWithClass(listStudent ls, int &firstStudent, string idClass){ // tim cac sinh vien co trong lop va in ra man hinh
+	createListStudentWithClass();
+	
+	firstStudent += 1; // in ra cac sinh vien thu firstStudent tro di
+	ptrStudent p = ls.head;
+	
+	int cnt = 0; // dem so luong sinh vien da in ra truoc do (in ra toi thoi diem firstStudent)
+	
+	// truong hop ds rong se khong thuc thi duoc ham nay
+	while(p != NULL){
+		if(isSubString(idClass, p->value.idClass)){
+			cnt += 1;
+			if(cnt >= firstStudent){ // da bo qua cac sinh vien da duoc in ra, bat dau in ra sinh vien va chi in ra dung 12 sinh vien
+				outtextby(firstStudent % 12, p->value, BLACK); // in ra thong tin sinh vien hien tai tu dong 0 - dong 11
+				if(firstStudent == getSizeClass(ls, idClass) || firstStudent % 12 == 0) return; // neu sinh vien vua in ra la sinh vien o cuoi bang hoac o cuoi lop thi tra ve
+				firstStudent += 1;
+			}
+		}
+		p = p->next;
+	}	
+}
+
 
 ptrStudent findPrevStudentInClass(listStudent &ls, string idClass, string idStudent){ // tim sinh vien dung ngay truoc sinh vien hien tai, co ma lop la idclass
 	ptrStudent p = ls.head, prev = NULL;
@@ -1795,11 +1854,128 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 			}
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){
-			
+			getmouseclick(WM_LBUTTONDOWN, x, y);
+			clearmouseclick(WM_LBUTTONDOWN);
+			// click vao nut Update
+			if(clickInScore(x, y, FORMSPOINTX, TABLLPOINTY + 100, TABLSPOINTX + 145, TABLLPOINTY + 140)){
+				if(!isFullInforStudent(firstStudent)){ // chi xay ra khi click chuot
+					setcolor(LIGHTRED);
+					outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Vui long nhap du thong tin!");
+					setcolor(BLACK);
+					delay(1000);
+					resetText();
+				}
+				else{
+					setcolor(LIGHTGREEN);
+					outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Cap nhat thong tin thanh cong!");
+					setcolor(BLACK);
+					delay(1000);
+					resetText();
+					
+					firstStudentTemp->value = firstStudent;
+					//uploadStudent(ls, firstStudent->value); // cap nhat thong tin sinh vien moi
+					
+					createList();
+					firstStudentTemp = displayStudentWithId(ls, id, firstStudentTemp->value.id); // hien thi nhung sinh vien co id giong voi id dang nhap tu bang phim 
+	//							Sleep(20000);
+					if(firstStudentTemp != NULL) lineCurrent = 1;                            // va thong tin sinh vien dau tien la firstStudent
+					else lineCurrent = 0;
+					
+					// xoa muc update va ve lai mac dinh truoc khi return
+					setfillstyle(SOLID_FILL, WHITE);
+					bar(FORMSPOINTX, FORMSPOINTY - 30, FORMLPOINTX, FORMLPOINTY + 10);
+					bar(FORMSPOINTX, TABLLPOINTY + 100, TABLSPOINTX + 145, TABLLPOINTY + 140);
+					
+					setfillstyle(SOLID_FILL, LIGHTGRAY);
+					setbkcolor(LIGHTGRAY);
+					bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+					outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+					bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+					outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+					
+					resetBox(LIGHTBLUE); // ve lai muc nhap mssv
+					setcolor(BLACK);
+					outtextxy(BOXSPOINTX + 10, BOXSPOINTY + 5, tochar(id));
+					
+					setDefault();
+					return;
+				}
+			}
 		}
 	}
-}                      
-void updateStudent(listStudent &ls){
+}    
+
+
+void deleteStudent(listStudent &ls, string idStudent, ptrStudent &firstStudent, int &lineCurrent){
+	
+	if(firstStudent == NULL){
+		setcolor(LIGHTRED);
+		outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Thong tin rong! Khong the xoa.");
+		setcolor(BLACK);
+		delay(1000);
+		return;
+	}
+	
+	int run1 = 1, selected = 1, finded = 1;
+	char key;
+	string text = "Chac chan xoa sinh vien co MSSV : ";
+	text += firstStudent->value.id;
+
+	drawDeleteStudent(text, selected);
+	while(run1){
+		key = getch();
+		if(key == ET){ // thuc hien xoa sinh vien trong danh sach 
+			if(selected == 1){
+				student s = firstStudent->value;
+			
+				firstStudent = findNextStudent(ls, idStudent, s.id); // tim sinh vien dung sau sinh vien hien tai, neu khong co thi tim sinh vien dung truoc
+				if(firstStudent == NULL){
+					firstStudent = findPrevStudent(ls, idStudent, s.id);
+				}
+				removeStudent(ls, s);
+				
+				createList(); // in ra danh sach sau khi xoa bat dau voi sinh vien dung sau sinh vien da xoa
+				if(firstStudent == NULL) lineCurrent = 0;
+				else{
+					firstStudent = displayStudentWithId(ls, idStudent, firstStudent->value.id);
+					if(firstStudent == NULL) lineCurrent = 0;
+					else lineCurrent = 1;
+				}
+				
+				// xoa muc thong bao xoa sinh vien
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(FORMSPOINTX, FORMSPOINTY - 30, FORMLPOINTX, FORMLPOINTY + 10);
+				
+				setcolor(LIGHTGREEN);
+				outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Xoa thong tin thanh cong!");
+				setcolor(BLACK);
+				delay(500);
+				resetText();
+				
+				return;
+			}
+			
+			else if(selected == 2){
+				// xoa muc thong bao xoa sinh vien
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(FORMSPOINTX, FORMSPOINTY - 30, FORMLPOINTX, FORMLPOINTY + 10);
+				
+				return;
+				// hien thi lai cac muc 
+			}
+		}
+		else if(key == RIGHT && selected == 1){ // dich sang lua chon ben phai
+			selected += 1;
+			drawDeleteStudent(text, selected);
+		}
+		else if(key == LEFT && selected == 2){ // dich sang lua chon ben trai
+			selected -= 1;
+			drawDeleteStudent(text, selected);
+		}
+	}
+	
+}                  
+void updateStudent(listStudent &ls, listClass &lc){
 	
 	drawUpdateStudent(); // ve giao dien 
 	
@@ -1812,11 +1988,8 @@ void updateStudent(listStudent &ls){
 		if(kbhit()){
 			char key = getch();
 			if(key == ESC){
-				if(!createNotice("Ban chac chan muon thoat!", "")){
-					return;
-				}
-				drawStudentManagement(1);
-				drawUpdateStudent();
+				cleardevice();
+				return;
 			}
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){ 
@@ -1831,7 +2004,7 @@ void updateStudent(listStudent &ls){
 				idStudent = emptyStr;
 				finded = 0, lineCurrent = 0;
 				firstStudent = NULL;
-				char key; int selected = 1;
+				char key; int selected = 2;
 				while(run2){
 					if(kbhit()){
 						key = getch();
@@ -1850,46 +2023,135 @@ void updateStudent(listStudent &ls){
 							}
 							else{ 
 								if(selected == 1){
+									insertStudent(ls);
+									// ve lai toan bo giao dien sau khi tra ve
+									
+									cleardevice();
+									drawStudentManagement(1);
+									drawUpdateStudent();
+									resetBox(LIGHTBLUE);
+									outtextxy(BOXSPOINTX + 10, BOXSPOINTY + 5, tochar(idStudent));
+									// tao lai danh sach khi nhap thong tin truoc do
+									createList();
+									firstStudent = displayStudentWithId(ls, idStudent, firstStudent->value.id);
+									finded = 1;  // in ra man hinh thong tin sinh vien va tra ve thong tin duoc to dam
+									if(firstStudent != NULL) lineCurrent = 1;
+									else lineCurrent = 0;
+									// to dam muc dang chon truoc do
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setDefault();	
+								}
+								else if(selected == 2){ // ton tai thong tin trong danh sach moi cho phep chinh sua
 									editStudent(ls, idStudent, firstStudent, lineCurrent);
 									
 								}
-								else{
-									//deleteStudent(ls, firstStudent, lineCurrent);
+								else if(selected == 3){
+									deleteStudent(ls, idStudent, firstStudent, lineCurrent); 
 									
+									// sau khi xoa sinh vien trong danh sach, kiem tra xem lieu danh sach hien ra co thong tin hay khong, neu khong thi cho selected = 0;
+									if(firstStudent == NULL){
+										selected = 0;
+										finded = 0;
+										setbkcolor(LIGHTGRAY);
+										setfillstyle(SOLID_FILL, LIGHTGRAY);
+										bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+										outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+										
+										setbkcolor(LIGHTGRAY);
+										setfillstyle(SOLID_FILL, LIGHTGRAY); // highlight sua thong tin
+										bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+										outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+										
+										setbkcolor(LIGHTGRAY);
+										setfillstyle(SOLID_FILL, LIGHTGRAY); 
+										bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+										outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+		
+										setDefault();
+									}		
 								}
 							}
 						}	
 						else if(key == RIGHT){
-							if(selected == 1 && finded){
+							if(selected != 0 && selected < 3 && finded){
 								selected += 1;
 								
-								setbkcolor(LIGHTGRAY);
-								setfillstyle(SOLID_FILL, LIGHTGRAY); // unhighlight muc truoc do
-								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
-								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
-								
-								setbkcolor(LIGHTBLUE);
-								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight muc dang chon
-								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
-								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
-								
+								if(selected == 2){ // muc dang chon la sua thong tin : highlight sua thong tin, unhighlihgt them/ xoa thong tin
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
+									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+									
+								}
+								else if(selected == 3){ // muc dang chon la xoa thong tin : highligh xoa thong tin, unhighlight them / sua thong tin
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight xoa thong tin
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); // unhighlight muc truoc do
+									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+								}
 								setDefault();
 							} 
 						}
 						else if(key == LEFT){
-							if(selected == 2 && finded){
+							if(selected > 1 && finded){
 								selected -= 1;
 								
-								setbkcolor(LIGHTGRAY);
-								setfillstyle(SOLID_FILL, LIGHTGRAY); // unhighlight muc truoc do
-								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
-								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
-								
-								setbkcolor(LIGHTBLUE);
-								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight muc dang chon
-								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
-								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
-								
+								if(selected == 1){ // muc dang chon la them thong tin / unhighlight muc sua xoa thong tin
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); // highlight sua thong tin
+									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");	
+								}
+								else if(selected == 2){ // muc dang chon la sua thong tin/ unhighlight muc them xoa thong tin
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
+									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");				
+								}
 								setDefault();
 							}
 						}
@@ -1965,31 +2227,43 @@ void updateStudent(listStudent &ls){
 							else lineCurrent = 0;
 							
 							if(finded){
-								selected = 1;
-								setbkcolor(LIGHTBLUE); // neu tim thay sinh vien thi hien thi chuc nang xoa sua.
-								setfillstyle(SOLID_FILL, LIGHTBLUE); 
+								selected = 2;
+								
+								setbkcolor(LIGHTGRAY); // neu tim thay sinh vien thi mac dinh highlight sua thong tin / unhighlight them xoa thong tin.
+								setfillstyle(SOLID_FILL, LIGHTGRAY);
+								bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+								
+								setbkcolor(LIGHTBLUE);
+								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
 								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
 								
 								setbkcolor(LIGHTGRAY);
-								setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+								setfillstyle(SOLID_FILL, LIGHTGRAY); 
 								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 								
 								setDefault();
 							}
-							else{ // neu khong tim thay thi khong hien thi chuc nang xoa va sua
+							else{ // neu khong tim thay mac dinh unhighlight them sua xoa thong tin
 								selected = 0;
 								
 								setbkcolor(LIGHTGRAY);
-								setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
-								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
-								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+								setfillstyle(SOLID_FILL, LIGHTGRAY);
+								bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
 								
-								setfillstyle(SOLID_FILL, LIGHTGRAY); 
+								setbkcolor(LIGHTGRAY);
+								setfillstyle(SOLID_FILL, LIGHTGRAY); // highlight sua thong tin
 								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
 								
+								setbkcolor(LIGHTGRAY);
+								setfillstyle(SOLID_FILL, LIGHTGRAY); 
+								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+
 								setDefault();
 							}
 						}
@@ -2006,14 +2280,20 @@ void updateStudent(listStudent &ls){
 								firstStudent = findStudent(ls, idStudent, finded); // finded nay de kiem tra xem co thong tin lien quan hay khong
 								
 								if(finded){
-									selected = 1;
-									setbkcolor(LIGHTBLUE); // neu tim thay sinh vien thi hien thi chuc nang xoa sua.
-									setfillstyle(SOLID_FILL, LIGHTBLUE); 
+									selected = 2;
+									
+									setbkcolor(LIGHTGRAY); // neu tim thay sinh vien thi mac dinh highlight sua thong tin / unhighlight them xoa thong tin.
+									setfillstyle(SOLID_FILL, LIGHTGRAY);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+									
+									setbkcolor(LIGHTBLUE);
+									setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
 									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
 									
 									setbkcolor(LIGHTGRAY);
-									setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
 									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 									
@@ -2023,13 +2303,19 @@ void updateStudent(listStudent &ls){
 									selected = 0;
 									
 									setbkcolor(LIGHTGRAY);
-									setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
-									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
-									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+									setfillstyle(SOLID_FILL, LIGHTGRAY);
+									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
 									
-									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); // highlight sua thong tin
 									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+									
+									setbkcolor(LIGHTGRAY);
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 									
 									setDefault();
 								}
@@ -2039,12 +2325,8 @@ void updateStudent(listStudent &ls){
 							}
 						}
 						else if(key == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
-							if(!createNotice("Ban chac chan muon thoat", "")){
-								return;
-							}
 							cleardevice();
-							drawStudentManagement(1);
-							drawUpdateStudent();
+							return;
 							break;
 						}
 					}
@@ -2055,13 +2337,19 @@ void updateStudent(listStudent &ls){
 							selected = 0;
 								
 							setbkcolor(LIGHTGRAY);
-							setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
-							bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
-							outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+							setfillstyle(SOLID_FILL, LIGHTGRAY);
+							bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+							outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
 							
-							setfillstyle(SOLID_FILL, LIGHTGRAY); 
+							setbkcolor(LIGHTGRAY);
+							setfillstyle(SOLID_FILL, LIGHTGRAY); // highlight sua thong tin
 							bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 							outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+							
+							setbkcolor(LIGHTGRAY);
+							setfillstyle(SOLID_FILL, LIGHTGRAY); 
+							bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+							outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 							
 							setDefault();
 						
@@ -2093,7 +2381,122 @@ void updateStudent(listStudent &ls){
 	}
 }
 
-void studentManagement(listStudent &ls){
+void displayStudentWithClass(listStudent &ls, listClass &lc){
+	int run1 = 1, run2 = 1, x = 0, y = 0, selected = 0, currentClass = 0, firstStudent = 0;
+	drawDisplayStudentWithClass(lc, currentClass, selected);
+	
+	char key;
+	while(run1){
+		if(kbhit()){
+			key = getch();
+			switch(key){
+				case ET: 
+					firstStudent = 0; 
+					createListStudentWithClass(); // ve bang liet ke thong tin sinh vien theo lop
+					
+					if(firstStudent < getSizeClass(ls, lc.idClass[currentClass])){ // so luong sinh vien cua mot lop
+					
+						findListStudentWithClass(ls, firstStudent, lc.idClass[currentClass]); // tim thong tin sinh vien trong danh sach lop va in ra man hinh
+						createScrollBar(firstStudent, getSizeClass(ls, lc.idClass[currentClass]));
+						while(run2){
+							if(kbhit()){
+								key = getch();
+								if(key == ESC){
+									createListStudentWithClass();
+									setfillstyle(SOLID_FILL, WHITE);
+									bar(LISTSPOINTX - 17, LISTSPOINTY, LISTSPOINTX - 4, LISTLPOINTY - 1); // xoa thanh cuon
+									setfillstyle(SOLID_FILL, WHITE);
+									bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 10); // xoa ta ca thong tin truoc do
+									setDefault();
+									break;
+								}
+								else if(key == UP){
+									if(ceil((float)firstStudent / 12) > 1){ 
+										if(firstStudent % 12 == 0) firstStudent -= 12;
+										else firstStudent -= (firstStudent % 12);
+										firstStudent -= 12;
+										
+										if(firstStudent >= 0){
+											findListStudentWithClass(ls, firstStudent, lc.idClass[currentClass]); 
+											createScrollBar(firstStudent, getSizeClass(ls, lc.idClass[currentClass]));
+										}
+									}
+								}
+								else if(key == DOWN){
+									if(firstStudent < getSizeClass(ls, lc.idClass[currentClass])){
+										findListStudentWithClass(ls, firstStudent, lc.idClass[currentClass]); 
+										createScrollBar(firstStudent, getSizeClass(ls, lc.idClass[currentClass]));
+									}
+								}
+							}
+							
+							if(ismouseclick(WM_LBUTTONDOWN)){
+								getmouseclick(WM_LBUTTONDOWN, x, y);
+								clearmouseclick(WM_LBUTTONDOWN);
+								
+								if(clickInScore(x, y, LISTSPOINTX - 17, LISTLPOINTY - 8, LISTSPOINTX - 5, LISTLPOINTY)){
+									if(firstStudent < getSizeClass(ls, lc.idClass[currentClass])){
+										findListStudentWithClass(ls, firstStudent, lc.idClass[currentClass]); 
+										createScrollBar(firstStudent, getSizeClass(ls, lc.idClass[currentClass]));
+									}
+								}
+								else if(clickInScore(x, y, LISTSPOINTX - 17, LISTSPOINTY, LISTSPOINTX - 5, LISTSPOINTY + 8)){
+									if(ceil((float)firstStudent / 12) > 1){ 
+										if(firstStudent % 12 == 0) firstStudent -= 12;
+										else firstStudent -= (firstStudent % 12);
+										firstStudent -= 12;
+										
+										if(firstStudent >= 0){
+											findListStudentWithClass(ls, firstStudent, lc.idClass[currentClass]); 
+											createScrollBar(firstStudent, getSizeClass(ls, lc.idClass[currentClass]));
+										}
+									}
+								}
+							}
+						}
+					}
+					else{
+						while(run2){
+							key = getch();
+							if(key == ESC){
+								setfillstyle(SOLID_FILL, WHITE);
+								bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 10); // xoa ta ca thong tin truoc do
+								break;
+							}
+						}
+					}
+					break;
+				case UP:
+					if(selected > 0){
+						selected -= 1;
+						currentClass -= 1;
+						drawDisplayStudentWithClass(lc, currentClass, selected); // giu trang thai, to mau muc khac
+					}
+					else if(currentClass > 0){
+						currentClass -= 1;
+						drawDisplayStudentWithClass(lc, currentClass, selected); // thay doi trang thai
+					}
+					break;
+				case DOWN:
+					if(selected < 7 && currentClass < lc.size - 1){
+						selected += 1;
+						currentClass += 1;
+						drawDisplayStudentWithClass(lc, currentClass, selected);
+					}
+					else if(currentClass < lc.size - 1){
+						currentClass += 1;
+						drawDisplayStudentWithClass(lc, currentClass, selected);
+					}
+					break;
+				case ESC:
+					return;
+					break;
+			}
+		}
+	}
+}
+
+void studentManagement(listStudent &ls, listClass &lc){
 	int selected = 1;
 	drawStudentManagement(selected);
 	
@@ -2104,11 +2507,13 @@ void studentManagement(listStudent &ls){
 			case ET:
 				switch(selected){
 					case 1:
-						updateStudent(ls);
-						return;
+						updateStudent(ls, lc);
+						drawStudentManagement(selected);
 						break;
-//					case 2:
-						
+					case 2:
+						displayStudentWithClass(ls, lc);
+						drawStudentManagement(selected);
+						break;		
 				}
 				break;
 			case UP:
@@ -2130,3 +2535,4 @@ void studentManagement(listStudent &ls){
 }
 
 #endif
+					
