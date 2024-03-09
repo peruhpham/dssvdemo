@@ -175,6 +175,102 @@ void displayStudentList(listStudent ls){
 //		
 //		addNode(root, s);
 //	}
+
 //}
+
+
+//===Quan li Danh sach Dang ki=== 
+// ds lien ket don
+struct Register{  
+    string idSearch;
+    double scores;
+    bool unSub;
+};
+
+void nhapDK(Register svdk){
+    cin>>svdk.idSearch>>svdk.scores>>svdk.unSub;
+}
+
+struct nodeRegister{ 
+    Register data;
+    nodeRegister *next;
+    nodeRegister(){
+        this->data=data;
+        this->next=NULL;
+    }
+};
+
+typedef nodeRegister *PTRDK;
+
+// struct listRegister{
+//     int size;
+//     PTRDK head;
+//     listRegister(){
+//         this->size=0;
+//         this->head=NULL;
+//     }
+// };
+
+PTRDK createNodeRegister(Register svdk){
+    PTRDK p= new nodeRegister;
+    p->data=svdk;
+    p->next=NULL;
+    
+    return p;
+}
+
+
+void insertNodeDK(PTRDK &head,Register svdk){
+    PTRDK p=createNodeRegister(svdk);
+    if(head==NULL){
+        head=p;
+    }
+    else{
+        PTRDK last=head;
+        while(last->next!=NULL){
+            last=last->next;
+        }   //k?t thúc v?ng l?p last tr? ð?n cu?i 
+            // chèn vào cu?i    
+        last->next=p;
+    }
+}
+
+
+void readListDK(PTRDK &ls, string nameFileListStudent){
+    ifstream f;
+    f.open(nameFileListStudent, ios::in);
+    if(!f.is_open()){
+        cout << "fail open!" << endl;
+        return;
+    }
+    cout << "complete open!" << endl; // doc file
+    
+    Register e;
+    while(!f.eof()){
+        
+        getline(f,e.idSearch,'#');
+        f>>e.scores;f.ignore();
+        f>>e.unSub;f.ignore();
+        
+        insertNodeDK(ls,e);
+    }
+    f.close();
+}
+
+
+
+void printfDSDK(Register dk){
+    cout<<dk.idSearch<<" "<<dk.scores<<" "<<dk.unSub<<endl;
+}
+
+void display(PTRDK ls){
+    PTRDK p = ls;
+    while(p != NULL){
+        printfDSDK(p->data);
+        p = p->next;
+    }
+}
+
+
 
 #endif

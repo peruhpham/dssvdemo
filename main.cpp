@@ -258,14 +258,174 @@ void studentManagement(listStudent &ls){
 //	}
 //}
 
+
+
+// Moiw them vaof
+
+void outtextwithDSDK(int line, Register s){
+	
+	setcolor(BLACK);
+	int y = 0;
+	if(line == 1) y = TABLSPOINTY + 50;
+	else if(line == 2) y = TABLSPOINTY + 100;
+	else if(line == 3) y = TABLSPOINTY + 150;
+	
+	outtextxy(TABLSPOINTX + 5, y, tochar(s.idSearch));
+	outtextxy(TABLSPOINTX + 150, y, tochar(to_string(s.scores)));
+	if(s.unSub==0){
+		outtextxy(TABLSPOINTX + 370, y, "Da DK");
+	}
+	else outtextxy(TABLSPOINTX + 370, y, "HUY DK"); 
+	
+	
+	
+	setDefault();
+}
+
+void findRegister(PTRDK list, char* text, int &finded){
+	int cnt = 1;
+	PTRDK p = list;
+	while(p != NULL){
+		if(isSubString(text, p->data.idSearch) && cnt <= 5){
+			finded = 1;
+			if(strlen(text) == 10){
+				outtextwithDSDK(1, p->data); // in ra trong dong 1
+				return;
+			}
+			outtextwithDSDK(cnt, p->data); // in ra trong dong thu cnt
+			cnt += 1; 
+		}
+		p = p->next;
+	}
+}
+
+void updateRegister(PTRDK list){
+	
+	drawUpdateRegister(); // ve giao dien 
+	
+	int run1 = 1;
+	
+	while(run1){
+		if(kbhit()){
+			char key = getch();
+			if(key == ESC){
+				if(!createNotice("Ban chac chan muon thoat!", "")){
+					return;
+				}
+				drawStudentRegister(1);
+				drawUpdateRegister();
+			}
+		}
+		if(ismouseclick(WM_LBUTTONDOWN)){
+			int run2 = 1, finded = 0;
+			int x, y; // lay toa do nhan chuot
+			getmouseclick(WM_LBUTTONDOWN, x, y);
+			clearmouseclick(WM_LBUTTONDOWN);
+			if(clickInScore(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){
+				char idStudent[15];
+				int len = 0, finded = 0;
+				while(run2){
+					char key;
+					key = getch();
+					if(key == ET){
+						// khong co du lieu thi thong bao
+						if(!finded){
+							setcolor(LIGHTRED);
+							outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Khong tim thay du lieu!");
+							Sleep(1000);
+						}
+						resetBox();
+						resetText();
+						setcolor(BLACK);
+						// chuong trinh tiep tuc, reset lai muc nhap
+						len = 0;
+						for(int i = 0; i < 15; i++) idStudent[i] = '\0';
+					}
+					else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9')){
+						// luu tru input, xuat input, timkiem, xuat danh sach
+						if(len < 10){
+							finded = 0;
+							idStudent[len] = key;
+			                idStudent[len + 1] = '\0'; //
+			                len++;
+							outtextxy(BOXSPOINTX + 10, BOXSPOINTY + 5, idStudent);
+							
+							// bat dau xu ly tim kiem
+							drawUpdateRegister();
+							findRegister(list, idStudent, finded);
+						}
+					}
+					else if(key == ESC){
+						run2 = 0;
+					}
+				}
+			}
+			else if(clickInScore(x, y, TABLSPOINTX + 85, TABLLPOINTY + 50, TABLSPOINTX + 305, TABLLPOINTY + 90)){
+				createNotice("them thong tin", "");
+			}
+			else if(clickInScore(x, y, TABLSPOINTX + 390, TABLLPOINTY + 50, TABLSPOINTX + 610, TABLLPOINTY + 90)){
+				createNotice("sua thong tin", "");
+			}
+			else if(clickInScore(x, y, TABLSPOINTX + 695, TABLLPOINTY + 50, TABLSPOINTX + 915, TABLLPOINTY + 90)){
+				createNotice("xoa thong tin", "");
+			}	
+		}
+	}
+}
+
+void studentRegister(PTRDK list){
+	int selected = 1;
+	drawStudentRegister(selected);
+	
+	char key;
+	while(true){
+		key = getch();
+		switch(key){
+			case ET:
+				switch(selected){
+					case 1:
+						updateRegister(list);
+						break;
+					case 2:
+						getch();
+						closegraph();
+						break;
+				}
+				
+				getch();
+				closegraph();
+				return;
+				break;
+			case UP:
+				if(selected > 1){
+					selected--;
+					drawStudentRegister(selected);
+				}
+				break;
+			case DOWN:
+				if(selected < 2){
+					selected++;
+					drawStudentRegister(selected);
+				}
+				break;
+		}
+	}
+	
+	
+}
+
 int main(){
 	
-	initwindow(500, LPOINTY);
+	initwindow(LPOINTX, LPOINTY);
 	
 	// tao tien xu ly, khai bao
 	string nameFileListStudent = "studentlist.txt";
 	listStudent ls;
 	readListStudent(ls, nameFileListStudent);
+	
+	string nameFileListRegister="dsdk.txt";
+	PTRDK list;
+	readListDK(list,nameFileListRegister); 
 	
 	getch();
 	int selected = 1;
@@ -280,14 +440,14 @@ int main(){
 					case 2:
 						studentManagement(ls);
 						getch();
-						closegraph();	
+//						closegraph();	
 //						node* listStudent;
 //						openOnFile(listStudent, flistStudent);
 //						
 //						studentManagment(listStudent);
 						
 						
-//						break;
+						break;
 //					case 3:
 //						if(createNotice("Da chon Danh sach mon hoc", "")){
 //							drawMenu(selected);
@@ -297,14 +457,11 @@ int main(){
 //							closegraph();
 //						}
 //						break;
-//					case 4:
-//						if(createNotice("Da chon Danh sach dang ky lop hoc", "")){
-//							drawMenu(selected);
-//						}
-//						else{
-//							cleardevice();
-//							closegraph();
-//						}
+					case 4:
+						studentRegister(list);
+						getch();
+						closegraph(); 
+						
 //						break;
 				}
 				break;

@@ -241,7 +241,7 @@ void createList(){ // tao khung nho ben trong
 }
 
 
-void drawUpdateStudent(){
+void drawUpdateStudent(){  
 	
 	createTable("Tra cuu thong tin");
 	createList();
@@ -320,5 +320,82 @@ void drawStudentManagement(int selected){
 
 	setDefault();
 }
+
+// tách  
+void drawUpdateRegister(){
+	
+	createTable("Tra cuu thong tin");
+	createList();
+	
+	settextstyle(COMPLEX_FONT, HORIZ_DIR, 2); // tao khung nhap mssv
+	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 80, "Vui long nhap MSSV:");
+	rectangle(BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY); 
+
+	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1); // tieu de tren bang danh sach
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	outtextxy(TABLSPOINTX + 10, TABLSPOINTY + 10, "MSSV");
+	outtextxy(TABLSPOINTX + 155, TABLSPOINTY + 10, "Diem");
+	outtextxy(TABLSPOINTX + 375, TABLSPOINTY + 10, "Tinh Trang");
+	
+	setfillstyle(SOLID_FILL, LIGHTGRAY);
+	setbkcolor(LIGHTGRAY);
+	bar(TABLSPOINTX + 85, TABLLPOINTY + 50, TABLSPOINTX + 305, TABLLPOINTY + 90);
+	outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 60, "Them thong tin");
+	bar(TABLSPOINTX + 390, TABLLPOINTY + 50, TABLSPOINTX + 610, TABLLPOINTY + 90);
+	outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 60, "Sua thong tin");
+	bar(TABLSPOINTX + 695, TABLLPOINTY + 50, TABLSPOINTX + 915, TABLLPOINTY + 90);
+	outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 60, "Xoa thong tin");
+	setDefault();
+}
+
+void drawStudentRegister(int selected){
+	char text[50] = "Quan ly dang ki";
+	
+	cleardevice();
+	
+	createHeader();
+	createBottom();
+	
+	// tieu de tren bang menu 
+	setbkcolor(LIGHTBLUE);
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(MENUSPOINTX, MENUSPOINTY, MENUSPOINTX + 300, MENUSPOINTY + 40);
+	outtextxy(10, MENUSPOINTY + 10, text); 
+	setDefault();
+
+	// tao menu 1
+
+	sprintf(text, "%c Cap nhat thong tin", 62);
+	setcolor(BLACK);
+	if(selected == 1){
+		setcolor(LIGHTBLUE);
+		outtextxy(10, MENUSPOINTY + 55, text);
+	}
+	else{
+		outtextxy(10, MENUSPOINTY + 55, text);
+	}
+
+	// tao menu 2
+	
+	sprintf(text, "%c Xem danh sach theo lop", 62);
+	setcolor(BLACK);
+	if(selected == 2){
+		setcolor(LIGHTBLUE);
+		outtextxy(10, MENUSPOINTY + 95 , text);
+	}
+	else{
+		outtextxy(10, MENUSPOINTY + 95 , text);
+	}
+	
+	setcolor(LIGHTGRAY);
+	line(MENUSPOINTX + 10, MENUSPOINTY + 45, MENUSPOINTX + 290, MENUSPOINTY + 45);
+	line(MENUSPOINTX + 10, MENUSPOINTY + 85, MENUSPOINTX + 290, MENUSPOINTY + 85);
+	line(MENUSPOINTX + 10, MENUSPOINTY + 125, MENUSPOINTX + 290, MENUSPOINTY + 125);
+//	line(MENUSPOINTX + 10,  MENUSPOINTY + 165, MENUSPOINTX + 290, MENUSPOINTY + 165);
+//	line(MENUSPOINTX + 10, MENUSPOINTY + 205, MENUSPOINTX + 290, MENUSPOINTY + 205);
+
+	setDefault();
+} 
 
 #endif
