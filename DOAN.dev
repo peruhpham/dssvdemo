@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=00000001g0000000000000000
-UnitCount=4
+UnitCount=7
 
 [VersionInfo]
 Major=1
@@ -82,6 +82,36 @@ BuildCmd=
 
 [Unit4]
 FileName=datahanding.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=studentmanagement.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
+FileName=studentmanagement.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=classregistermanagement.h
 CompileCpp=1
 Folder=
 Compile=1

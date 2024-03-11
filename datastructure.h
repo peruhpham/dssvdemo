@@ -1,9 +1,13 @@
-#ifndef DECLAREDATASTRUCTURE_H
-#define DECLAREDATASTRUCTURE_H
+#ifndef DATASTRUCTURE_H
+#define DATASTRUCTURE_H
 
+// khai bao tat ca cau truct du lieu, cac ham thao tac voi cau truc du lieu : nhap, xoa
 
 using namespace std;
 
+const int MAXLISTCLASS = 50;
+
+// danh sach sinh vien 
 struct student{    
     string id, firstName, lastName;
 	string gender, phone, idClass;
@@ -30,21 +34,64 @@ struct listStudent{
 	}
 };
 
-void addLast(listStudent &ls,student x){
-    ptrStudent p = new nodeStudent(x);
-   
-    if(ls.size == 0){
-        ls.head = p;
-        ls.size += 1;
-    }
-    else{
-        ptrStudent last = ls.head;
-        while(last->next != NULL){
-            last = last->next;
-        }
-        last->next = p;
-        ls.size += 1;
-    }
+void addStudent(listStudent &ls,student x){ // chen co thu tu
+    ptrStudent newnode = new nodeStudent(x);
+    ptrStudent cur = ls.head;
+    
+    if(cur == NULL){ // truong hop rong
+    	ls.head = newnode;
+    	return;
+	}
+	for(cur; cur->next != NULL && cur->next->value.id <= x.id; cur = cur->next);
+	
+	if(cur->value.id > x.id){
+		newnode->next = ls.head;
+		ls.head = newnode;
+		return;
+	}
+	if(cur->value.id < x.id){
+		newnode->next = cur->next;
+		cur->next = newnode;
+		return;
+	}
+	return;
+}
+
+void uploadStudent(listStudent &ls, student s){
+	ptrStudent cur = ls.head;
+	if(cur == NULL){
+		return;
+	}
+	while(cur != NULL){
+		if(isSubString(s.id, cur->value.id)){
+			cur->value = s;
+			return;
+		}
+		cur = cur->next;
+	}
+}
+
+void removeStudent(listStudent &ls, student s){
+	ptrStudent cur = ls.head;
+	ptrStudent prev = NULL;
+	
+	if(cur == NULL){
+		return;
+	}
+	if(cur->value.id == s.id){
+		ls.head = cur->next;
+		delete cur;
+		return;
+	}
+	while(cur != NULL && cur->value.id != s.id){
+		prev = cur;
+		cur = cur->next;
+	}
+	
+	if(cur == NULL) return; // khong tim thay du lieu
+	
+	prev->next = cur->next;
+	delete cur;
 }
 
 // doc file 
@@ -52,10 +99,10 @@ void readListStudent(listStudent &ls, string nameFileListStudent){
     ifstream f;
     f.open(nameFileListStudent, ios::in);
     if(!f.is_open()){
-        cout << "fail open!" << endl;
+        cout << "failed open list student!" << endl;
         return;
     }
-    cout << "complete open!" << endl; // doc file
+    cout << "completed open list student!" << endl; // doc file
     
     student e;
     while(!f.eof()){
@@ -73,7 +120,7 @@ void readListStudent(listStudent &ls, string nameFileListStudent){
         getline(ss, temp, '#');
         
         e.year = stringtoint(temp);
-        addLast(ls,e);
+        addStudent(ls,e);
     }
     f.close();
 }
@@ -87,6 +134,48 @@ void displayStudentList(listStudent ls){
         printfStudent(p->value);
         p = p->next;
     }
+}
+
+
+// danh sach lop hoc 
+
+struct listClass{
+	int size;
+	string idClass[MAXLISTCLASS]; // danh sach id lop hoc
+	listClass(){
+		this->size = 0;
+	}
+};
+
+int addClass(listClass &lc,  string idClass){
+	if(lc.size == MAXLISTCLASS) return 0;
+	lc.idClass[lc.size] = idClass;
+	lc.size += 1;
+	return 1;
+}
+
+void displayListClass(listClass &lc){
+	for(int i = 0; i < lc.size; i++){
+		cout << lc.idClass[i] << endl;
+	}
+}
+
+void readListClass(listClass &lc, string nameFileListClass){
+	ifstream f;
+	f.open(nameFileListClass, ios::in);
+	if(!f.is_open()){
+		cout << "failed open list class!" << endl;
+		return;
+	}
+	cout << "completed open list class!" << endl;
+	
+	string idClass;
+	
+	while(!f.eof()){
+		getline(f, idClass);
+		addClass(lc, idClass);
+	}
+	f.close();
 }
 
 // cay nhi phan 
@@ -175,102 +264,6 @@ void displayStudentList(listStudent ls){
 //		
 //		addNode(root, s);
 //	}
-
 //}
-
-
-//===Quan li Danh sach Dang ki=== 
-// ds lien ket don
-struct Register{  
-    string idSearch;
-    double scores;
-    bool unSub;
-};
-
-void nhapDK(Register svdk){
-    cin>>svdk.idSearch>>svdk.scores>>svdk.unSub;
-}
-
-struct nodeRegister{ 
-    Register data;
-    nodeRegister *next;
-    nodeRegister(){
-        this->data=data;
-        this->next=NULL;
-    }
-};
-
-typedef nodeRegister *PTRDK;
-
-// struct listRegister{
-//     int size;
-//     PTRDK head;
-//     listRegister(){
-//         this->size=0;
-//         this->head=NULL;
-//     }
-// };
-
-PTRDK createNodeRegister(Register svdk){
-    PTRDK p= new nodeRegister;
-    p->data=svdk;
-    p->next=NULL;
-    
-    return p;
-}
-
-
-void insertNodeDK(PTRDK &head,Register svdk){
-    PTRDK p=createNodeRegister(svdk);
-    if(head==NULL){
-        head=p;
-    }
-    else{
-        PTRDK last=head;
-        while(last->next!=NULL){
-            last=last->next;
-        }   //k?t thúc v?ng l?p last tr? ð?n cu?i 
-            // chèn vào cu?i    
-        last->next=p;
-    }
-}
-
-
-void readListDK(PTRDK &ls, string nameFileListStudent){
-    ifstream f;
-    f.open(nameFileListStudent, ios::in);
-    if(!f.is_open()){
-        cout << "fail open!" << endl;
-        return;
-    }
-    cout << "complete open!" << endl; // doc file
-    
-    Register e;
-    while(!f.eof()){
-        
-        getline(f,e.idSearch,'#');
-        f>>e.scores;f.ignore();
-        f>>e.unSub;f.ignore();
-        
-        insertNodeDK(ls,e);
-    }
-    f.close();
-}
-
-
-
-void printfDSDK(Register dk){
-    cout<<dk.idSearch<<" "<<dk.scores<<" "<<dk.unSub<<endl;
-}
-
-void display(PTRDK ls){
-    PTRDK p = ls;
-    while(p != NULL){
-        printfDSDK(p->data);
-        p = p->next;
-    }
-}
-
-
 
 #endif
