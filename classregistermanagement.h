@@ -36,6 +36,7 @@ typedef nodeRegister *ptrRegister;
 
 typedef listRegister *ptrListRegister; 
 
+
 void insertRegister(listRegister &lr, Register data){
 	ptrRegister newnode = new nodeRegister(data);
     ptrRegister cur = lr.head;
@@ -91,5 +92,6 @@ void displayRegister(listRegister &lr){
     	p = p->next;	
 	}
 }
+
 
 #endif
