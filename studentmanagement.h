@@ -23,7 +23,7 @@ void outtextwith(int line, student s, int COLOR){ // outtext voi chi so dong lin
 	setDefault();
 }
 
-void outtextby(int line, student s, int COLOR){
+void outtextby(int line, student s, int COLOR){// giong outtextwith in ra nhieu dong
 	setcolor(COLOR);
 	
 	int Y = LISTSPOINTY + 10;
