@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=00000001g0000000000000000
-UnitCount=11
+UnitCount=9
 
 [VersionInfo]
 Major=1
@@ -141,13 +141,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=Untitled1
+FileName=subjectmanagement.h
 Folder=
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=1
 
 [Unit10]
 FileName=Untitled2

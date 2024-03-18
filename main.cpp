@@ -30,7 +30,7 @@ int main(){
 	readListStudent(ls, nameFileListStudent);
 	readListClass(lc, nameFileListClass);
 	
-	getch();
+//	getch();
 	int selected = 1;
 	createMenu(selected);
 	while(1){

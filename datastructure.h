@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 const int MAXLISTCLASS = 50;
 
 // danh sach sinh vien 
@@ -333,8 +334,8 @@ void readListClass(listClass &lc, string nameFileListClass){
 
 struct subject {
     string idSubject;
-	int STCLT, STCTH;
     string nameSubject;
+	int STCLT, STCTH;
     
     friend bool operator>(const subject& subject1, const subject& subject2);
     friend bool operator<(const subject& subject1, const subject& subject2);
@@ -360,13 +361,12 @@ struct nodeSubject {
     	this->height = 1;
 	}
 };
-
-
 typedef nodeSubject *ptrNodeSubject;
 
 struct listSubject{
 	ptrNodeSubject root;
 	int size;
+
 	listSubject(){
 		this->root = NULL;
 		this->size = 0;
@@ -404,7 +404,7 @@ ptrNodeSubject rightRotate(ptrNodeSubject y) {
     return x;
 }
 
-ptrNodeSubject leftRotate(ptrNodeSubject x) {
+ptrNodeSubject leftRotate(ptrNodeSubject x){
     ptrNodeSubject y = x->right; 
     ptrNodeSubject T2 = y->left; 
 

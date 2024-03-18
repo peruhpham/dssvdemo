@@ -726,7 +726,7 @@ void drawSubjectManagement()
 	bar(0, 60, 1350, 600);
 	
 	//khung 
-	setcolor(LIGHTBLUE);
+	setcolor(LIGHTGRAY);
 	rectangle(350, 70, 1340, 440);
 	
 	// to mau cho tab
@@ -756,17 +756,17 @@ void drawSubjectManagement()
 	
 	// settextstyle(COMPLEX_FONT, HORIZ_DIR, 3);
 	
-//	setbkcolor(LIGHTWHITE);
-	rectangle (TABLE_SX, TABLE_SY + 450, TABLE_SX + 100, TABLE_SY + 470);
-	rectangle (TABLE_SX + 120, TABLE_SY + 450, TABLE_SX + 120, TABLE_SY + 470);
-	rectangle (TABLE_SX + 260, TABLE_SY + 450, TABLE_SX + 260, TABLE_SY + 470);
+	// rectangle (TABLE_SX, TABLE_SY + 450, TABLE_SX + 100, TABLE_SY + 470);
+	// rectangle (TABLE_SX + 120, TABLE_SY + 450, TABLE_SX + 120, TABLE_SY + 470);
+	// rectangle (TABLE_SX + 260, TABLE_SY + 450, TABLE_SX + 260, TABLE_SY + 470);
 
-	setcolor(LIGHTRED);
-	outtextxy (TABLE_SX, TABLE_SY + 450, "THEM");
-	outtextxy (TABLE_SX + 120, TABLE_SY + 450, "XOA");
-	outtextxy (TABLE_SX + 260, TABLE_SY + 450, "HIEU CHINH");
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	outtextxy (TABLE_SX, TABLE_LY + 20, "THEM");
+	outtextxy (TABLE_SX + 300, TABLE_LY + 20, "XOA");
+	outtextxy (TABLE_LX - 260, TABLE_LY + 20, "HIEU CHINH");
 
-	getch();
+	// getch();
 	setDefault();
 
 // 	setcolor(LIGHTBLUE);
