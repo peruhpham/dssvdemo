@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=00000001g0000000001000000
-UnitCount=7
+UnitCount=6
 
 [VersionInfo]
 Major=1
@@ -91,7 +91,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=studentmanagement.cpp
+FileName=studentmanagement.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -101,7 +101,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=studentmanagement.h
+FileName=classforsubjectmanagement.h
 CompileCpp=1
 Folder=
 Compile=1
