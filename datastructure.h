@@ -5,9 +5,20 @@
 
 using namespace std;
 
-const int MAXLISTCLASS = 50;
+#define MAXLISTCLASS 50
+#define MAXCLASS 10000
+#define emptyStr ""
+
+
+
+int getAutoIdClass(){
+	static int id = 0;
+	return ++id;
+}
 
 // danh sach sinh vien 
+//_______________________________________________________________________________________
+
 struct student{    
     string id, firstName, lastName;
 	string gender, phone, idClass;
@@ -37,38 +48,67 @@ struct listStudent{
 void addStudent(listStudent &ls,student x){ // chen co thu tu
     ptrStudent newnode = new nodeStudent(x);
     ptrStudent cur = ls.head;
+    ptrStudent prev = NULL;
     
     if(cur == NULL){ // truong hop rong
     	ls.head = newnode;
     	return;
 	}
-	for(cur; cur->next != NULL && cur->next->value.id <= x.id; cur = cur->next);
 	
-	if(cur->value.id > x.id){
-		newnode->next = ls.head;
-		ls.head = newnode;
-		return;
-	}
-	if(cur->value.id < x.id){
-		newnode->next = cur->next;
-		cur->next = newnode;
-		return;
-	}
-	return;
-}
-
-void uploadStudent(listStudent &ls, student s){
-	ptrStudent cur = ls.head;
-	if(cur == NULL){
-		return;
-	}
-	while(cur != NULL){
-		if(isSubString(s.id, cur->value.id)){
-			cur->value = s;
+	while(cur != NULL){;
+		if(newnode->value.idClass < cur->value.idClass){
+			if(prev == NULL){
+				ls.head = newnode;
+				newnode->next = cur;
+			}
+			else{
+				prev->next = newnode; 
+				newnode->next = cur;
+			}
 			return;
 		}
+		else if(newnode->value.idClass == cur->value.idClass){
+			if(newnode->value.lastName < cur->value.lastName){
+				if(prev == NULL){
+					ls.head = newnode;
+					newnode->next = cur;
+				}
+				else{
+					prev->next = newnode; 
+					newnode->next = cur;
+				}
+				return;
+			}
+			else if(newnode->value.lastName == cur->value.lastName){
+				if(newnode->value.firstName < cur->value.firstName){
+					if(prev == NULL){
+						ls.head = newnode;
+						newnode->next = cur;
+					}
+					else{
+						prev->next = newnode; 
+						newnode->next = cur;
+					}
+					return;
+				}
+				else if(newnode->value.firstName == cur->value.firstName){
+					if(prev != NULL){
+						prev->next = newnode; // chen sau
+						newnode->next = cur;
+						return;
+					}
+				}
+			}
+		}
+		prev = cur;
 		cur = cur->next;
 	}
+	
+	if(prev != NULL){
+		prev->next = newnode; // chen cuoi
+	}
+	
+	return;
 }
 
 void removeStudent(listStudent &ls, student s){
@@ -92,6 +132,17 @@ void removeStudent(listStudent &ls, student s){
 	
 	prev->next = cur->next;
 	delete cur;
+}
+
+void uploadStudent(listStudent &ls, student s){ // cap nhat thong tin 
+	ptrStudent cur = ls.head;
+	if(cur == NULL){
+		return;
+	}
+	
+	removeStudent(ls, s); // xoa sinh vien theo id;
+	
+	addStudent(ls, s); // them sinh vien vao danh sach co thu tu
 }
 
 // doc file 
@@ -138,6 +189,10 @@ void displayStudentList(listStudent ls){
 
 
 // danh sach lop hoc 
+//_______________________________________________________________________________________
+
+
+
 
 struct listClass{
 	int size;
@@ -179,96 +234,378 @@ void readListClass(listClass &lc, string nameFileListClass){
 }
 
 
+// danh sach dang ky 
+//_______________________________________________________________________________________
 
 
 
+struct Register{  
+    string idStudent;
+    double scores;
+    bool unSub;
+};
 
-// cay nhi phan 
+
+struct nodeRegister{ 
+    Register data;
+    nodeRegister *next;
+    nodeRegister(Register data){
+        this->data=data;
+        this->next=NULL;
+    }
+};
+
+typedef nodeRegister *ptrRegister;
 
 
-//struct subject{
-//	string idSubject, name;
-//	string STCLT, STCTH;
-//};
-//
-//struct nodeSubject{ // cau truc cay nhi phan can bang 
-//	subject data;
-//	int height;
-//	nodeSubject *left, *right;
-//};
-//
-//void init(nodeSubject *&root){
-//	root = NULL;
-//}
-//
-//nodeSubject* createNodeSubject(subject data){ // tao mot node voi voi gia tri da cho
-//	nodeSubject *newNode = new nodeSubject;
-//	newNode->data = data;
-//	newNode->height = 1;
-//	newNode->left = newNode->right = NULL;
-//	return newNode;
-//}
-//
-//int getHeight(nodeSubject *root){
-//	if(root == NULL) return 0; // truong hop danh sach rong
-//	return root->height;
-//}
-//
-//int getBalance(nodeSubject *root){
-//	if(root == NULL) return 0; // truong hop danh sach rong
-//	return getHeight(root->left) - getHeight(root->right);
-//}
-//
-//nodeSubject* rightRotate(nodeSubject *y){
-//	nodeSubject *x = y->left;
-//	nodeSubject *T2 = x->right;
-//	x->right = y;
-//	y->left = T2;
-//	
-//	y->height = 1 + max(getHeight(y->left), getHeight(y->right));
-//	x->height = 1 + max(getHeight(x->left), getHeight(x->right));
-//	
-//	return x;
-//}
-//
-//
-//void addNode(nodeSubject *&root, subject s){
-//	if(root == NULL){ // truong hop danh sach rong
-//		root = createNodeSubject(s);
-//		return;
-//	}
-//	addNode(root->left, s);
-//	
-//	root->height = 1 + max(getHeight(root->left), getHeight(root->right));
-//	int balance = getBalance(root);
-//	
-//	if(balance > 1){ // cay khong can bang luon trong truong hop left left
-//		root = rightRotate(root);
-//	}
-//}
-//
-//void readSubjectList(nodeSubject *&root, string nameFileSubjectList){ // xu ly doc file
-//	fstream f;
-//	f.open(nameFileSubjectList, ios::in);
-//	if(!f.is_open()){
-//		cout << "Failed Open!" << endl;
-//		return;
-//	}
-//	cout << "Completed Open!" << endl;
-//	
-//	subject s;
-//	while(!f.eof()){
-//		string line;
-//		getline(f, line);
-//		
-//		stringstream ss(line);
-//		getline(ss, s.idSubject, '#');
-//		getline(ss, s.name, '#');
-//		getline(ss, s.STCLT, '#');
-//		getline(ss, s.STCTH, '#');
-//		
-//		addNode(root, s);
-//	}
-//}
+struct listRegister{
+     int size;
+     ptrRegister head;
+     listRegister(){
+         this->size=0;
+         this->head=NULL;
+     }
+ };
 
+typedef listRegister *ptrListRegister;
+
+void insertRegister(listRegister &lr, Register data){
+	ptrRegister newnode = new nodeRegister(data);
+    ptrRegister cur = lr.head;
+    
+    if(cur == NULL){ // truong hop rong
+    	lr.head = newnode;
+    	return;
+	}
+	
+	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
+	
+	if(cur->data.idStudent > data.idStudent){
+		newnode->next = lr.head;
+		lr.head = newnode;
+		return;
+	}
+	
+	if(cur->data.idStudent < data.idStudent){
+		newnode->next = cur->next;
+		cur->next = newnode;
+		return;
+	}
+	return;
+}
+
+
+// danh sach lop theo mon hoc (lop tin chi)
+//_______________________________________________________________________________________
+
+
+
+struct classForSubject{
+	int idclass;// tu dong tang 
+	string idSubject;
+	int academicYear;//Niên Khoa 
+	int semester;//Hoc ky 
+	int group;
+	int studentMin;
+	int studentMax;
+	bool unClass;
+	ptrListRegister lr;
+	classForSubject(){
+		this->lr = new listRegister;
+		this->idclass = 0; this->idSubject = emptyStr;
+		this->group = this->academicYear = this->semester = this->studentMax = this->studentMin = 0;
+		this->unClass = true;
+	}
+}; 
+
+typedef classForSubject *ptrClassForSubject;
+
+struct listClassForSubject{
+    ptrClassForSubject list[MAXCLASS];
+    int size ;
+    listClassForSubject(){
+    	this->size = 0;																																	
+	}
+};
+
+int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
+	if(lcfs.size == MAXCLASS) return -1; // danh sach day 
+	
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idSubject == data->idSubject && lcfs.list[i]->academicYear == data->academicYear && 
+		   lcfs.list[i]->semester == data->semester && lcfs.list[i]->group == data->group){
+			return 0; // danh sach da co thong tin;
+		}
+	}
+	
+	data->idclass = getAutoIdClass();
+	data->unClass = true;
+	
+	lcfs.list[lcfs.size] = new classForSubject;
+	*lcfs.list[lcfs.size] = *data;	
+	lcfs.size += 1;
+
+	return 1;
+} 
+
+int updateClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data, int currentClass){
+	if(lcfs.size == MAXCLASS) return -1; // danh sach day 
+	
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idSubject == data->idSubject && lcfs.list[i]->academicYear == data->academicYear && 
+		    lcfs.list[i]->semester == data->semester && lcfs.list[i]->group == data->group && i != currentClass){
+			return 0; // danh sach da co thong tin
+		}
+	}
+	
+	*lcfs.list[currentClass] = *data;
+	return 1;
+}
+
+int deleteClassForSubject(listClassForSubject &lcfs, int currentClass){
+	if(lcfs.size == 0) return 0;
+	int i = currentClass;
+	ptrClassForSubject temp = lcfs.list[i];
+	while(i < lcfs.size - 1){
+		lcfs.list[i] = lcfs.list[i + 1];
+		i += 1;
+	}
+	lcfs.list[i] = NULL;
+	delete temp;
+	lcfs.size -= 1;
+	return 1;
+}
+
+void displayListClassForSubject(listClassForSubject lcfs){
+	for(int i = 0; i < lcfs.size; i++){
+		cout << lcfs.list[i]->idclass << " " << lcfs.list[i]->idSubject << " " << lcfs.list[i]->academicYear;
+		cout << " " << lcfs.list[i]->semester << " " << lcfs.list[i]->group << " " << lcfs.list[i]->studentMin;
+		cout << " " << lcfs.list[i]->studentMax << " " << lcfs.list[i]->unClass;
+		if(lcfs.list[i]->lr == NULL) cout << " Khong co sinh vien dang ky " << endl;
+	}
+}
+
+
+void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClassForSubject){
+	ifstream f;
+    f.open(nameFileListClassForSubject, ios::in);
+    if(!f.is_open()){
+        cout << "fail open file list classforsubject!" << endl;
+        return;
+    }
+    
+    ptrClassForSubject p = new classForSubject;
+    
+    cout << "completed open file list classforsubject!" << endl; // doc file
+    while(!f.eof()){
+    	
+        string line;
+        getline(f, line); 
+        stringstream ss(line);
+        
+        getline(ss, p->idSubject, '#');
+        ss >> p->academicYear; ss.ignore();
+        ss >> p->semester; ss.ignore();
+        ss >> p->group; ss.ignore();
+        ss >> p->studentMin; ss.ignore();
+        ss >> p->studentMax; ss.ignore();
+        
+        addClassForSubject(lcfs, p);
+    
+    }
+    f.close();
+}
+
+
+// danh sach mon hoc 
+//_______________________________________________________________________________________
+
+
+
+struct subject {
+    string idSubject;
+	int STCLT, STCTH;
+    string nameSubject;
+    
+    friend bool operator>(const subject& subject1, const subject& subject2);
+    friend bool operator<(const subject& subject1, const subject& subject2);
+
+};
+
+bool operator>(const subject& subject1, const subject& subject2) {
+    return subject1.idSubject > subject2.idSubject;
+}
+
+bool operator<(const subject& subject1, const subject& subject2) {
+    return subject1.idSubject < subject2.idSubject;
+}
+
+//-----
+struct nodeSubject {
+    subject data;
+    nodeSubject *left,*right;
+    int height;
+    nodeSubject(subject sub){
+    	this->data = sub;
+    	this->left = this->right = NULL;
+    	this->height = 1;
+	}
+};
+
+
+typedef nodeSubject *ptrSubject;
+
+struct listSubject{
+	ptrSubject root;
+	int size;
+	listSubject(){
+		this->root = NULL;
+		this->size = 0;
+	}
+};
+
+
+int height(ptrSubject sub) {
+    if (sub == nullptr) 
+        return 0;
+    return sub->height;
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+
+
+ptrSubject rightRotate(ptrSubject y) {
+    ptrSubject x = y->left;
+    ptrSubject T2 = x->right;
+
+    // Perform rotation 
+    x->right = y; 
+    y->left = T2; 
+
+    // Update heights 
+    y->height = max(height(y->left), 
+                    height(y->right)) + 1; 
+    x->height = max(height(x->left), 
+                    height(x->right)) + 1; 
+
+    // Return new root 
+    return x;
+}
+
+ptrSubject leftRotate(ptrSubject x) {
+    ptrSubject y = x->right; 
+    ptrSubject T2 = y->left; 
+
+    // Perform rotation 
+    y->left = x; 
+    x->right = T2; 
+
+    // Update heights 
+    x->height = max(height(x->left),     
+                    height(x->right)) + 1; 
+    y->height = max(height(y->left), 
+                    height(y->right)) + 1; 
+
+    // Return new root 
+    return y; 
+} 
+
+
+
+// Get Balance factor of node N 
+int getBalance(ptrSubject N) { 
+    if (N == NULL) 
+        return 0; 
+    return height(N->left) - height(N->right); 
+} 
+
+ptrSubject insert(ptrSubject nodeSub, subject key) {
+    if (nodeSub == nullptr)
+        return new nodeSubject(key);
+
+    if (key.idSubject < nodeSub->data.idSubject)
+        nodeSub->left = insert(nodeSub->left, key);
+    else if (key.idSubject > nodeSub->data.idSubject)
+        nodeSub->right = insert(nodeSub->right, key);
+    else
+        return nodeSub;
+
+    // Update height
+    nodeSub->height = 1 + max(height(nodeSub->left), height(nodeSub->right));
+
+    // Get balance
+    int balance = getBalance(nodeSub);
+
+    if (balance > 1 && key.idSubject < nodeSub->left->data.idSubject)
+        return rightRotate(nodeSub);
+    if (balance < -1 && key.idSubject > nodeSub->right->data.idSubject)
+        return leftRotate(nodeSub);
+    if (balance > 1 && key.idSubject > nodeSub->left->data.idSubject) {
+        nodeSub->left = leftRotate(nodeSub->left);
+        return rightRotate(nodeSub);
+    }
+    if (balance < -1 && key.idSubject < nodeSub->right->data.idSubject) {
+        nodeSub->right = rightRotate(nodeSub->right);
+        return leftRotate(nodeSub);
+    }
+
+    return nodeSub;
+}
+
+
+void readListSubject(listSubject &lsb, string nameFileSubjectList) {
+	ptrSubject root = lsb.root;
+	
+    ifstream f(nameFileSubjectList);
+    if (!f.is_open()) {
+        cout << "fail open file subject!" << endl;
+        return;
+    }
+    cout << "completed open file subject!" << endl;
+
+    subject s;
+    string line;
+    while (getline(f, line)) {
+        stringstream ss(line);
+
+		getline(ss, s.idSubject, '#');
+		getline(ss, s.nameSubject, '#');
+		ss >> s.STCLT; ss.ignore();
+		ss >> s.STCTH; ss.ignore();
+
+        root = insert(root, s);
+    }
+    
+    lsb.root = root;
+    
+    f.close();
+}
+
+string findNameSubject(string idSubject, ptrSubject root) {
+    if (root == NULL) return emptyStr;
+	if(idSubject > root->data.idSubject) return findNameSubject(idSubject, root->right);
+	if(idSubject < root->data.idSubject) return findNameSubject(idSubject, root->left);
+	return root->data.nameSubject;
+}
+
+void readListYear(int *academicYear, int &sizeYear){
+	string nameFileListYear = "data\\yearlist.txt";
+	ifstream f(nameFileListYear);
+    if (!f.is_open()) {
+        cout << "fail open file year!" << endl;
+        return;
+    }
+    cout << "completed open file year!" << endl;
+
+    int year;
+    while (f >> year) {
+        academicYear[sizeYear] = year;
+        sizeYear += 1;
+    }
+    
+    f.close();
+}
 #endif
