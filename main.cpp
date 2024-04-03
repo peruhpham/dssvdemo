@@ -10,67 +10,68 @@
 #include "studentmanagement.h"
 #include "classforsubjectmanagement.h"
 
-  
-using namespace std;
+
+using namespace std; 
 
 int main(){  
-	
+	      
 	initwindow(LPOINTX, LPOINTY);
 	
 	// tao tien xu ly, khai bao 
 	string nameFileListStudent = "data\\studentlist.txt";
-	string nameFileListClass = "data\\classlist.txt";
+	string nameFileListClass = "data\\classlist.txt";        
 	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
 	string nameFileListSubject = "data\\subjectlist.txt";
-	
+	   
 	listStudent ls;
 	listClass lc;
-	listClassForSubject lcfs;
+	listClassForSubject lcfs; 
 	listSubject lsj;
 	
-	readListStudent(ls, nameFileListStudent);
+	readListStudent(ls, nameFileListStudent);  
 	readListClass(lc, nameFileListClass);
-	readListClassForSubject(lcfs, nameFileListClassForSubject);
+	readListClassForSubject(lcfs, nameFileListClassForSubject);  
 	readListSubject(lsj, nameFileListSubject);
-	   
+
+ 	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day
 //  getch();
 	int selected = 1;
-	createMenu(selected);
+	createMenu(selected);  
 
-	while(1){
-		char key = getch();
+	while(1){  
+		char key = getch();            
 		       
-		int ascii = static_cast<int>(key); 
+		int ascii = static_cast<int>(key);    
         if (ascii == 0) { 
-            key = getch();
-            ascii = static_cast<int>(key);
+            key = getch();     
+            ascii = static_cast<int>(key); 
             ascii += 255; 
-    	}
-    
-		switch(ascii){
-			case ET:    	
+    	}       
+       
+		switch(ascii){  
+			case ET:    	          
 				switch(selected){
-					case 1:
-						studentManagement(ls, lc);
-						createMenu(selected);	         
-						break; 
+					case 1:   
+						studentManagement(ls, lc);  
+						createMenu(selected);	          
+						break;   
 					case 2:
-						classForSubjectManagement(lcfs, lsj); // quan li lop theo mon hoc (lop tin chi)
-						createMenu(selected);  
-						break;
-//					case 3:
-//					case 4:    
-				}
+						classForSubjectManagement(lcfs, lsj, ls ); // quan li lop theo mon hoc (lop tin chi)  
+						createMenu(selected);          
+						break;              
+//					case 3:  
+//					case 4:           
+				}  
 				break;
-			case UP:
-				if(selected > 1){ 
-					selected--;
+			case UP:   
+				if(selected > 1){           
+					selected--; 
 					createMenu(selected);
 				}
-				break; 
+				break;     
 			case DOWN:
 				if(selected < 4){
-					selected++;
+					selected++;     
 					createMenu(selected);
 				}
 				break;

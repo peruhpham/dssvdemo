@@ -188,6 +188,18 @@ void displayStudentList(listStudent ls){
 }
 
 
+ptrStudent findPtrStudent(listStudent &ls, string id){
+	ptrStudent cur = ls.head;
+	
+	while(cur != NULL){
+		if(cur->value.id == id){
+			return cur;
+		}
+		cur = cur->next;
+	}
+	return NULL;
+}
+
 // danh sach lop hoc 
 //_______________________________________________________________________________________
 
@@ -269,31 +281,56 @@ struct listRegister{
 
 typedef listRegister *ptrListRegister;
 
-void insertRegister(listRegister &lr, Register data){
+void insertRegister(ptrListRegister &lr, Register data){
 	ptrRegister newnode = new nodeRegister(data);
-    ptrRegister cur = lr.head;
+    ptrRegister cur = lr->head;
     
     if(cur == NULL){ // truong hop rong
-    	lr.head = newnode;
+    	lr->head = newnode;
+    	lr->size += 1;
     	return;
 	}
 	
 	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
 	
 	if(cur->data.idStudent > data.idStudent){
-		newnode->next = lr.head;
-		lr.head = newnode;
+		newnode->next = lr->head;
+		lr->head = newnode;
+		lr->size += 1;
 		return;
 	}
 	
 	if(cur->data.idStudent < data.idStudent){
 		newnode->next = cur->next;
 		cur->next = newnode;
+		lr->size += 1;
 		return;
 	}
+
 	return;
 }
-
+//void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
+//	ptrStudent currentStudent = ls.head;
+//	
+//	Register r; 
+//	for(int i = 0; i < lcfs.size; i++){
+//		
+//		cout << "__________" << i << "__________" << endl;
+//		while(currentStudent != NULL){
+//			// moi cur la mot ptrStudent
+//			
+//			r.idStudent = currentStudent->value.id;
+//			r.scores = 0;
+//			r.unSub = 0;
+//
+//			cout << &(lcfs.list[i]->lr) << endl;
+//			insertRegister(lcfs.list[i]->lr, r);
+//			currentStudent = currentStudent->next;
+//		}
+//		currentStudent = ls.head;
+//		
+//	}
+//}
 
 // danh sach lop theo mon hoc (lop tin chi)
 //_______________________________________________________________________________________
@@ -312,6 +349,7 @@ struct classForSubject{
 	ptrListRegister lr;
 	classForSubject(){
 		this->lr = new listRegister;
+		
 		this->idclass = 0; this->idSubject = emptyStr;
 		this->group = this->academicYear = this->semester = this->studentMax = this->studentMin = 0;
 		this->unClass = true;
@@ -339,9 +377,11 @@ int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	}
 	
 	data->idclass = getAutoIdClass();
-	data->unClass = true;
+	data->unClass = false;
+	data->lr = new listRegister;
 	
 	lcfs.list[lcfs.size] = new classForSubject;
+
 	*lcfs.list[lcfs.size] = *data;	
 	lcfs.size += 1;
 
@@ -416,6 +456,22 @@ void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClass
     f.close();
 }
 
+int existStudentHaveGrade(ptrListRegister &lr){
+	ptrRegister p = lr->head;
+	if(p == NULL) return 0;
+	while(p != NULL){
+		if(p->data.scores != 0){
+			return 1;
+		}
+		p = p->next;
+	}
+	return 0;
+}
+
+int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
+	if(lcfs.list[currentClass]->lr->head != NULL) return 1;
+	return 0;
+}
 
 // danh sach mon hoc 
 //_______________________________________________________________________________________
@@ -607,5 +663,27 @@ void readListYear(int *academicYear, int &sizeYear){
     }
     
     f.close();
+}
+
+void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
+	ptrStudent currentStudent = ls.head;
+	
+	Register r; 
+	for(int i = 0; i < lcfs.size; i++){
+		while(currentStudent != NULL){
+			// moi cur la mot ptrStudent
+			
+			r.idStudent = currentStudent->value.id;
+			r.scores = 0;
+			r.unSub = 0;
+		
+			insertRegister(lcfs.list[i]->lr, r);
+			
+			cout << 1 << endl;
+			currentStudent = currentStudent->next;
+		}
+		currentStudent = ls.head;
+		
+	}
 }
 #endif
