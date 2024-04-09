@@ -28,8 +28,8 @@ Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
-CompilerSettings=00000001g0000000000000000
-UnitCount=8
+CompilerSettings=00000001g0000000001000000
+UnitCount=7
 
 [VersionInfo]
 Major=1
@@ -91,16 +91,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=studentmanagement.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit6]
 FileName=studentmanagement.h
 CompileCpp=1
 Folder=
@@ -110,8 +100,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
-FileName=classregistermanagement.h
+[Unit6]
+FileName=classforsubjectmanagement.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -120,8 +110,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
-FileName=creditclassmanagement.h
+[Unit7]
+FileName=registerclass.h
 CompileCpp=1
 Folder=
 Compile=1

@@ -91,6 +91,26 @@ void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClass
     f.close();
 }
 
+void outtextwith_classTC(int line, classForSubject cfs, int COLOR){ // outtext voi chi so dong line
+	
+	setcolor(COLOR);
+	int Y = 0;
+	if(line == 1) Y = TABLSPOINTY + 50;
+	else if(line == 2) Y = TABLSPOINTY + 100;
+	else if(line == 3) Y = TABLSPOINTY + 150;
+	else Y = TABLSPOINTY + 200;
+	
+	outtextxy(TABLSPOINTX + 5, Y, tochar(to_string(cfs.academicYear)));
+	outtextxy(TABLSPOINTX + 150, Y, tochar(to_string(cfs.semester)));
+	outtextxy(TABLSPOINTX + 370, Y, tochar(cfs.idSubject));
+	outtextxy(TABLSPOINTX + 515, Y, tochar(cfs.group));
+	
+	
+	setDefault();
+}
+
+
+
 //int main(){
 //	listClassForSubject lcfs; 
 //	string nameFileListClassForSubject = "classforsubjectlist.txt";
