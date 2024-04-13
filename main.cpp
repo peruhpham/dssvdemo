@@ -12,10 +12,10 @@
 
 #include "subjectmanagement.h"
 
-  
-using namespace std;
-
-int main(){  
+     
+using namespace std;           
+ 
+int main(){   
 	
 	initwindow(LPOINTX, LPOINTY);
 	
@@ -24,12 +24,12 @@ int main(){
 	string nameFileListClass = "data\\classlist.txt";
 	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
 	string nameFileListSubject = "data\\subjectlist.txt";
-	
-	listStudent ls;
-	listClass lc;
-	listClassForSubject lcfs;
-	listSubject lsj;
-	
+	  
+	listStudent ls; 
+	listClass lc; 
+	listClassForSubject lcfs;   
+	listSubject lsj;        
+	     
 	readListStudent(ls, nameFileListStudent);
 	readListClass(lc, nameFileListClass);
 	readListClassForSubject(lcfs, nameFileListClassForSubject);
@@ -51,9 +51,9 @@ int main(){
     
 		switch(ascii){
 			case ET:    	   
-				switch(selected){        
+				switch(selected){          
 					case 1:  
-						studentManagement(ls, lc);
+						studentManagement(ls, lc);   
 						createMenu(selected);	         
 						break; 
 					case 2:

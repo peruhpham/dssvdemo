@@ -29,18 +29,17 @@
 #define BACKSPACE 8
 
 #define MENU_ITEM_HEIGHT 40 //Chiều cao của mỗi mục trong menu
-
 #define D_ROW 22
+// #define MAX_MON_HOC 100
 
-#define MAX_MON_HOC 100
-
+// Khai bao nguyen mau ham
 void subjectManagement(listSubject &lsb);
 void drawTableListSubject ();
 void displaySubjectList(ptrSubject root);
 void resetDisplaySubjectList(int &x, int &y);
 
 void hightlightLineSubject();
-void tieuXaoSubject();
+void drawHeaderAndBottom();
 
 void drawMenuSubject();
 void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem);
@@ -54,12 +53,16 @@ void printListSubjectByName(subject *sub, int x, int y);
 void AVLToArray(ptrSubject currentNodeSubject, subject *arrayTmp, int &currentIndex);
 
 
-void drawTableControlSubject();
-//----------------------------------------------------------------
+void drawTableControlSubject();// draw bang dieu khien
+void removeTableConsolSubject();// che lai man hinh khu vuc dieu khien va bang du lieu
+void reloadingDataSubject();
+void drawMenuStartSubject();
+
+//=====================================================================================================
 
 
 
-// tao giao dien moi cDanh sach mon hoc
+// Tao giao dien moi cDanh sach mon hoc
 void drawTableListSubject (){
 	setcolor(RED);
 	rectangle(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
@@ -124,6 +127,8 @@ void drawTableListSubject (){
     outtextxy(TABLE_SX + 110 + 50 + 120, TABLE_SY + 10, "TEN MON HOC");
     outtextxy(TABLE_SX + 2 + 50 + 120 + 340, TABLE_SY + 10, "STCLT");
     outtextxy(TABLE_SX + 2 + 50 + 120 + 340 + 60, TABLE_SY + 10, "STCTH");
+
+	setDefault();
 //----------------------------------------------------------------
 }
 //----------------------------------------------------------------
@@ -146,6 +151,8 @@ void displaySubjectList(ptrSubject root) {
             displaySubjectList(root->right); 
         }
     }
+
+	setDefault();
 }
 
 void resetDisplaySubjectList(int &x, int &y){
@@ -177,7 +184,7 @@ void hightlightLineSubject(){
 
 }
 //----------------------------------------------------------------
-void tieuXaoSubject(){
+void drawHeaderAndBottom(){
     // setcolor(LIGHTBLUE);
     // bar(TABLE_SX, 0, TABLE_LX, TABLE_SY);
     // bar(TABLE_SX, TABLE_LY, TABLE_LX, TABLE_LY + 200);
@@ -187,8 +194,7 @@ void tieuXaoSubject(){
 
 //----------------------------------------------------------------
 void drawMenuSubject(){
-	//Thiet lap mau cho khung menu subject
-	setfillstyle(SOLID_FILL, WHITE);
+	setfillstyle(SOLID_FILL, WHITE);//Thiet lap mau cho khung menu subject
 	setcolor(WHITE);
 	rectangle(MENU_SUB_SX, MENU_SUB_SY, MENU_SUB_LX, MENU_SUB_LY);
 
@@ -266,7 +272,7 @@ void printSTT (listSubject &lsb){
 
 
 //----------------------------------------------------------------
-// reset lại menu
+// reset lại menu dieu kien subject.
 void resetMenuSubject(int &selectedItem){
 	int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
 
@@ -287,12 +293,10 @@ void resetMenuSubject(int &selectedItem){
 			
             key = getch();
             // cleardevice(); // Xóa màn hình để vẽ lại menu
-            // Xử lý phím lên
-            if (key == 72) {
+            if (key == 72) {// Xử lý phím lên
                 selectedItem = (selectedItem - 1 + 3) % 3;
             }
-            // Xử lý phím xuống
-            else if (key == 80) {
+            else if (key == 80) {// Xử lý phím xuống
                 selectedItem = (selectedItem + 1) % 3;
             }
             // In lại menu với lựa chọn mới được tô sáng
@@ -320,10 +324,12 @@ void resetMenuSubject(int &selectedItem){
             setcolor(WHITE); // Reset màu về mặc định
         }
 	}
+	setDefault();
 }
 
 //----------------------------------------------------------------
-void AVLtoArray(nodeSubject* currentNodeSubject, subject *arrayTmp, int &currentIndex){//chuyen du lieu tu cay avl sang array
+//chuyen du lieu tu cay avl sang array
+void AVLtoArray(nodeSubject* currentNodeSubject, subject *arrayTmp, int &currentIndex){
 	if(currentNodeSubject != nullptr){
 		AVLtoArray(currentNodeSubject->left, arrayTmp, currentIndex);
 		arrayTmp[currentIndex] = currentNodeSubject->data;
@@ -359,18 +365,19 @@ void printListSubjectByName(subject *sub, int &x, int &y){
 }
 
 //----------------------------------------------------------------
-void drawTableControlSubject(){
+//draw bang do hoa xu ly them sua xoa mon hoc.
+void drawTableControlSubject(){ //draw bang do hoa xu ly them sua xoa mon hoc.
 	setcolor(BLUE);
-	rectangle(TABLE_CONTROL_SX, TABLE_CONTROL_SY, TABLE_CONTROL_LX, TABLE_CONTROL_LY); // draw vien do
+	rectangle(TABLE_CONTROL_SX, TABLE_CONTROL_SY, TABLE_CONTROL_LX, TABLE_CONTROL_LY-10); // draw vien do
 
 	setfillstyle(SOLID_FILL, LIGHTCYAN);
-	bar(TABLE_CONTROL_SX+1, TABLE_CONTROL_SY+1, TABLE_CONTROL_LX-1, TABLE_CONTROL_LY-2); // draw nen gray
+	bar(TABLE_CONTROL_SX+1, TABLE_CONTROL_SY+1, TABLE_CONTROL_LX-1, TABLE_CONTROL_LY-11); // draw nen gray
 	
 	
 	outtextxy(TABLE_CONTROL_SX + 2, TABLE_CONTROL_SY, "CAP NHAT THONG TIN");// tieu de bang dieu khien
 
 	setcolor(BLUE);
-	settextstyle(SMALL_FONT, HORIZ_DIR, 5);// dieu chinh kich thuoc chu
+	settextstyle(SMALL_FONT, HORIZ_DIR, 6);// dieu chinh kich thuoc chu
 
 	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60-20 , "Ma mon hoc:");
 	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);// o de nhap thong tin id mon hoc
@@ -378,25 +385,48 @@ void drawTableControlSubject(){
 	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 120-20 , "Ten mon hoc:");
 	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);// o de nhap thong tin id mon hoc
 
-	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 160, "So tin chi");
+	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 158, "So tin chi");
 
 	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175, "Ly thuyet:");
-	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 80, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
+	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 100, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
 
 	outtextxy(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175, "Thuc hanh:");
-	rectangle(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 80, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
+	rectangle(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
 	
 	
 	setDefault();
 
 	// 340px den 680px = 340px -> moi o 100px -> kc 10px
 	rectangle(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 250 + 30);
-	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 250 + 5, "(+) THEM");
+	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 250 + 5, "(+)THEM");
 	rectangle(TABLE_CONTROL_SX + 10 + 100 + 10, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 250 + 30);
-	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 250 + 5,"(-) XOA");
+	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 250 + 5,"(-)XOA");
 	rectangle(TABLE_CONTROL_SX + 10 + 110*2, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 250 + 30);
-	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 250 + 5, "SUA");
+	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 250 + 5, "(+-)SUA");
 
+
+
+
+	setDefault();
+}
+
+// Che lai man hinh khu vuc dieu khien va bang du lieu.
+void removeTableConsolSubject(){
+	setcolor(BLUE);
+	rectangle(TABLE_CONTROL_SX, TABLE_CONTROL_SY, TABLE_LX, TABLE_LY + 149);
+	// getch();
+	bar(TABLE_CONTROL_SX, TABLE_CONTROL_SY, TABLE_LX + 2, TABLE_LY + 150);
+
+}
+
+//Load lai du lieu trong danh sach mon hoc.
+void reloadingDataSubject(){
+	string nameFileListSubject = "data\\subjectlist.txt";
+
+	listSubject lsub;
+
+	readListSubject(lsub, nameFileListSubject);
+	cout << "\n" << "DA RELOADING THANH CONG DANH SACH SSUBJECT.\n";
 }
 
 
@@ -410,7 +440,8 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
     outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
     outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
     outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
-    char key;
+    
+	char key;
     while (true) {
 		if(selectedItem == 0){
 			setcolor(BLUE);
@@ -449,49 +480,103 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
         }
 		
 		if(key == ENTER && selectedItem == 0){
-			// xu li nhap
-			drawTableControlSubject();
+			// reloadingDataSubject();
+
+			// // xu li nhap
+			// drawTableControlSubject();
 
 
 
-			// Xu li enter tai day
-			drawTableListSubject ();
-			displaySubjectList(lsb.root);
-			printSTT(lsb);
-			tieuXaoSubject();
+			// // Xu li enter tai day
+			// drawTableListSubject ();
+			// displaySubjectList(lsb.root);
+			// printSTT(lsb);
+			// drawHeaderAndBottom();
 
-			key = getch();
-			if(key == ESC){
-				tieuXaoSubject();
-				setcolor(LIGHTGRAY);
-				bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
-				// resetMenuSubject(selectedItem);
-				break;
-			}
+			// key = getch();
+			// if(key == ESC){
+			// 	drawHeaderAndBottom();
+			// 	// setcolor(LIGHTGRAY);
+			// 	bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+
+			// 	removeTableConsolSubject();// XOA HET MAN HINH HIEN THỊ KHU VUC DIEU KHIEN.
+			// 	// resetMenuSubject(selectedItem);
+			// 	break;
+			// }
 			// break; // thoat khoi vòng lap
 			//================================================================
-		}
-		else if(key == ENTER && selectedItem == 1){
-			drawTableControlSubject();
+			reloadingDataSubject();
 
+			drawTableControlSubject();
 			// Xu li enter tai day
 			drawTableListSubject ();
-			//priDanh sach theo tên môn hoc.
-
-			// displaySubjectList(lsb.root);
+			//print Danh sach theo tên môn hoc.
 			printSTT(lsb);
-			//-===========================
+			
 			int arraySize = 0;
 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
-			
+			//---------------------------------
 			cout << "\narray from AVL tree data\n";
+			//test xuat du lieu tren màn hinh consol 
 			for(int i = 0; i < arraySize; i++){
 				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
 
 			}
-			y = TABLE_SY + 40 + D_ROW/10 -1;
+			//-----------------------------------
 
-			for(int i = 0; i < arraySize; i++){ // sap xep theo ten mon hoc
+			y = TABLE_SY + 40 + D_ROW/10 -1;
+			drawTableListSubject();
+			printSTT(lsb);
+			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+				setbkcolor(WHITE);
+				setcolor(GREEN);
+				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
+				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
+				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
+				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+				y += D_ROW;
+			}
+
+			delete[] subjectListArray;
+			cout << "Danh sach mon hoc theo thu tu ten:" << endl;
+
+			//======================================
+
+			drawHeaderAndBottom();
+
+			key = getch();
+			if(key == ESC){
+				drawHeaderAndBottom();
+
+				removeTableConsolSubject();
+				break;
+			}
+			// getch(); 
+			break; // thoat khoi vòng lap
+		}
+		else if(key == ENTER && selectedItem == 1){
+			reloadingDataSubject();
+
+			drawTableControlSubject();
+			// Xu li enter tai day
+			drawTableListSubject ();
+
+			//print Danh sach theo tên môn hoc.
+			printSTT(lsb);
+			//-===========================
+			int arraySize = 0;
+			subject* subjectListArray = arraySubject(lsb.root, arraySize);
+			//---------------------------------
+			cout << "\narray from AVL tree data\n";
+			//test xuat du lieu tren màn hinh consol 
+			for(int i = 0; i < arraySize; i++){
+				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
+
+			}
+			//-----------------------------------
+
+			// Sap xep theo ten mon hoc
+			for(int i = 0; i < arraySize; i++){ 
 				int indexCurrent = i;
 				while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
 					subject temp = subjectListArray[indexCurrent];
@@ -502,6 +587,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
 				}
 			}
 
+			y = TABLE_SY + 40 + D_ROW/10 -1;
 			drawTableListSubject();
 			printSTT(lsb);
 			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
@@ -527,15 +613,16 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
 
 			//=================
 
-			tieuXaoSubject();
+			drawHeaderAndBottom();
 
 			key = getch();
 			if(key == ESC){
-				tieuXaoSubject();
+				drawHeaderAndBottom();
 				
-				setcolor(LIGHTGRAY);
-				bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+				// setcolor(LIGHTGRAY);
+				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
 
+				removeTableConsolSubject();
 				// resetMenuSubject(selectedItem);
 				break;
 			}
@@ -543,30 +630,54 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
 			break; // thoat khoi vòng lap
 		}
 		else if(key == ENTER && selectedItem == 2){
+			reloadingDataSubject();
+
 			// Xu li enter tai day
-				drawTableListSubject ();
-				// displaySubjectList(lsb.root);
+			drawTableListSubject ();
+			// displaySubjectList(lsb.root);
 
-				tieuXaoSubject();
+			drawHeaderAndBottom();
 
-				// getch();
-				break; // thoat khoi vòng lap/
+			// getch();
+			key = getch();
+			if(key == ESC){
+				drawHeaderAndBottom();
+				
+				// setcolor(LIGHTGRAY);
+				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+
+				removeTableConsolSubject();
+				// resetMenuSubject(selectedItem);
+				break;
+			}
+
+			break; // thoat khoi vòng lap/
 		}
-
-		else if(key == ESC)
+		else if(key == ESC){
 			break;
+
+		}
 	}
 
 
 }
 
+// Ve menu cac lenh dieu khien cua mon hoc.
+void drawMenuStartSubject(){
+	// setfillstyle(SOLID_FILL, LIGHTMAGENTA);
+	bar(MENU_SUB_SX, MENU_SUB_SY, MENU_SUB_LX + 2, MENU_SUB_LY);// ve lai bang chua cac muc dieu khien.
 
-//----------------------------------------------------------------
-void subjectManagement(listSubject &lsb, int selected){	
 	setcolor(BLACK);
 	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY, ">> Danh sach mon theo ID");
 	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
 	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
+
+	setDefault();
+}
+//----------------------------------------------------------------
+void subjectManagement(listSubject &lsb, int selected){	
+	drawMenuStartSubject();
+	
 	char key = ENTER;
 	int ascii;
 	while(true){
