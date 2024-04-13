@@ -6,6 +6,7 @@
 void outtextwith(int line, student s, int COLOR){ // outtext voi chi so dong line
 	
 	setcolor(COLOR);
+<<<<<<< HEAD
 	int Y = 0;
 	if(line == 1) Y = TABLSPOINTY + 50;
 	else if(line == 2) Y = TABLSPOINTY + 100;
@@ -19,10 +20,26 @@ void outtextwith(int line, student s, int COLOR){ // outtext voi chi so dong lin
 	outtextxy(TABLSPOINTX + 615, Y, tochar(s.phone));
 	outtextxy(TABLSPOINTX + 760, Y, tochar(s.idClass));
 	outtextxy(TABLSPOINTX + 905, Y, tochar(to_string(s.year)));
+=======
+	int y = 0;
+	if(line == 1) y = TABLSPOINTY + 50;
+	else if(line == 2) y = TABLSPOINTY + 100;
+	else if(line == 3) y = TABLSPOINTY + 150;
+	else y = TABLSPOINTY + 200;
+	
+	outtextxy(TABLSPOINTX + 5, y, tochar(s.id));
+	outtextxy(TABLSPOINTX + 150, y, tochar(s.firstName));
+	outtextxy(TABLSPOINTX + 370, y, tochar(s.lastName));
+	outtextxy(TABLSPOINTX + 515, y, tochar(s.gender));
+	outtextxy(TABLSPOINTX + 615, y, tochar(s.phone));
+	outtextxy(TABLSPOINTX + 760, y, tochar(s.idClass));
+	outtextxy(TABLSPOINTX + 905, y, tochar(to_string(s.year)));
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 	
 	setDefault();
 }
 
+<<<<<<< HEAD
 void outtextby(int line, student s, int COLOR){
 	setcolor(COLOR);
 	
@@ -57,6 +74,8 @@ int getSizeClass(listStudent ls, string idClass){
 	return s;
 }
 
+=======
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 int isEmptyBox(int num, string idStudent, string firstName, string lastName, string gender, string phone, string year){
 	switch(num){
 		case 1:
@@ -80,6 +99,10 @@ int isEmptyBox(int num, string idStudent, string firstName, string lastName, str
 	}
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 int existStudent(listStudent &ls, string id){
 	ptrStudent p = ls.head;
 	while(p != NULL){
@@ -179,9 +202,13 @@ ptrStudent findClass(listStudent &ls, string idClass, int &finded){ // tim ma lo
 	return firstStudent; // tra ve sinh vien dau tien duoc tim kiem
 }
 
+<<<<<<< HEAD
 
 
 ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass){ // tim cac sinh vien dung sau sinh vien hien tai co ma lop idclass
+=======
+ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass){ // tim sinh vien dung sau sinh vien hien tai co ma lop idclass
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 	int cnt = 1;
 	ptrStudent p = ls.head;
 	ptrStudent firstStudent = NULL;
@@ -203,6 +230,7 @@ ptrStudent findStudentInClass(listStudent &ls, string idStudent, string idClass)
 	return firstStudent;
 }
 
+<<<<<<< HEAD
 void findListStudentWithClass(listStudent ls, int &firstStudent, string idClass){ // tim cac sinh vien co trong lop va in ra man hinh
 	createListStudentWithClass();
 	
@@ -226,6 +254,8 @@ void findListStudentWithClass(listStudent ls, int &firstStudent, string idClass)
 }
 
 
+=======
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 ptrStudent findPrevStudentInClass(listStudent &ls, string idClass, string idStudent){ // tim sinh vien dung ngay truoc sinh vien hien tai, co ma lop la idclass
 	ptrStudent p = ls.head, prev = NULL;
 	while(p != NULL){
@@ -295,6 +325,7 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 	}
 	maxCurrentBox = max(maxCurrentBox, currentBox); // xac dinh da nhap bao nhieu thong tin
 		if(kbhit()){
+<<<<<<< HEAD
 			char key; int ascii;
 			key = getch();
 			
@@ -306,6 +337,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 	    	}
 	    	
 			if(ascii == ET){
+=======
+			char key;
+			key = getch();
+			if(key == ET){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 1: // truong hop nhap xong maso sinh vien
 						if((int)idStudent.size() != 10){
@@ -479,7 +515,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						break;
 				}	
 			}
+<<<<<<< HEAD
 			else if(ascii == LEFT){
+=======
+			else if(key == LEFT){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 2: // truong hop nhap xong ho
 						if((int)firstName.size() == 0){
@@ -580,7 +620,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						break;
 				}
 			}
+<<<<<<< HEAD
 			else if(ascii == RIGHT){
+=======
+			else if(key == RIGHT){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 1: // truong hop nhap xong maso sinh vien
 						if((int)idStudent.size() != 10){
@@ -690,7 +734,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						break;
 				}
 			}
+<<<<<<< HEAD
 			else if(ascii == UP){
+=======
+			else if(key == UP){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if(lineCurrent > 1){
 					// dich sang o truoc do
 					ptrStudent prevStudent = findPrevStudentInClass(ls, idClass, firstStudent->value.id); // tim ra thong tin sinh vien trong lop truoc do
@@ -721,7 +769,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 					}
 				}
 			}
+<<<<<<< HEAD
 			else if(ascii == DOWN){
+=======
+			else if(key == DOWN){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if(lineCurrent < 4 && lineCurrent != 0){
 					ptrStudent nextStudent = findNextStudentInClass(ls, idClass, firstStudent->value.id);
 					if(nextStudent != NULL){
@@ -750,16 +802,27 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 					}
 				}
 			}
+<<<<<<< HEAD
 			else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9') || ascii == SPACE || ascii == BP){
 				switch(currentBox){
 					case 1: // xu ly nhap cho muc idStudent
 						if(ascii == BP && (int)idStudent.size() > 0){
+=======
+			else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9') || key == SPACE || key == BP){
+				switch(currentBox){
+					case 1: // xu ly nhap cho muc idStudent
+						if(key == BP && (int)idStudent.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							idStudent.pop_back();
 							resetInforStudentBox(1, LIGHTBLUE); // xoa muc nhap va in lai
 							setcolor(BLACK);
 							outtextxy(FORMSPOINTX + 10, FORMSPOINTY + 10, tochar(idStudent));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)idStudent.size() < 10){
 								formatKey(key); // dua ve chu in hoa
 								idStudent += key;
@@ -769,13 +832,21 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						}
 						break;
 					case 2: // xu ly nhap cho muc Ho 
+<<<<<<< HEAD
 						if(ascii == BP && (int)firstName.size() > 0){
+=======
+						if(key == BP && (int)firstName.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							firstName.pop_back();
 							resetInforStudentBox(2, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 155, FORMSPOINTY + 10, tochar(firstName));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ascii == SPACE){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || key == SPACE){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)firstName.size() < 19){
 								formatKey(key);
 								firstName += key;
@@ -785,13 +856,21 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						}
 						break;
 					case 3: // xu ly nhap cho muc TEN
+<<<<<<< HEAD
 						if(ascii == BP && (int)lastName.size() > 0){
+=======
+						if(key == BP && (int)lastName.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							lastName.pop_back();
 							resetInforStudentBox(3, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 375, FORMSPOINTY + 10, tochar(lastName));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)lastName.size() < 12){
 								formatKey(key);
 								lastName += key;
@@ -801,13 +880,21 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						}
 						break;
 					case 4: // xu ly nhap cho muc goi tinh
+<<<<<<< HEAD
 						if(ascii == BP && (int)gender.size() > 0){
+=======
+						if(key == BP && (int)gender.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							gender.pop_back();
 							resetInforStudentBox(4, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 520, FORMSPOINTY + 10, tochar(gender));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)gender.size() < 3){
 								formatKey(key);
 								gender += key;
@@ -817,13 +904,21 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						}
 						break;
 					case 5: // xu ly nhap cho muc phone
+<<<<<<< HEAD
 						if(ascii == BP && (int)phone.size() > 0){
+=======
+						if(key == BP && (int)phone.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							phone.pop_back();
 							resetInforStudentBox(5, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 620, FORMSPOINTY + 10, tochar(phone));
 						}
+<<<<<<< HEAD
 						else if(('0' <= ascii && ascii <= '9')){
+=======
+						else if(('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)phone.size() < 10){
 								formatKey(key);
 								phone += key;
@@ -833,13 +928,21 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						}
 						break;
 					case 6: // xu ly nhap cho muc khoa
+<<<<<<< HEAD
 						if(ascii == BP && (int)year.size() > 0){
+=======
+						if(key == BP && (int)year.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							year.pop_back();
 							resetInforStudentBox(6, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 765, FORMSPOINTY + 10, tochar(year));
 						}
+<<<<<<< HEAD
 						else if(('0' <= ascii && ascii <= '9')){
+=======
+						else if(('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)year.size() < 4){
 								formatKey(key);
 								year += key;
@@ -850,7 +953,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 						break;
 				}
 			}
+<<<<<<< HEAD
 			else if(ascii == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
+=======
+			else if(key == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if(!createNotice("Ban chac chan muon thoat", "")){
 					return;
 				}
@@ -873,7 +980,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 			// click vao nut add
+<<<<<<< HEAD
 			if(clickInRange(x, y, TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY)){
+=======
+			if(clickInScore(x, y, TABLSPOINTX + 900, FORMSPOINTY, FORMLPOINTX, FORMLPOINTY)){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if((int)idStudent.size() == 0){
 					setcolor(LIGHTRED);
 					outtextxy(BOXLPOINTX + 30, LISTSPOINTY + 80, "Thong tin rong!");
@@ -912,7 +1023,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			 //click de chinh sua nhap id
+<<<<<<< HEAD
 			else if(clickInRange(x, y, FORMSPOINTX, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY) && maxCurrentBox >= 1){
+=======
+			else if(clickInScore(x, y, FORMSPOINTX, FORMSPOINTY, TABLSPOINTX + 145, FORMLPOINTY) && maxCurrentBox >= 1){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				// bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -934,7 +1049,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			// click de chinh sua nhap ho
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY) && maxCurrentBox >= 2){
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 145, FORMSPOINTY, TABLSPOINTX + 365, FORMLPOINTY) && maxCurrentBox >= 2){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				//bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -956,7 +1075,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			// click de chinh sua nhap ten
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY) && maxCurrentBox >= 3){
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 365, FORMSPOINTY, TABLSPOINTX + 510, FORMLPOINTY) && maxCurrentBox >= 3){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				//bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -978,7 +1101,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			// click de chinh sua nhap gioi tinh
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY) && maxCurrentBox >= 4){
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 510, FORMSPOINTY, TABLSPOINTX + 610, FORMLPOINTY) && maxCurrentBox >= 4){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				//bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -1000,7 +1127,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			// click de chinh sua nhap sdt
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY) && maxCurrentBox >= 5){
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 610, FORMSPOINTY, TABLSPOINTX + 755, FORMLPOINTY) && maxCurrentBox >= 5){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				//bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -1022,7 +1153,11 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 				}
 			}
 			// click de chinh sua nhap nam
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY) && maxCurrentBox >= 6){
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 755, FORMSPOINTY, TABLSPOINTX + 900, FORMLPOINTY) && maxCurrentBox >= 6){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				//bat dau to nhat muc dang chon
 				if(isEmptyBox(currentBox, idStudent, firstName, lastName, gender, phone, year)){
 					setcolor(LIGHTRED);
@@ -1048,16 +1183,26 @@ void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, 
 	}
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap thong tin voi ham typeInforStudent()
 	drawInsertStudent();
 	int run1 = 1;
 	
 	int x, y; // lay toa do nhan chuot
+<<<<<<< HEAD
 	char key; int ascii;
+=======
+	
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 	// bat dau chon muc voi 2 truong hop : 1. nhap phim ESC de thoat, 2. click chuot vao muc de nhap du lieu
 	while(run1){
 		// phat hien nhap phim ESC va xu ly
 		if(kbhit()){
+<<<<<<< HEAD
 			key = getch();
 			
 			ascii = static_cast<int>(key);
@@ -1068,6 +1213,10 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 	    	}
 	    	
 			if(ascii == ESC){
+=======
+			char key = getch();
+			if(key == ESC){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if(!createNotice("Ban chac chan muon thoat!", "")){ // neu thoat thi return
 					return;
 				}
@@ -1083,7 +1232,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 			// neu click chuot ra ngoai muc nhap thi hien thi thong bao nhap lai
+<<<<<<< HEAD
 			if(!clickInRange(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY) && entered == 0){
+=======
+			if(!clickInScore(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY) && entered == 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				createBox(LIGHTRED, "Vui long nhap Ma lop:");
 			}
 			// click chuot vao muc nhap va bat dau nhap 
@@ -1099,6 +1252,7 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 				while(run2){ // bat dau nhap thong tin ma lop
 					// truong hop nhan phim
 					if(kbhit()){
+<<<<<<< HEAD
 						key = getch();
 						
 						ascii = static_cast<int>(key);
@@ -1108,6 +1262,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 				            ascii += 255;
 				    	}
 						if(ascii == ET){
+=======
+						char key;
+						key = getch();
+						if(key == ET){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							// khong co du lieu thi thong bao
 							if(!finded){
 								setcolor(LIGHTRED);
@@ -1132,7 +1291,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 							// chuong trinh tiep tuc, reset lai muc nhap
 							idClass = "";
 						}
+<<<<<<< HEAD
 						else if(ascii == UP){
+=======
+						else if(key == UP){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if(lineCurrent > 1){
 								// dich sang o truoc do
 								ptrStudent prevStudent = findPrevStudentInClass(ls, idClass, firstStudent->value.id); // tim ra thong tin sinh vien trong lop truoc do
@@ -1163,7 +1326,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 								}
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == DOWN){
+=======
+						else if(key == DOWN){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if(lineCurrent < 4 && lineCurrent != 0){
 								ptrStudent nextStudent = findNextStudentInClass(ls, idClass, firstStudent->value.id);
 								if(nextStudent != NULL){
@@ -1192,7 +1359,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 								}
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == BP && (int)idClass.size() > 0){
+=======
+						else if(key == BP && (int)idClass.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							idClass.pop_back();
 							resetBox(LIGHTBLUE); // xoa muc nhap va in lai
 							outtextxy(BOXSPOINTX + 10, BOXSPOINTY + 5, tochar(idClass));
@@ -1201,7 +1372,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 							if(firstStudent != NULL) lineCurrent = 1;
 							else lineCurrent = 0;
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							// luu tru input, xuat input, timkiem, xuat danh sach
 							if((int)idClass.size() < 9){
 								formatKey(key); // dua ve chu in hoa
@@ -1216,7 +1391,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 								else lineCurrent = 0;
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
+=======
+						else if(key == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if(!createNotice("Ban chac chan muon thoat", "")){
 								return;
 							}
@@ -1230,7 +1409,11 @@ void insertStudent(listStudent &ls){ // bat buoc nhap ma lop sau do bat dau nhap
 					// truong hop click chuot vao vi tri add hoac click ra ngoai muc nhap 
 					if(ismouseclick(WM_LBUTTONDOWN)){
 						getmouseclick(WM_LBUTTONDOWN, x, y);
+<<<<<<< HEAD
 						if(!clickInRange(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){
+=======
+						if(!clickInScore(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							resetBox(BLACK);
 							resetText();
 							break; // dung nhap du lieu
@@ -1276,7 +1459,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 	
 	int run1 = 1, enter = 1, finded = 1, x, y;
 		
+<<<<<<< HEAD
 	char key; int ascii;
+=======
+	char key;
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 	while(run1){
 		if(enter != 0){
 			if(currentBox == 8){
@@ -1295,6 +1482,7 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 		if(kbhit()){
 			char key;
 			key = getch();
+<<<<<<< HEAD
 			
 			ascii = static_cast<int>(key);
 	        if (ascii == 0) { 
@@ -1304,6 +1492,9 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 	    	}
 	    	
 			if(ascii == ET){
+=======
+			if(key == ET){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 1: // truong hop nhap xong maso sinh vien
 						if((int)idStudent.size() != 10){
@@ -1456,7 +1647,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 							resetText();
 							
 							firstStudentTemp->value = firstStudent;
+<<<<<<< HEAD
 							uploadStudent(ls, firstStudentTemp->value); // cap nhat thong tin sinh vien moi
+=======
+							//uploadStudent(ls, firstStudent->value); // cap nhat thong tin sinh vien moi
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							
 							createList();
 							firstStudentTemp = displayStudentWithId(ls, id, firstStudentTemp->value.id); // hien thi nhung sinh vien co id giong voi id dang nhap tu bang phim 
@@ -1488,7 +1683,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 				}	
 			}
 			
+<<<<<<< HEAD
 			else if(ascii == LEFT){
+=======
+			else if(key == LEFT){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 2: // truong hop nhap xong ho
 						if((int)firstName.size() == 0){
@@ -1599,7 +1798,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 				}
 						
 			}
+<<<<<<< HEAD
 			else if(ascii == RIGHT){
+=======
+			else if(key == RIGHT){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 1: // truong hop nhap xong maso sinh vien
 						if((int)idStudent.size() != 10){
@@ -1718,7 +1921,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 				}
 			}
 			
+<<<<<<< HEAD
 			else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9') || ascii == SPACE || ascii == BP){
+=======
+			else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9') || key == SPACE || key == BP){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				switch(currentBox){
 					case 1: // xu ly nhap cho muc idStudent
 						setcolor(LIGHTRED);
@@ -1728,13 +1935,21 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						resetText();
 						break;
 					case 2: // xu ly nhap cho muc Ho 
+<<<<<<< HEAD
 						if(ascii == BP && (int)firstName.size() > 0){
+=======
+						if(key == BP && (int)firstName.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							firstName.pop_back();
 							resetInforStudentBox(2, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 155, FORMSPOINTY + 10, tochar(firstName));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ascii == SPACE){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || key == SPACE){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)firstName.size() < 19){
 								formatKey(key);
 								firstName += key;
@@ -1744,13 +1959,21 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						}
 						break;
 					case 3: // xu ly nhap cho muc TEN
+<<<<<<< HEAD
 						if(ascii == BP && (int)lastName.size() > 0){
+=======
+						if(key == BP && (int)lastName.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							lastName.pop_back();
 							resetInforStudentBox(3, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 375, FORMSPOINTY + 10, tochar(lastName));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)lastName.size() < 12){
 								formatKey(key);
 								lastName += key;
@@ -1760,13 +1983,21 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						}
 						break;
 					case 4: // xu ly nhap cho muc goi tinh
+<<<<<<< HEAD
 						if(ascii == BP && (int)gender.size() > 0){
+=======
+						if(key == BP && (int)gender.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							gender.pop_back();
 							resetInforStudentBox(4, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 520, FORMSPOINTY + 10, tochar(gender));
 						}
+<<<<<<< HEAD
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z')){
+=======
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)gender.size() < 3){
 								formatKey(key);
 								gender += key;
@@ -1776,13 +2007,21 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						}
 						break;
 					case 5: // xu ly nhap cho muc phone
+<<<<<<< HEAD
 						if(ascii == BP && (int)phone.size() > 0){
+=======
+						if(key == BP && (int)phone.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							phone.pop_back();
 							resetInforStudentBox(5, LIGHTBLUE);
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 620, FORMSPOINTY + 10, tochar(phone));
 						}
+<<<<<<< HEAD
 						else if(('0' <= ascii && ascii <= '9')){
+=======
+						else if(('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)phone.size() < 10){
 								formatKey(key);
 								phone += key;
@@ -1799,7 +2038,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						resetText();
 						break;
 					case 7: // xu ly cho muc nhap khoa
+<<<<<<< HEAD
 						if(ascii == BP && (int)year.size() > 0){
+=======
+						if(key == BP && (int)year.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							year.pop_back();
 							
 							setfillstyle(SOLID_FILL, WHITE);
@@ -1811,7 +2054,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 							setcolor(BLACK);
 							outtextxy(TABLSPOINTX + 910, FORMSPOINTY + 10, tochar(year));
 						}
+<<<<<<< HEAD
 						else if(('0' <= ascii && ascii <= '9')){
+=======
+						else if(('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if((int)year.size() < 4){
 								formatKey(key);
 								year += key;
@@ -1822,7 +2069,11 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 						break;
 				}
 			}
+<<<<<<< HEAD
 			else if(ascii == ESC){
+=======
+			else if(key == ESC){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				if(createNotice("Ban chac chan muon thoat!", "")){ // truong hop nhan enter de tiep tuc
 				
 					// ve lai toan bo man hinh cu
@@ -1884,6 +2135,7 @@ void editStudent(listStudent &ls, string id, ptrStudent firstStudentTemp, int &l
 			}
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){
+<<<<<<< HEAD
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 			// click vao nut Update
@@ -2040,12 +2292,40 @@ void updateStudent(listStudent &ls, listClass &lc){
 			if(ascii == ESC){
 				cleardevice();
 				return;
+=======
+			
+		}
+	}
+}                      
+void updateStudent(listStudent &ls){
+	
+	drawUpdateStudent(); // ve giao dien 
+	
+	int run1 = 1, run2 = 1, run3 = 1, finded = 0, lineCurrent = 0;
+	string idStudent;
+	ptrStudent firstStudent = NULL;
+	
+	int x, y; // lay toa do nhan chuot
+	while(run1){
+		if(kbhit()){
+			char key = getch();
+			if(key == ESC){
+				if(!createNotice("Ban chac chan muon thoat!", "")){
+					return;
+				}
+				drawStudentManagement(1);
+				drawUpdateStudent();
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 			}
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){ 
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
+<<<<<<< HEAD
 			if(clickInRange(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){ // NEU CLICK VAO TIM KIEM SINH VIEN
+=======
+			if(clickInScore(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){ // NEU CLICK VAO TIM KIEM SINH VIEN
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				
 				setcolor(LIGHTBLUE);
 				rectangle(BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY); // to hop nhap thanh mau xanh
@@ -2054,6 +2334,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 				idStudent = emptyStr;
 				finded = 0, lineCurrent = 0;
 				firstStudent = NULL;
+<<<<<<< HEAD
 				int on = 1, selected = 2;
 				while(run2){
 					
@@ -2066,6 +2347,13 @@ void updateStudent(listStudent &ls, listClass &lc){
 				            ascii += 255;
 				    	}
 						if(ascii == ET){
+=======
+				char key; int selected = 1;
+				while(run2){
+					if(kbhit()){
+						key = getch();
+						if(key == ET){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							// khong co du lieu lien quan thi thong bao
 							if(!finded){
 								setcolor(LIGHTRED);
@@ -2080,6 +2368,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 							}
 							else{ 
 								if(selected == 1){
+<<<<<<< HEAD
 									insertStudent(ls);
 									// ve lai toan bo giao dien sau khi tra ve
 									
@@ -2213,6 +2502,52 @@ void updateStudent(listStudent &ls, listClass &lc){
 							}
 						}
 						else if(ascii == UP){
+=======
+									editStudent(ls, idStudent, firstStudent, lineCurrent);
+									
+								}
+								else{
+									//deleteStudent(ls, firstStudent, lineCurrent);
+									
+								}
+							}
+						}	
+						else if(key == RIGHT){
+							if(selected == 1 && finded){
+								selected += 1;
+								
+								setbkcolor(LIGHTGRAY);
+								setfillstyle(SOLID_FILL, LIGHTGRAY); // unhighlight muc truoc do
+								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+								
+								setbkcolor(LIGHTBLUE);
+								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight muc dang chon
+								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+								
+								setDefault();
+							} 
+						}
+						else if(key == LEFT){
+							if(selected == 2 && finded){
+								selected -= 1;
+								
+								setbkcolor(LIGHTGRAY);
+								setfillstyle(SOLID_FILL, LIGHTGRAY); // unhighlight muc truoc do
+								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+								
+								setbkcolor(LIGHTBLUE);
+								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight muc dang chon
+								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+								
+								setDefault();
+							}
+						}
+						else if(key == UP){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if(lineCurrent > 1){
 								// dich sang o truoc do
 								ptrStudent prevStudent = findPrevStudent(ls, idStudent, firstStudent->value.id); // tim ra thong tin sinh vien trong lop truoc do co ma la ma con cua idstudent
@@ -2243,7 +2578,11 @@ void updateStudent(listStudent &ls, listClass &lc){
 								}
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == DOWN){
+=======
+						else if(key == DOWN){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							if(lineCurrent < 4 && lineCurrent != 0){
 								ptrStudent nextStudent = findNextStudent(ls, idStudent,  firstStudent->value.id);
 								if(nextStudent != NULL){
@@ -2272,7 +2611,11 @@ void updateStudent(listStudent &ls, listClass &lc){
 								}
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == BP && (int)idStudent.size() > 0){
+=======
+						else if(key == BP && (int)idStudent.size() > 0){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							
 							finded = 0;
 							idStudent.pop_back();
@@ -2284,6 +2627,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 							else lineCurrent = 0;
 							
 							if(finded){
+<<<<<<< HEAD
 								selected = 2;
 								
 								setbkcolor(LIGHTGRAY); // neu tim thay sinh vien thi mac dinh highlight sua thong tin / unhighlight them xoa thong tin.
@@ -2293,16 +2637,26 @@ void updateStudent(listStudent &ls, listClass &lc){
 								
 								setbkcolor(LIGHTBLUE);
 								setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
+=======
+								selected = 1;
+								setbkcolor(LIGHTBLUE); // neu tim thay sinh vien thi hien thi chuc nang xoa sua.
+								setfillstyle(SOLID_FILL, LIGHTBLUE); 
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
 								
 								setbkcolor(LIGHTGRAY);
+<<<<<<< HEAD
 								setfillstyle(SOLID_FILL, LIGHTGRAY); 
+=======
+								setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 								
 								setDefault();
 							}
+<<<<<<< HEAD
 							else{ // neu khong tim thay mac dinh unhighlight them sua xoa thong tin
 								selected = 0;
 								
@@ -2325,6 +2679,24 @@ void updateStudent(listStudent &ls, listClass &lc){
 							}
 						}
 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9')){
+=======
+							else{ // neu khong tim thay thi khong hien thi chuc nang xoa va sua
+								selected = 0;
+								
+								setbkcolor(LIGHTGRAY);
+								setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+								bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+								
+								setfillstyle(SOLID_FILL, LIGHTGRAY); 
+								bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+								outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+								
+								setDefault();
+							}
+						}
+						else if(('a' <= key && key <= 'z') || ('A' <= key && key <= 'Z') || ('0' <= key && key <= '9')){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							// luu tru input, xuat input, timkiem, xuat danh sach
 							if((int)idStudent.size() < 10){
 								finded = 0;
@@ -2337,6 +2709,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 								firstStudent = findStudent(ls, idStudent, finded); // finded nay de kiem tra xem co thong tin lien quan hay khong
 								
 								if(finded){
+<<<<<<< HEAD
 									selected = 2;
 									
 									setbkcolor(LIGHTGRAY); // neu tim thay sinh vien thi mac dinh highlight sua thong tin / unhighlight them xoa thong tin.
@@ -2346,11 +2719,20 @@ void updateStudent(listStudent &ls, listClass &lc){
 									
 									setbkcolor(LIGHTBLUE);
 									setfillstyle(SOLID_FILL, LIGHTBLUE); // highlight sua thong tin
+=======
+									selected = 1;
+									setbkcolor(LIGHTBLUE); // neu tim thay sinh vien thi hien thi chuc nang xoa sua.
+									setfillstyle(SOLID_FILL, LIGHTBLUE); 
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
 									
 									setbkcolor(LIGHTGRAY);
+<<<<<<< HEAD
 									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+=======
+									setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 									
@@ -2360,6 +2742,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 									selected = 0;
 									
 									setbkcolor(LIGHTGRAY);
+<<<<<<< HEAD
 									setfillstyle(SOLID_FILL, LIGHTGRAY);
 									bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
@@ -2374,6 +2757,16 @@ void updateStudent(listStudent &ls, listClass &lc){
 									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 									
+=======
+									setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+									bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+									
+									setfillstyle(SOLID_FILL, LIGHTGRAY); 
+									bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+									outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+									
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 									setDefault();
 								}
 								
@@ -2381,15 +2774,26 @@ void updateStudent(listStudent &ls, listClass &lc){
 								else lineCurrent = 0;
 							}
 						}
+<<<<<<< HEAD
 						else if(ascii == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
 							cleardevice();
 							return;
+=======
+						else if(key == ESC){ // esc gom cac lua chon : thoat chuong trinh (return), quay tro lai (break) de su dung con tro chuot
+							if(!createNotice("Ban chac chan muon thoat", "")){
+								return;
+							}
+							cleardevice();
+							drawStudentManagement(1);
+							drawUpdateStudent();
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							break;
 						}
 					}
 					if(ismouseclick(WM_LBUTTONDOWN)){
 						getmouseclick(WM_LBUTTONDOWN, x, y);
 						clearmouseclick(WM_LBUTTONDOWN);
+<<<<<<< HEAD
 						if(clickInRange(x, y, TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140)){
 							
 						}
@@ -2417,6 +2821,20 @@ void updateStudent(listStudent &ls, listClass &lc){
 							bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
 							outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
 							
+=======
+						if(!clickInScore(x, y, BOXSPOINTX, BOXSPOINTY, BOXLPOINTX, BOXLPOINTY)){ // click ra ngoai muc nhap khi dang nhap
+							selected = 0;
+								
+							setbkcolor(LIGHTGRAY);
+							setfillstyle(SOLID_FILL, LIGHTGRAY); // neu tim kiem duoc thong tin sinh vien thi hien thi chuc nang xoa va sua
+							bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+							outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+							
+							setfillstyle(SOLID_FILL, LIGHTGRAY); 
+							bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+							outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+							
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 							setDefault();
 						
 							resetBox(BLACK);
@@ -2427,18 +2845,30 @@ void updateStudent(listStudent &ls, listClass &lc){
 					}
 				}
 			}
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140)){ // click vao muc them thong tin
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140)){ // click vao muc them thong tin
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				insertStudent(ls);
 				cleardevice();
 				drawStudentManagement(1);
 				drawUpdateStudent();
 			}
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140)){ // click vao muc sua thong tin
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140)){ // click vao muc sua thong tin
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				createBox(LIGHTRED, "Vui long nhap MSSV:");
 				delay(1500);
 				createBox(BLACK, "Vui long nhap MSSV:");
 			}
+<<<<<<< HEAD
 			else if(clickInRange(x, y, TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140)){ // click vao muc xoa thong tin
+=======
+			else if(clickInScore(x, y, TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140)){ // click vao muc xoa thong tin
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				createBox(LIGHTRED, "Vui long nhap MSSV:");
 				delay(1500);
 				createBox(BLACK, "Vui long nhap MSSV:");
@@ -2447,6 +2877,7 @@ void updateStudent(listStudent &ls, listClass &lc){
 	}
 }
 
+<<<<<<< HEAD
 void displayStudentWithClass(listStudent &ls, listClass &lc){   // xem danh sach theo lop 
 	int run1 = 1, run2 = 1, x = 0, y = 0, selected = 0, currentClass = 0, firstStudent = 0;
 	drawDisplayStudentWithClass(lc, currentClass, selected);
@@ -2584,12 +3015,16 @@ void displayStudentWithClass(listStudent &ls, listClass &lc){   // xem danh sach
 }
 
 void studentManagement(listStudent &ls, listClass &lc){
+=======
+void studentManagement(listStudent &ls){
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 	int selected = 1;
 	drawStudentManagement(selected);
 	
 	char key;
 	while(true){
 		key = getch();
+<<<<<<< HEAD
 		
 		int ascii = static_cast<int>(key);
         if (ascii == 0) { 
@@ -2609,6 +3044,17 @@ void studentManagement(listStudent &ls, listClass &lc){
 						displayStudentWithClass(ls, lc);
 						drawStudentManagement(selected);
 						break;		
+=======
+		switch(key){
+			case ET:
+				switch(selected){
+					case 1:
+						updateStudent(ls);
+						return;
+						break;
+//					case 2:
+						
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 				}
 				break;
 			case UP:
@@ -2630,4 +3076,7 @@ void studentManagement(listStudent &ls, listClass &lc){
 }
 
 #endif
+<<<<<<< HEAD
 					
+=======
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65

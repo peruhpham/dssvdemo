@@ -8,6 +8,7 @@
 #include "datastructure.h"
 #include "display.h"
 #include "studentmanagement.h"
+<<<<<<< HEAD
 #include "classforsubjectmanagement.h"
 
 #include "subjectmanagement.h"
@@ -79,6 +80,60 @@ int main(){
 					createMenu(selected);
 				}
 				break; 
+=======
+#include "subjectmanagement.h"
+
+
+using namespace std;
+
+int main(){
+	
+	initwindow(LPOINTX, LPOINTY);
+	
+	// tao tien xu ly, khai bao
+	string nameFileListStudent = "data\\studentlist.txt";
+	string nameFileListClass = "data\\classlist.txt";
+	string nameFileListSubject = "data\\subjectlist.txt";
+	
+	listSubject lsb;
+	listStudent ls;
+	listClass lc;
+	
+	readSubjectList(lsb, nameFileListSubject);
+	readListStudent(ls, nameFileListStudent);
+	readListClass(lc, nameFileListClass);
+	
+//	getch();
+	int selected = 1;
+	createMenu(selected);
+	while(1){
+		char key = getch();
+		switch(key){
+			case ET: 	
+				switch(selected){
+					case 1:
+					
+						break; 
+					case 2:
+						studentManagement(ls);
+						createMenu(selected);	
+						break;
+					case 3:
+						subjectManagement(lsb);
+						createMenu(selected);
+						break;
+					case 4:
+					
+						break; 
+				}
+				break;
+			case UP:
+				if(selected > 1){
+					selected--;
+					createMenu(selected);
+				}
+				break;
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 			case DOWN:
 				if(selected < 4){
 					selected++;
@@ -92,7 +147,10 @@ int main(){
 				}
 				createMenu(selected);
 				break;
+<<<<<<< HEAD
 			
+=======
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 		}
 	}
 }

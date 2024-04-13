@@ -12,6 +12,11 @@ int isSubString(string subtext, string text){ // kiem tra xau con
 	return 1;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 int stringtoint(string s){
 	int temp = 0;
 	for(int i = 1; i <= s.size(); i++){
@@ -32,10 +37,13 @@ char* tochar(string s) {
 void formatKey(char &key){
 	if(islower(key)) key = toupper(key);
 }
+<<<<<<< HEAD
 
 string formatIdClass(int IdClass){
 	string temp = "";
 	temp = string(5 - to_string(IdClass).size(), '0') + to_string(IdClass);
 	return temp;
 }
+=======
+>>>>>>> 0f4fb9906d9cb9a9b6597246252db87374cb5f65
 #endif
