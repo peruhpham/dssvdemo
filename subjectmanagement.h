@@ -4,7 +4,7 @@
 //#include "datastructure.h"
 //#include "datahanding.h"
 //#include "display.h"
-//using namespace std;
+using namespace std;
  
 
 #define MENU_SUB_SX 0
@@ -32,6 +32,8 @@
 #define D_ROW 22
 // #define MAX_MON_HOC 100
 
+
+
 // Khai bao nguyen mau ham
 void subjectManagement(listSubject &lsb);
 void drawTableListSubject ();
@@ -42,7 +44,8 @@ void hightlightLineSubject();
 void drawHeaderAndBottom();
 
 void drawMenuSubject();
-void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem);
+void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem);
+// void drawMenuAndUpdateSelection(listSubject &lsb);
 
 void copyAVLToArray(ptrSubject root, subject arrSubject[], int& index);
 //void displaySubjectListByControl();
@@ -57,17 +60,19 @@ void drawTableControlSubject();// draw bang dieu khien
 void removeTableConsolSubject();// che lai man hinh khu vuc dieu khien va bang du lieu
 void reloadingDataSubject();
 void drawMenuStartSubject();
+void drawScrollBarSubject();
 
+void menuTQ(int selected);
 //=====================================================================================================
 
 
 
 // Tao giao dien moi cDanh sach mon hoc
 void drawTableListSubject (){
-	setcolor(RED);
+	setcolor(LIGHTGRAY);
 	rectangle(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
 
-	setfillstyle(SOLID_FILL, YELLOW);
+	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
 	//----------------------------------------------------------------
 	// new table
@@ -78,33 +83,17 @@ void drawTableListSubject (){
 	//----------------
 	// vẽ thanh cuộn 
 	// setcolor(RED);
-	rectangle(TABLE_LX + 1, TABLE_SY, TABLE_LX - 20, TABLE_LY);
-	setfillstyle(SOLID_FILL, WHITE);
-	bar(TABLE_LX + 1, TABLE_SY, TABLE_LX - 20, TABLE_LY);
+	// rectangle(TABLE_LX + 1, TABLE_SY, TABLE_LX - 20, TABLE_LY);
+
+	// setfillstyle(SOLID_FILL, WHITE);
+	// bar(TABLE_LX + 1, TABLE_SY, TABLE_LX - 20, TABLE_LY);
 	//----------------------------------------------------------------
-
-	int x1 = TABLE_LX + 1, y1 = TABLE_SY + 14;
-	int x2 = TABLE_LX + 1 + 8, y2 = TABLE_SY;
-	int x3 = TABLE_LX + 1 + 16, y3 = TABLE_SY + 14;
-	line(x1, y1, x2, y2);
-	line(x2, y2, x3, y3);
-	line(x3, y3, x1, y1);
-	int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
-	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	fillpoly(4, points1);
-
-	int u1 = TABLE_LX + 1, v1 = TABLE_LY - 14;
-	int u2 = TABLE_LX + 1 + 8, v2 = TABLE_LY;
-	int u3 = TABLE_LX + 1 + 16, v3 = TABLE_LY - 14;
-	line(u1, y1, u2, v2);
-	line(u2, y2, u3, v3);
-	line(u3, y3, u1, v1);
-	int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
-	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	fillpoly(4, points2);
+	drawScrollBarSubject();// ve thanh cuon cho bang subject.
+	
 	
 	//-------
 	setlinestyle(SOLID_LINE, 0, 1);
+	setcolor(LIGHTGRAY);
 	line(TABLE_SX + 50, TABLE_SY, TABLE_SX + 50, TABLE_LY);
 	line(TABLE_SX + 50 + 120, TABLE_SY, TABLE_SX + 50 + 120, TABLE_LY);
 	line(TABLE_SX + 50 + 120 + 340, TABLE_SY, TABLE_SX + 50 + 120 +340, TABLE_LY);
@@ -114,6 +103,7 @@ void drawTableListSubject (){
     bar(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_SY + 40);// Ve hinh chu nhat
 	
 	setlinestyle(SOLID_LINE, 0, 1);
+	setcolor(LIGHTGRAY);
     for (int y = TABLE_SY + 40; y < TABLE_LY; y += D_ROW) {
         line(TABLE_SX, y, TABLE_LX-20, y);
     }
@@ -158,9 +148,6 @@ void displaySubjectList(ptrSubject root) {
 void resetDisplaySubjectList(int &x, int &y){
     x = TABLE_SX + 50;
     y = TABLE_SY + D_ROW/10 -1 + 40;
-
-	// setfillstyle(SOLID_FILL, WHITE);
-	// bar(TABLE_SX, TABLE_SY, TABLE_LX+30, TABLE_LY+1);
 }
 
 // void displaySubjectListByControl(listSubject lsb){
@@ -185,9 +172,6 @@ void hightlightLineSubject(){
 }
 //----------------------------------------------------------------
 void drawHeaderAndBottom(){
-    // setcolor(LIGHTBLUE);
-    // bar(TABLE_SX, 0, TABLE_LX, TABLE_SY);
-    // bar(TABLE_SX, TABLE_LY, TABLE_LX, TABLE_LY + 200);
 	createHeader();
 	createBottom();
 }
@@ -354,8 +338,9 @@ subject* arraySubject(nodeSubject* currentNodeSubject, int &arraySize) {
 	return arraySub;
 }
 
+//In danh sach theo thu tu ten mon hoc.
 void printListSubjectByName(subject *sub, int &x, int &y){
-	for(int i=0; i<11; i++){
+	for(int i=0; i<5; i++){
 		outtextxy(TABLE_SX + 50, y, tochar(sub[i].idSubject));
 		outtextxy(TABLE_SX + 50 + 120, y, tochar(sub[i].nameSubject));
 		outtextxy(TABLE_SX + 50 + 120 + 340, y, tochar(to_string(sub[i].STCLT)));
@@ -426,241 +411,432 @@ void reloadingDataSubject(){
 	listSubject lsub;
 
 	readListSubject(lsub, nameFileListSubject);
-	cout << "\n" << "DA RELOADING THANH CONG DANH SACH SSUBJECT.\n";
+	std::cout << "\n" << "DA RELOADING THANH CONG DANH SACH SSUBJECT.\n";
 }
 
+// Ve thanh cuon cho table subject.
+void drawScrollBarSubject(){
+	int x1 = TABLE_LX - 20, y1 = TABLE_SY + 40 + 14;
+	int x2 = TABLE_LX - 20 + 8, y2 = TABLE_SY + 40;
+	int x3 = TABLE_LX - 20 + 16, y3 = TABLE_SY + 40 + 14;
+	// int x1 = TABLE_LX + 1, y1 = TABLE_SY + 14;
+	// int x2 = TABLE_LX + 1 + 8, y2 = TABLE_SY;
+	// int x3 = TABLE_LX + 1 + 16, y3 = TABLE_SY + 14;
+	line(x1, y1, x2, y2);
+	line(x2, y2, x3, y3);
+	line(x3, y3, x1, y1);
+	int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	fillpoly(4, points1);
+
+	int u1 = TABLE_LX - 20 + 1, v1 = TABLE_LY - 14;
+	int u2 = TABLE_LX - 20 + 1 + 8, v2 = TABLE_LY;
+	int u3 = TABLE_LX - 20 + 1 + 16, v3 = TABLE_LY - 14;
+	line(u1, y1, u2, v2);
+	line(u2, y2, u3, v3);
+	line(u3, y3, u1, v1);
+	int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	fillpoly(4, points2);
+
+	//ve thanh sang theo du lieu
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TABLE_LX - 19, TABLE_SY + 41 + 16, TABLE_LX - 1, TABLE_LY - 1 - 16);
+
+	setDefault();
+}
+
+
+void menuTQ(int selected){
+	char text[50];
+	cleardevice();
+	
+	createHeader();
+	createBottom();
+
+	setbkcolor(WHITE);
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(MENUSPOINTX, MENUSPOINTY, MENUSPOINTX + 300, MENUSPOINTY + 40);
+	outtextxy(10, MENUSPOINTY + 10, "Lop sinh vien");
+	setcolor(LIGHTGRAY);
+	rectangle(MENUSPOINTX, MENUSPOINTY, MENUSPOINTX + 300, MENUSPOINTY + 40);
+	setDefault();
+	
+	setbkcolor(WHITE);
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(MENUSPOINTX, MENUSPOINTY + 40, MENUSPOINTX + 300, MENUSPOINTY + 80);
+	outtextxy(10, MENUSPOINTY + 50, "Lop tin chi");
+	setcolor(LIGHTGRAY);
+	rectangle(MENUSPOINTX, MENUSPOINTY + 40, MENUSPOINTX + 300, MENUSPOINTY + 80); 
+	setDefault();
+
+	setbkcolor(LIGHTBLUE);
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(MENUSPOINTX, MENUSPOINTY + 40 + 40, MENUSPOINTX + 300, MENUSPOINTY + 80 + 40);
+	outtextxy(10, MENUSPOINTY + 50 + 40, "Mon hoc");
+	setcolor(LIGHTGRAY);
+	rectangle(MENUSPOINTX, MENUSPOINTY + 40 + 40, MENUSPOINTX + 300, MENUSPOINTY + 80 + 40); 
+	setDefault();
+
+
+	// bat dau tao menu con 
+	sprintf(text, "%c Danh sach theo ID", 62);
+	setcolor(BLACK);
+	if(selected == 0){
+		setcolor(BLUE);
+		outtextxy(10, MENUSPOINTY + 95 + 40, text);
+	}
+	else{
+		outtextxy(10, MENUSPOINTY + 95 + 40, text);
+	}
+
+	// tao menu 2
+	
+	sprintf(text, "%c Danh sach theo ten", 62);
+	setcolor(BLACK);
+	if(selected == 1){
+		setcolor(BLUE);
+		outtextxy(10, MENUSPOINTY + 135 + 40 , text);
+	}
+	else{
+		outtextxy(10, MENUSPOINTY + 135 + 40 , text);
+	}
+	
+	sprintf(text, "%c Cap nhat danh sach", 62);
+	setcolor(BLACK);
+	if(selected == 2){
+		setcolor(BLUE);
+		outtextxy(10, MENUSPOINTY + 175 + 40 , text);
+	}
+	else{
+		outtextxy(10, MENUSPOINTY + 175 + 40, text);
+	}
+
+	setDefault();
+}
 
 // Phan xu lý/////////////////////////////////////////
 //----------------------------------------------------------------
-
 // Hàm vẽ menu và cập nhật lựa chọn
-void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
+void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
     int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
-    // In ra menu
-    outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
-    outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
-    outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
-    
-	char key;
-    while (true) {
-		if(selectedItem == 0){
-			setcolor(BLUE);
-            outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
+	cout << selectedItem << " draw menu" << endl;
+	if(selectedItem == 0){
+		cout << "selectItem 0" << endl;
+		reloadingDataSubject();
+		drawTableControlSubject();
+		// Xu li enter tai day
+		drawTableListSubject ();
+		//print Danh sach theo tên môn hoc.
+		printSTT(lsb);
+		int arraySize = 0;
+		subject* subjectListArray = arraySubject(lsb.root, arraySize);
+		y = TABLE_SY + 40 + D_ROW/10 -1;
+		drawTableListSubject();
+		printSTT(lsb);
+		for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+			setbkcolor(WHITE);
+			setcolor(LIGHTRED);
+			outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+			y += D_ROW;
 		}
-        if (kbhit()) {
-            key = getch();
-            // Xử lý phím lên
-            if (key == 72) {
-                selectedItem = (selectedItem - 1 + 3) % 3;
-            }
-            // Xử lý phím xuống
-            else if (key == 80) {
-                selectedItem = (selectedItem + 1) % 3;
-            }
-            // In lại menu với lựa chọn mới được tô sáng
-            y = MENU_SUB_SY;
-			setcolor(BLACK);
-            outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
-            outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
-            outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
-			if(selectedItem == 0){
-				setcolor(BLUE);
-            	outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
-			}
-			else if(selectedItem == 1){
-				setcolor(BLUE);
-				outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
-			}
-			else if(selectedItem == 2){
-				setcolor(BLUE);
-				outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
-			}
+		delete[] subjectListArray;
+		drawHeaderAndBottom();
 
-            setcolor(WHITE); // Reset màu về mặc định
-        }
-		
-		if(key == ENTER && selectedItem == 0){
-			// reloadingDataSubject();
-
-			// // xu li nhap
-			// drawTableControlSubject();
-
-
-
-			// // Xu li enter tai day
-			// drawTableListSubject ();
-			// displaySubjectList(lsb.root);
-			// printSTT(lsb);
-			// drawHeaderAndBottom();
-
-			// key = getch();
-			// if(key == ESC){
-			// 	drawHeaderAndBottom();
-			// 	// setcolor(LIGHTGRAY);
-			// 	bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
-
-			// 	removeTableConsolSubject();// XOA HET MAN HINH HIEN THỊ KHU VUC DIEU KHIEN.
-			// 	// resetMenuSubject(selectedItem);
-			// 	break;
-			// }
-			// break; // thoat khoi vòng lap
-			//================================================================
-			reloadingDataSubject();
-
-			drawTableControlSubject();
-			// Xu li enter tai day
-			drawTableListSubject ();
-			//print Danh sach theo tên môn hoc.
-			printSTT(lsb);
-			
-			int arraySize = 0;
-			subject* subjectListArray = arraySubject(lsb.root, arraySize);
-			//---------------------------------
-			cout << "\narray from AVL tree data\n";
-			//test xuat du lieu tren màn hinh consol 
-			for(int i = 0; i < arraySize; i++){
-				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
-
-			}
-			//-----------------------------------
-
-			y = TABLE_SY + 40 + D_ROW/10 -1;
-			drawTableListSubject();
-			printSTT(lsb);
-			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
-				setbkcolor(WHITE);
-				setcolor(GREEN);
-				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
-				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
-				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
-				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
-				y += D_ROW;
-			}
-
-			delete[] subjectListArray;
-			cout << "Danh sach mon hoc theo thu tu ten:" << endl;
-
-			//======================================
-
-			drawHeaderAndBottom();
-
-			key = getch();
-			if(key == ESC){
-				drawHeaderAndBottom();
-
-				removeTableConsolSubject();
-				break;
-			}
-			// getch(); 
-			break; // thoat khoi vòng lap
-		}
-		else if(key == ENTER && selectedItem == 1){
-			reloadingDataSubject();
-
-			drawTableControlSubject();
-			// Xu li enter tai day
-			drawTableListSubject ();
-
-			//print Danh sach theo tên môn hoc.
-			printSTT(lsb);
-			//-===========================
-			int arraySize = 0;
-			subject* subjectListArray = arraySubject(lsb.root, arraySize);
-			//---------------------------------
-			cout << "\narray from AVL tree data\n";
-			//test xuat du lieu tren màn hinh consol 
-			for(int i = 0; i < arraySize; i++){
-				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
-
-			}
-			//-----------------------------------
-
-			// Sap xep theo ten mon hoc
-			for(int i = 0; i < arraySize; i++){ 
-				int indexCurrent = i;
-				while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
-					subject temp = subjectListArray[indexCurrent];
-					subjectListArray[indexCurrent] = subjectListArray[indexCurrent-1];
-					subjectListArray[indexCurrent-1] = temp;
-
-					indexCurrent--;
-				}
-			}
-
-			y = TABLE_SY + 40 + D_ROW/10 -1;
-			drawTableListSubject();
-			printSTT(lsb);
-			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
-				setbkcolor(WHITE);
-				setcolor(GREEN);
-				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
-				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
-				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
-				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
-				y += D_ROW;
-			}
-
-			delete[] subjectListArray;
-			
-			// duyetCayVaLuuThongTin(lsb.root, danhSachTamThoi, currentIndex);
-
-			// Sắp xDanh sách tạm thời theo tên môn học
-			// sapXepChon(danhSachTamThoi, currentIndex, soSanhTheoTenMonHoc);
-
-			// Danh sách môn học theo thứ tự tên môn học
-			cout << "Danh sach mon hoc theo thu tu ten:" << endl;
-			// inDanhSachTheoTenMonHoc(danhSachTamThoi, currentIndex);
-
-			//=================
-
-			drawHeaderAndBottom();
-
-			key = getch();
-			if(key == ESC){
-				drawHeaderAndBottom();
-				
-				// setcolor(LIGHTGRAY);
-				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
-
-				removeTableConsolSubject();
-				// resetMenuSubject(selectedItem);
-				break;
-			}
-			// getch(); 
-			break; // thoat khoi vòng lap
-		}
-		else if(key == ENTER && selectedItem == 2){
-			reloadingDataSubject();
-
-			// Xu li enter tai day
-			drawTableListSubject ();
-			// displaySubjectList(lsb.root);
-
-			drawHeaderAndBottom();
-
-			// getch();
-			key = getch();
-			if(key == ESC){
-				drawHeaderAndBottom();
-				
-				// setcolor(LIGHTGRAY);
-				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
-
-				removeTableConsolSubject();
-				// resetMenuSubject(selectedItem);
-				break;
-			}
-
-			break; // thoat khoi vòng lap/
-		}
-		else if(key == ESC){
-			break;
-
-		}
+		getch();
 	}
 
+	if(selectedItem == 1){
+		cout << "selected 1" << endl;
+		reloadingDataSubject();
 
+		drawTableControlSubject();
+		// Xu li enter tai day
+		drawTableListSubject ();
+		//print Danh sach theo tên môn hoc.
+		printSTT(lsb);
+		//===========================
+		int arraySize = 0;
+		subject* subjectListArray = arraySubject(lsb.root, arraySize);
+		for(int i = 0; i < arraySize; i++){ 
+			int indexCurrent = i;
+			while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
+				subject temp = subjectListArray[indexCurrent];
+				subjectListArray[indexCurrent] = subjectListArray[indexCurrent-1];
+				subjectListArray[indexCurrent-1] = temp;
+
+				indexCurrent--;
+			}
+		}
+
+		y = TABLE_SY + 40 + D_ROW/10 -1;
+		drawTableListSubject();
+		printSTT(lsb);
+		for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+			setbkcolor(WHITE);
+			setcolor(GREEN);
+			outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+			y += D_ROW;
+		}
+
+		delete[] subjectListArray;
+		//=================
+
+		drawHeaderAndBottom();
+
+		getch();
+	}
+
+	if(selectedItem == 2){
+		
+		drawTableControlSubject();
+		// Xu li enter tai day
+		drawTableListSubject ();
+		//print Danh sach theo tên môn hoc.
+		printSTT(lsb);
+		cout << "selectedIrem 2" << endl;
+
+		getch();
+	}
+	
 }
+        
+
+
+
+
+// void drawMenuAndUpdateSelection(listSubject &lsb, int selectedItem) {
+//     int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
+//     // In ra menu
+//     outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
+//     outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
+//     outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
+    
+// 	char key;
+//     while (true) {
+// 		if(selectedItem == 0){
+// 			setcolor(BLUE);
+//             outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
+// 		}
+//         if (kbhit()) {
+//             key = getch();
+//             if (key == 72) {// Xử lý phím lên
+//                 selectedItem = (selectedItem - 1 + 3) % 3;
+//             }
+//             else if (key == 80) {// Xử lý phím xuống
+//                 selectedItem = (selectedItem + 1) % 3;
+//             }
+//             // In lại menu với lựa chọn mới được tô sáng
+//             y = MENU_SUB_SY;
+// 			setcolor(BLACK);
+//             outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
+//             outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
+//             outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
+// 			if(selectedItem == 0){
+// 				setcolor(BLUE);
+//             	outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
+// 			}
+// 			else if(selectedItem == 1){
+// 				setcolor(BLUE);
+// 				outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">> Danh sach mon theo Ten");
+// 			}
+// 			else if(selectedItem == 2){
+// 				setcolor(BLUE);
+// 				outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
+// 			}
+
+//             setcolor(WHITE); // Reset màu về mặc định
+//         }
+		
+// 		if(key == ENTER && selectedItem == 0){
+// 			// reloadingDataSubject();
+
+// 			// // xu li nhap
+// 			// drawTableControlSubject();
+
+
+
+// 			// // Xu li enter tai day
+// 			// drawTableListSubject ();
+// 			// displaySubjectList(lsb.root);
+// 			// printSTT(lsb);
+// 			// drawHeaderAndBottom();
+
+// 			// key = getch();
+// 			// if(key == ESC){
+// 			// 	drawHeaderAndBottom();
+// 			// 	// setcolor(LIGHTGRAY);
+// 			// 	bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+
+// 			// 	removeTableConsolSubject();// XOA HET MAN HINH HIEN THỊ KHU VUC DIEU KHIEN.
+// 			// 	// resetMenuSubject(selectedItem);
+// 			// 	break;
+// 			// }
+// 			// break; // thoat khoi vòng lap
+// 			//================================================================
+// 			reloadingDataSubject();
+
+// 			drawTableControlSubject();
+// 			// Xu li enter tai day
+// 			drawTableListSubject ();
+// 			//print Danh sach theo tên môn hoc.
+// 			printSTT(lsb);
+			
+// 			int arraySize = 0;
+// 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
+// 			//---------------------------------
+// 			cout << "\narray from AVL tree data\n";
+// 			//test xuat du lieu tren màn hinh consol 
+// 			for(int i = 0; i < arraySize; i++){
+// 				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
+
+// 			}
+// 			//-----------------------------------
+
+// 			y = TABLE_SY + 40 + D_ROW/10 -1;
+// 			drawTableListSubject();
+// 			printSTT(lsb);
+// 			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+// 				setbkcolor(WHITE);
+// 				setcolor(GREEN);
+// 				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+// 				y += D_ROW;
+// 			}
+
+// 			delete[] subjectListArray;
+// 			cout << "Danh sach mon hoc theo thu tu ten:" << endl;
+
+// 			//======================================
+
+// 			drawHeaderAndBottom();
+
+// 			key = getch();
+// 			if(key == ESC){
+// 				drawHeaderAndBottom();
+
+// 				removeTableConsolSubject();
+// 				break;
+// 			}
+// 			// getch(); 
+// 			break; // thoat khoi vòng lap
+// 		}
+// 		else if(key == ENTER && selectedItem == 1){
+// 			reloadingDataSubject();
+
+// 			drawTableControlSubject();
+// 			// Xu li enter tai day
+// 			drawTableListSubject ();
+
+// 			//print Danh sach theo tên môn hoc.
+// 			printSTT(lsb);
+// 			//-===========================
+// 			int arraySize = 0;
+// 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
+// 			//---------------------------------
+// 			cout << "\narray from AVL tree data\n";
+// 			//test xuat du lieu tren màn hinh consol 
+// 			for(int i = 0; i < arraySize; i++){
+// 				cout << subjectListArray[i].idSubject << " " << subjectListArray[i].nameSubject << " " << subjectListArray[i].STCLT << " " << subjectListArray[i].STCTH << endl;
+
+// 			}
+// 			//-----------------------------------
+
+// 			// Sap xep theo ten mon hoc
+// 			for(int i = 0; i < arraySize; i++){ 
+// 				int indexCurrent = i;
+// 				while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
+// 					subject temp = subjectListArray[indexCurrent];
+// 					subjectListArray[indexCurrent] = subjectListArray[indexCurrent-1];
+// 					subjectListArray[indexCurrent-1] = temp;
+
+// 					indexCurrent--;
+// 				}
+// 			}
+
+// 			y = TABLE_SY + 40 + D_ROW/10 -1;
+// 			drawTableListSubject();
+// 			printSTT(lsb);
+// 			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+// 				setbkcolor(WHITE);
+// 				setcolor(GREEN);
+// 				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
+// 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+// 				y += D_ROW;
+// 			}
+
+// 			delete[] subjectListArray;
+			
+// 			// duyetCayVaLuuThongTin(lsb.root, danhSachTamThoi, currentIndex);
+
+// 			// Sắp xDanh sách tạm thời theo tên môn học
+// 			// sapXepChon(danhSachTamThoi, currentIndex, soSanhTheoTenMonHoc);
+
+// 			// Danh sách môn học theo thứ tự tên môn học
+// 			cout << "Danh sach mon hoc theo thu tu ten:" << endl;
+// 			// inDanhSachTheoTenMonHoc(danhSachTamThoi, currentIndex);
+
+// 			//=================
+
+// 			drawHeaderAndBottom();
+
+// 			key = getch();
+// 			if(key == ESC){
+// 				drawHeaderAndBottom();
+				
+// 				// setcolor(LIGHTGRAY);
+// 				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+
+// 				removeTableConsolSubject();
+// 				// resetMenuSubject(selectedItem);
+// 				break;
+// 			}
+// 			// getch(); 
+// 			break; // thoat khoi vòng lap
+// 		}
+// 		else if(key == ENTER && selectedItem == 2){
+// 			reloadingDataSubject();
+
+// 			// Xu li enter tai day
+// 			drawTableListSubject ();
+// 			// displaySubjectList(lsb.root);
+
+// 			drawHeaderAndBottom();
+
+// 			// getch();
+// 			key = getch();
+// 			if(key == ESC){
+// 				drawHeaderAndBottom();
+				
+// 				// setcolor(LIGHTGRAY);
+// 				// bar(TABLE_SX, TABLE_SY, TABLE_LX + 30, TABLE_LY + 1);
+
+// 				removeTableConsolSubject();
+// 				// resetMenuSubject(selectedItem);
+// 				break;
+// 			}
+
+// 			break; // thoat khoi vòng lap/
+// 		}
+// 		else if(key == ESC){
+// 			return;
+// 			break;
+
+// 		}
+// 	}
+
+
+// }
 
 // Ve menu cac lenh dieu khien cua mon hoc.
 void drawMenuStartSubject(){
@@ -675,10 +851,13 @@ void drawMenuStartSubject(){
 	setDefault();
 }
 //----------------------------------------------------------------
-void subjectManagement(listSubject &lsb, int selected){	
-	drawMenuStartSubject();
+
+void subjectManagement1(listSubject &lsb){	
+	int selected = 0;
+	// drawMenuStartSubject();
+	menuTQ(selected);
 	
-	char key = ENTER;
+	char key = ESC;
 	int ascii;
 	while(true){
 		if(kbhit()){
@@ -689,31 +868,101 @@ void subjectManagement(listSubject &lsb, int selected){
 				ascii = static_cast<int>(key);
 				ascii += 255;
 			}
-			int selectedItem = 0; // Lựa chọn hiện tại của menu
+
+			//int selectedItem = 0; // Lựa chọn hiện tại của menu
+
 			switch(ascii){
 				case ENTER:
+					cout << "3 case subject mana" << selected << endl;
 					/* code */
-					// resetDisplaySubjectList(x, y);
-					drawMenuSubject();
-					//----------------------------------------------------------------
-					drawMenuAndUpdateSelection(lsb, selectedItem);
-					//----------------------------------------------------------------
-				break;
+					switch(selected){
+						case 0: 
+							cout << "case 1 subject mana" << endl;
+							// xu ly hien giao dien danh sach theo id tai day
+							drawMenuAndUpdateSelection(lsb, selected);
+							menuTQ(selected);
+							break;
+						case 1: 
+							cout << "case 2 subject manager" << endl;
+							// xu ly hien giao dien danh sach theo ten mon hoc tai day
+							drawMenuAndUpdateSelection(lsb, selected);
 
+							menuTQ(selected);
+							break;
+						case 2: 
+							cout << "case 3 subject manager" << endl;
+							// xu ly hien giao dien cap nhat
+							drawMenuAndUpdateSelection(lsb, selected);
+
+							menuTQ(selected);
+							break;
+					}
+					break;
+				case UP:
+					if(selected >= 0){
+						selected = (selected - 1 + 3)%3;
+						menuTQ(selected);
+					}
+					break;
+				case DOWN:
+					if(selected <= 2){
+						selected = (selected + 1)%3 ;
+						menuTQ(selected);
+					}
+					break;
 				case ESC:
-					createMenu(selected);
+					return;
 
-					setfillstyle(SOLID_FILL, RED);
-					bar(TABLE_SX, TABLE_SY, TABLE_LX+30, TABLE_LY+10);
-				break;
+				cout << "4\n";
+				//----------------------------------------------------------------
 			}
 		}
-		else if(ascii == ESC)
-			break;
 	}
-    // getch();
-    setDefault();
 }
+// void subjectManagement(listSubject &lsb, int selected){	
+// 	drawMenuStartSubject();
+	
+// 	char key = ESC;
+// 	int ascii;
+// 	while(true){
+// 		if(kbhit()){
+// 			key = getch();
+// 			ascii = static_cast<int>(key);
+// 			if(ascii == 0){
+// 				key = getch();
+// 				ascii = static_cast<int>(key);
+// 				ascii += 255;
+// 			}
+
+// 			int selectedItem = 0; // Lựa chọn hiện tại của menu
+
+// 			switch(ascii){
+// 				case ENTER:
+// 					cout << "3\n";
+// 					/* code */
+// 					// resetDisplaySubjectList(x, y);
+// 					drawMenuSubject();
+// 					//----------------------------------------------------------------
+// 					drawMenuAndUpdateSelection(lsb, selectedItem);
+// 					cout << "4\n";
+// 					//----------------------------------------------------------------
+// 				break;
+
+// 				case ESC:
+// 					return;
+// 					createMenu(selected);
+
+// 					// setfillstyle(SOLID_FILL, RED);
+// 					// bar(TABLE_SX, TABLE_SY, TABLE_LX +30, TABLE_LY+10);
+// 				break;
+// 			}
+// 		}
+// 		else if(ascii == ESC)
+// 			break;
+// 	}
+//     // getch();
+//     setDefault();
+// }
 
 #endif 
 

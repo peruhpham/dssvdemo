@@ -2,28 +2,29 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
+#include <iostream>
 #include <bits/stdc++.h>
 #include <string>
 #include "datahanding.h"
-#include "datastructure.h"
+#include "datastructure.h"  
 #include "display.h"
 #include "studentmanagement.h"
 #include "classforsubjectmanagement.h"
 
-#include "subjectmanagement.h"
+#include "subjectmanagement.h" 
 
      
-using namespace std;           
+using namespace std;                      
  
 int main(){   
 	
-	initwindow(LPOINTX, LPOINTY);
+	initwindow(LPOINTX, LPOINTY); 
 	
 	// tao tien xu ly, khai bao 
 	string nameFileListStudent = "data\\studentlist.txt";
 	string nameFileListClass = "data\\classlist.txt";
 	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
-	string nameFileListSubject = "data\\subjectlist.txt";
+	string nameFileListSubject = "data\\subjectlist.txt";      
 	  
 	listStudent ls; 
 	listClass lc; 
@@ -62,11 +63,13 @@ int main(){
 						break;
 					case 3:
 						//
-//						displaySubjectListByControl(lsj); 
+						subjectManagement1(lsj);
 						// 
-						subjectManagement(lsj, selected); // quan li 
+						cout << "1 main\n"; 
+//						subjectManagement(lsj, selected); // quan li                       
 						
-						resetDisplaySubjectList(x, y);
+						// resetDisplaySubjectList(x, y);
+						cout << "2 main\n";
 						createMenu(selected);
 						break;						
 					case 4:
