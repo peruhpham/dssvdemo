@@ -40,6 +40,7 @@ void outtextwithline(int lineCurrent, subject s, int COLOR){
 	setDefault();
 }
 
+
 void outtextwithline2(int lineCurrent, int academicYear, int COLOR){
 	string text = to_string(academicYear);
 	setcolor(COLOR);

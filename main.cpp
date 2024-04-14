@@ -3,68 +3,80 @@
 #include <conio.h>
 #include <stdio.h>
 #include <bits/stdc++.h>
-#include <string>
+#include <iostream>
+#include <string> 
 #include "datahanding.h"
-#include "datastructure.h"
+#include "datastructure.h"    
 #include "display.h"
 #include "studentmanagement.h"
 #include "classforsubjectmanagement.h"
-
-
+#include "studentgrademanagement.h"
+#include "subjectmanagement.h"
+                     
 using namespace std; 
 
-int main(){  
-	      
-	initwindow(LPOINTX, LPOINTY);
+int main(){   
+	       
+	initwindow(LPOINTX, LPOINTY);   
 	
 	// tao tien xu ly, khai bao 
 	string nameFileListStudent = "data\\studentlist.txt";
-	string nameFileListClass = "data\\classlist.txt";        
-	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
-	string nameFileListSubject = "data\\subjectlist.txt";
+	string nameFileListClass = "data\\classlist.txt";                 
+	string nameFileListClassForSubject = "data\\classforsubjectlist.txt"; 
+	string nameFileListSubject = "data\\subjectlist.txt";   
 	   
 	listStudent ls;
-	listClass lc;
+	listClass lc;   
 	listClassForSubject lcfs; 
 	listSubject lsj;
 	
 	readListStudent(ls, nameFileListStudent);  
-	readListClass(lc, nameFileListClass);
-	readListClassForSubject(lcfs, nameFileListClassForSubject);  
-	readListSubject(lsj, nameFileListSubject);
+	readListClass(lc, nameFileListClass);        
+	readListClassForSubject(lcfs, nameFileListClassForSubject);   
+	readListSubject(lsj, nameFileListSubject);   
 
- 	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day
-//  getch();
+ 	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day 
+//  getch(); 
 	int selected = 1;
-	createMenu(selected);  
+	createMenu(selected);    
 
-	while(1){  
+	while(1){   
 		char key = getch();            
 		       
-		int ascii = static_cast<int>(key);    
-        if (ascii == 0) { 
-            key = getch();     
+		int ascii = static_cast<int>(key);     
+        if (ascii == 0) {     
+            key = getch();      
             ascii = static_cast<int>(key); 
-            ascii += 255; 
+            ascii += 255;     
     	}       
-       
-		switch(ascii){  
+           
+		switch(ascii){    
 			case ET:    	          
-				switch(selected){
-					case 1:   
-						studentManagement(ls, lc);  
+				switch(selected){ 
+					case 1:     
+						studentManagement(ls, lc);     
 						createMenu(selected);	          
-						break;   
-					case 2:
-						classForSubjectManagement(lcfs, lsj, ls ); // quan li lop theo mon hoc (lop tin chi)  
+						break;                    
+					case 2:     
+						classForSubjectManagement(lcfs, lsj, ls ); // quan li lop theo mon hoc (lop tin chi)      
 						createMenu(selected);          
-						break;              
-//					case 3:  
+						break; 
+					case 3:
+						subjectManagement1(lsj);
+						cout << "1 main\n";                        
+						// resetDisplaySubjectList(x, y);
+						cout << "2 main\n";
+						createMenu(selected);
+						break;             
+					case 4:       
+						studentGradeManagement(lcfs, lsj, ls); 
+						createMenu(selected);   
+						break;  
 //					case 4:           
-				}  
+				}       
 				break;
-			case UP:   
-				if(selected > 1){           
+			case UP:       
+				if(selected > 1){             
 					selected--; 
 					createMenu(selected);
 				}

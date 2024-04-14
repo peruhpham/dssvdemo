@@ -4,8 +4,8 @@ ELE1319#Ly thuyet thong tin#3#1
 INT1314#Kien truc may tinh#3#1
 INT1359#Toan roi rac 2#3#0
 INT1306#Cau truc DL va GT#3#2
-SKD1102#Ky nang lam viec nhom#1#1
+SKD1102#Ky nang thuyet trinh#1#1
 BAS1159#Tieng anh (C3)#4#0
 BAS1204#Giai tich 2#3#0
-BAS1224#Vat li 1 va thi nghiem#4#1
+BAS1224#Vat li va thi nghiem#4#1
 ELE1433#Ky thuat so#3#1

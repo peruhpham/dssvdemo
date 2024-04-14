@@ -200,6 +200,8 @@ ptrStudent findPtrStudent(listStudent &ls, string id){
 	return NULL;
 }
 
+
+
 // danh sach lop hoc 
 //_______________________________________________________________________________________
 
@@ -268,7 +270,6 @@ struct nodeRegister{
 };
 
 typedef nodeRegister *ptrRegister;
-
 
 struct listRegister{
      int size;
@@ -369,7 +370,8 @@ struct listClassForSubject{
 int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	if(lcfs.size == MAXCLASS) return -1; // danh sach day 
 	
-	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+	// kiem tra da ton tai hay chua
+	for(int i = 0; i < lcfs.size; i++){ 
 		if(lcfs.list[i]->idSubject == data->idSubject && lcfs.list[i]->academicYear == data->academicYear && 
 		   lcfs.list[i]->semester == data->semester && lcfs.list[i]->group == data->group){
 			return 0; // danh sach da co thong tin;
@@ -455,6 +457,18 @@ void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClass
     }
     f.close();
 }
+
+ptrClassForSubject findClassForSubject(listClassForSubject &lcfs, string idSubject, int academic, int semes, int group){
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idSubject == idSubject && lcfs.list[i]->academicYear ==academic && 
+		    lcfs.list[i]->semester == semes && lcfs.list[i]->group == group){
+			return lcfs.list[i]; // danh sach da co thong tin
+		}
+	}
+	return NULL;
+}
+
+
 
 int existStudentHaveGrade(ptrListRegister &lr){
 	ptrRegister p = lr->head;
@@ -647,6 +661,13 @@ string findNameSubject(string idSubject, ptrSubject root) {
 	return root->data.nameSubject;
 }
 
+ptrSubject findSubject(string idSubject, ptrSubject root){
+	if (root == NULL) return NULL;
+	if(idSubject > root->data.idSubject) return findSubject(idSubject, root->right);
+	if(idSubject < root->data.idSubject) return findSubject(idSubject, root->left);
+	return root;
+}
+
 void readListYear(int *academicYear, int &sizeYear){
 	string nameFileListYear = "data\\yearlist.txt";
 	ifstream f(nameFileListYear);
@@ -674,12 +695,11 @@ void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
 			// moi cur la mot ptrStudent
 			
 			r.idStudent = currentStudent->value.id;
-			r.scores = 0;
+			r.scores = 11;
 			r.unSub = 0;
 		
 			insertRegister(lcfs.list[i]->lr, r);
 			
-			cout << 1 << endl;
 			currentStudent = currentStudent->next;
 		}
 		currentStudent = ls.head;
