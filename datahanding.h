@@ -38,6 +38,7 @@ string formatIdClass(int IdClass){
 	temp = string(5 - to_string(IdClass).size(), '0') + to_string(IdClass);
 	return temp;
 }
+<<<<<<< HEAD
 
 string toLowerCase(string text){
 	for(char &x : text){
@@ -47,4 +48,6 @@ string toLowerCase(string text){
 }
 
 
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 #endif

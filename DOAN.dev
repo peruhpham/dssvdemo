@@ -111,7 +111,11 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
+<<<<<<< HEAD
 FileName=studentgrademanagement.h
+=======
+FileName=subjectmanagement.h
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 CompileCpp=1
 Folder=
 Compile=1

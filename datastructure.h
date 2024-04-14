@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+
+
+//-------------------------------------------------------------------------------------------------------------------
+
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 #ifndef DATASTRUCTURE_H
 #define DATASTRUCTURE_H
 
@@ -188,6 +195,7 @@ void displayStudentList(listStudent ls){
 }
 
 
+<<<<<<< HEAD
 ptrStudent findPtrStudent(listStudent &ls, string id){
 	ptrStudent cur = ls.head;
 	
@@ -202,6 +210,8 @@ ptrStudent findPtrStudent(listStudent &ls, string id){
 
 
 
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 // danh sach lop hoc 
 //_______________________________________________________________________________________
 
@@ -271,6 +281,10 @@ struct nodeRegister{
 
 typedef nodeRegister *ptrRegister;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 struct listRegister{
      int size;
      ptrRegister head;
@@ -282,6 +296,7 @@ struct listRegister{
 
 typedef listRegister *ptrListRegister;
 
+<<<<<<< HEAD
 void insertRegister(ptrListRegister &lr, Register data){
 	ptrRegister newnode = new nodeRegister(data);
     ptrRegister cur = lr->head;
@@ -289,21 +304,35 @@ void insertRegister(ptrListRegister &lr, Register data){
     if(cur == NULL){ // truong hop rong
     	lr->head = newnode;
     	lr->size += 1;
+=======
+void insertRegister(listRegister &lr, Register data){
+	ptrRegister newnode = new nodeRegister(data);
+    ptrRegister cur = lr.head;
+    
+    if(cur == NULL){ // truong hop rong
+    	lr.head = newnode;
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
     	return;
 	}
 	
 	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
 	
 	if(cur->data.idStudent > data.idStudent){
+<<<<<<< HEAD
 		newnode->next = lr->head;
 		lr->head = newnode;
 		lr->size += 1;
+=======
+		newnode->next = lr.head;
+		lr.head = newnode;
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 		return;
 	}
 	
 	if(cur->data.idStudent < data.idStudent){
 		newnode->next = cur->next;
 		cur->next = newnode;
+<<<<<<< HEAD
 		lr->size += 1;
 		return;
 	}
@@ -332,6 +361,13 @@ void insertRegister(ptrListRegister &lr, Register data){
 //		
 //	}
 //}
+=======
+		return;
+	}
+	return;
+}
+
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 
 // danh sach lop theo mon hoc (lop tin chi)
 //_______________________________________________________________________________________
@@ -341,7 +377,11 @@ void insertRegister(ptrListRegister &lr, Register data){
 struct classForSubject{
 	int idclass;// tu dong tang 
 	string idSubject;
+<<<<<<< HEAD
 	int academicYear;//Ni�n Khoa 
+=======
+	int academicYear;//Ni�n Khoa 
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	int semester;//Hoc ky 
 	int group;
 	int studentMin;
@@ -350,7 +390,10 @@ struct classForSubject{
 	ptrListRegister lr;
 	classForSubject(){
 		this->lr = new listRegister;
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 		this->idclass = 0; this->idSubject = emptyStr;
 		this->group = this->academicYear = this->semester = this->studentMax = this->studentMin = 0;
 		this->unClass = true;
@@ -370,8 +413,12 @@ struct listClassForSubject{
 int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	if(lcfs.size == MAXCLASS) return -1; // danh sach day 
 	
+<<<<<<< HEAD
 	// kiem tra da ton tai hay chua
 	for(int i = 0; i < lcfs.size; i++){ 
+=======
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 		if(lcfs.list[i]->idSubject == data->idSubject && lcfs.list[i]->academicYear == data->academicYear && 
 		   lcfs.list[i]->semester == data->semester && lcfs.list[i]->group == data->group){
 			return 0; // danh sach da co thong tin;
@@ -379,11 +426,17 @@ int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	}
 	
 	data->idclass = getAutoIdClass();
+<<<<<<< HEAD
 	data->unClass = false;
 	data->lr = new listRegister;
 	
 	lcfs.list[lcfs.size] = new classForSubject;
 
+=======
+	data->unClass = true;
+	
+	lcfs.list[lcfs.size] = new classForSubject;
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	*lcfs.list[lcfs.size] = *data;	
 	lcfs.size += 1;
 
@@ -458,6 +511,7 @@ void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClass
     f.close();
 }
 
+<<<<<<< HEAD
 ptrClassForSubject findClassForSubject(listClassForSubject &lcfs, string idSubject, int academic, int semes, int group){
 	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
 		if(lcfs.list[i]->idSubject == idSubject && lcfs.list[i]->academicYear ==academic && 
@@ -486,6 +540,8 @@ int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
 	if(lcfs.list[currentClass]->lr->head != NULL) return 1;
 	return 0;
 }
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 
 // danh sach mon hoc 
 //_______________________________________________________________________________________
@@ -624,10 +680,27 @@ ptrSubject insert(ptrSubject nodeSub, subject key) {
 
     return nodeSub;
 }
+<<<<<<< HEAD
 
 
 void readListSubject(listSubject &lsb, string nameFileSubjectList) {
 	ptrSubject root = lsb.root;
+=======
+//-----------------------------------------------------------------------------
+// Hàm chuyển dữ liệu từ cây AVL sang mảng
+void copyAVLToArray(ptrSubject root, subject arr[], int& index) {
+    if (root == nullptr)
+        return;
+    copyAVLToArray(root->left, arr, index);
+    arr[index++] = root->data;
+    copyAVLToArray(root->right, arr, index);
+}
+//------------------------------------------------------------------------------
+
+void readListSubject(listSubject &lsb, string nameFileSubjectList) {
+	ptrSubject root = lsb.root;
+	// int sizeSubject = lsb.size;// dem so luong mon hoc
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	
     ifstream f(nameFileSubjectList);
     if (!f.is_open()) {
@@ -647,6 +720,12 @@ void readListSubject(listSubject &lsb, string nameFileSubjectList) {
 		ss >> s.STCTH; ss.ignore();
 
         root = insert(root, s);
+<<<<<<< HEAD
+=======
+
+		// dem so luong mon hoc
+		lsb.size++;
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
     }
     
     lsb.root = root;
@@ -654,6 +733,11 @@ void readListSubject(listSubject &lsb, string nameFileSubjectList) {
     f.close();
 }
 
+<<<<<<< HEAD
+=======
+//---------------------------------------------------------------------------
+
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 string findNameSubject(string idSubject, ptrSubject root) {
     if (root == NULL) return emptyStr;
 	if(idSubject > root->data.idSubject) return findNameSubject(idSubject, root->right);
@@ -661,6 +745,7 @@ string findNameSubject(string idSubject, ptrSubject root) {
 	return root->data.nameSubject;
 }
 
+<<<<<<< HEAD
 ptrSubject findSubject(string idSubject, ptrSubject root){
 	if (root == NULL) return NULL;
 	if(idSubject > root->data.idSubject) return findSubject(idSubject, root->right);
@@ -668,6 +753,8 @@ ptrSubject findSubject(string idSubject, ptrSubject root){
 	return root;
 }
 
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 void readListYear(int *academicYear, int &sizeYear){
 	string nameFileListYear = "data\\yearlist.txt";
 	ifstream f(nameFileListYear);
@@ -685,6 +772,7 @@ void readListYear(int *academicYear, int &sizeYear){
     
     f.close();
 }
+<<<<<<< HEAD
 
 void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
 	ptrStudent currentStudent = ls.head;
@@ -706,4 +794,6 @@ void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
 		
 	}
 }
+=======
+>>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 #endif
