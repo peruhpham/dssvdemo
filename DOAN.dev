@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=00000001g0000000001000000
-UnitCount=7
+UnitCount=8
 
 [VersionInfo]
 Major=1
@@ -111,11 +111,17 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-<<<<<<< HEAD
-FileName=studentgrademanagement.h
-=======
 FileName=subjectmanagement.h
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=studentgrademanagement.h
 CompileCpp=1
 Folder=
 Compile=1

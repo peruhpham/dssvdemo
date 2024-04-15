@@ -40,10 +40,7 @@ void outtextwithline(int lineCurrent, subject s, int COLOR){
 	setDefault();
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 void outtextwithline2(int lineCurrent, int academicYear, int COLOR){
 	string text = to_string(academicYear);
 	setcolor(COLOR);
@@ -198,7 +195,6 @@ void findListSemester(int *semester, int sizeSemester){
 	}
 }
 
-<<<<<<< HEAD
 void getListOpeningClass(ptrClassForSubject ListOpeningClass[], listClassForSubject &lcfs, int &sizeList, int idClass, int academic, int semester){
 	for(int i = 0; i < sizeList; i++){
 		ListOpeningClass[i] = NULL;
@@ -234,25 +230,6 @@ void getListCancelClass(ptrClassForSubject listCancelClass[], listClassForSubjec
 		}
 	}
 }
-=======
-int existStudentHaveGrade(ptrListRegister &lr){
-	ptrRegister p = lr->head;
-	if(p == NULL) return 0;
-	while(p != NULL){
-		if(p->data.scores != 0){
-			return 1;
-		}
-		p = p->next;
-	}
-	return 0;
-}
-
-int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
-	if(lcfs.list[currentClass]->lr->head != NULL) return 1;
-	return 0;
-}
-
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 int openClass(listClassForSubject &lcfs, listSubject &lsj, int *academicYear, int &sizeYear, int *semester){
 	
 	drawOpenClass();
@@ -906,7 +883,6 @@ int openClass(listClassForSubject &lcfs, listSubject &lsj, int *academicYear, in
 
 void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, int sizeYear, int *semester, int currentClass){
 	
-<<<<<<< HEAD
 	drawEditClass();
 	
 	// khai bao 
@@ -917,24 +893,13 @@ void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, i
 //	int academicYear = lcfs.list[currentClass]->academicYear;
 	int semesterTemp = lcfs.list[currentClass]->semester;
 	
-=======
-	cout << 1 << endl;
-	drawEditClass();
-	
-	// khai bao 
-	
-	int run1 = 1, on = 0, ascii = 0, selected = 0, lineCurrent, cntline, yearCurrent, status, edit, x, y;
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	string group = to_string(lcfs.list[currentClass]->group); 
 	string minStudent = to_string(lcfs.list[currentClass]->studentMin); 
 	string maxStudent = to_string(lcfs.list[currentClass]->studentMax);
 	
 	ptrClassForSubject cfs = new classForSubject;
 	*cfs = *lcfs.list[currentClass];
-<<<<<<< HEAD
 	ptrSubject firstSubject = NULL;
-=======
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	
 	char key;
 	
@@ -984,7 +949,6 @@ void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, i
 			clearmouseclick(WM_LBUTTONDOWN);
 			
 			switch(selected){
-<<<<<<< HEAD
 				case 1:  // click vao ma mon - ten mon 
 					lineCurrent = 1; cntline = 1;
 					firstSubject = NULL; // luu mon hoc hien tai trong danh sach duoc in dam tren man hinh
@@ -1226,9 +1190,6 @@ void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, i
 						}
 					}
 					break;
-=======
-				
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 				case 3: // click vao muc so sv toi thieu 
 					
 					setcolor(BLUE);
@@ -1304,7 +1265,6 @@ void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, i
 					
 					break;
 				
-<<<<<<< HEAD
 				case 4: // click vao muc hoc ky
 					lineCurrent = 1; //
 
@@ -1394,8 +1354,6 @@ void editClass(listClassForSubject &lcfs, listSubject &lsj, int* academicYear, i
 					}
 					break;
 					
-=======
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 					
 				case 5: 
 				
@@ -1634,7 +1592,6 @@ void deleteClass(listClassForSubject &lcfs, int currentClass){
 	}
 }
 
-<<<<<<< HEAD
 void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 
 	ptrClassForSubject listCancelClass[MAXCLASS]; // mang chua danh sach cac lop co kha nang huy (sinh vien dang ky < sinh vien toi thieu)
@@ -2211,8 +2168,6 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 		}
 	}
 }
-=======
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 	
 	drawOpenClassForSubject();
@@ -2227,11 +2182,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 	} 
 	
 	int currentClass = 0, row = 0;
-<<<<<<< HEAD
 	char key; string idClass = emptyStr, text = emptyStr;
-=======
-	char key; string idClass = emptyStr;
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	int ascii, selected = 1, mouseSelected = 0, finded = 0, x, y, on = 0, off = 1; // off de kiem tra : neu tat ca cac muc deu tat thi off = 1
 	drawListClassForSubject(lcfs, lsj, currentClass, row); // in ra thong tin cac lop tin chi, to dam muc duoc chon
 
@@ -2269,21 +2220,13 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 								idClass = emptyStr;
 								finded = 0; currentClass = 0; row = 0; selected = 1;
 								
-<<<<<<< HEAD
 								drawClassForSubjectManagement(1);
-=======
-								drawClassForSubjectManagement(2);
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 								drawOpenClassForSubject();
 								drawListClassForSubject(lcfs, lsj, currentClass, row);
 								highlightOpenClass(selected, LIGHTBLUE);
 								break;
 							case 2: // chuc nang sua lop
-<<<<<<< HEAD
 								if(lcfs.size != 0 && !existStudentRegisting(lcfs, currentClass)){ // lr : listRegister; ton tai sinh vien co diem
-=======
-								if(lcfs.size != 0 && !existStudentHaveGrade(lcfs.list[currentClass]->lr)){ // lr : listRegister; ton tai sinh vien co diem
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	
 									editClass(lcfs, lsj, academicYear, sizeYear, semester, currentClass);
 								
@@ -2296,18 +2239,13 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									idClass = emptyStr;
 									selected = 2; finded = 0;
 									
-<<<<<<< HEAD
 									drawClassForSubjectManagement(1);
-=======
-									drawClassForSubjectManagement(2);
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 									drawOpenClassForSubject();
 									drawListClassForSubject(lcfs, lsj, currentClass, row);
 									highlightOpenClass(selected, LIGHTBLUE);
 								}
 								
 								else{
-<<<<<<< HEAD
 									text = "Sinh vien da co diem, Khong the sua!"; 
 									setbkcolor(WHITE);
 									setcolor(LIGHTRED);
@@ -2326,19 +2264,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									
 									setfillstyle(SOLID_FILL, WHITE);
 									bar(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // 
-=======
-									/// tao thong bao o day 
-								}
-								
-								break;
-							case 3: 
-							
-								if(lcfs.size != 0 && !existStudentRegisting(lcfs, currentClass)){ // lop hien tai khong co sinh vien dang ky
-									deleteClass(lcfs, currentClass);
-									
-//									setfillstyle(SOLID_FILL, WHITE);
-//									bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 5); // 
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 									
 									setcolor(BLACK);
 									rectangle(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // to hop nhap thanh mau den
@@ -2371,7 +2296,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									}
 								}
 								else{
-<<<<<<< HEAD
 									text = "Sinh vien da co diem, Khong the xoa!"; 
 									setbkcolor(WHITE);
 									setcolor(LIGHTRED);
@@ -2391,12 +2315,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									highlightOpenClass(selected, LIGHTBLUE);
 									setDefault();
 								}
-=======
-									// tao thong bao o day
-								}
-								break;
-							case 4:
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 								break;
 						}
 					}
@@ -2476,17 +2394,12 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 				idClass = emptyStr;
 				finded = 0; currentClass = 0; row = 0; selected = 1;
 				
-<<<<<<< HEAD
 				drawClassForSubjectManagement(1);
-=======
-				drawClassForSubjectManagement(2);
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 				drawOpenClassForSubject();
 				drawListClassForSubject(lcfs, lsj, currentClass, row);
 				highlightOpenClass(selected, LIGHTBLUE);
 			}
 			else if(clickInRange(x, y, LISTSPOINTX + 290, LISTSPOINTY + 460, LISTSPOINTX + 460, LISTSPOINTY + 500) && lcfs.size != 0){ // sua lop
-<<<<<<< HEAD
 				if(lcfs.size != 0 && !existStudentRegisting(lcfs, currentClass)){ // lr : listRegister; ton tai sinh vien co diem
 	
 					editClass(lcfs, lsj, academicYear, sizeYear, semester, currentClass);
@@ -2574,29 +2487,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					highlightOpenClass(selected, LIGHTBLUE);
 					setDefault();
 				}
-=======
-				editClass(lcfs, lsj, academicYear, sizeYear, semester, currentClass);
-								
-				setfillstyle(SOLID_FILL, WHITE);
-				bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTLPOINTY - 5); // 
-				
-				setcolor(BLACK);
-				rectangle(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // to hop nhap thanh mau den
-				
-				idClass = emptyStr;
-				selected = 2; finded = 0;
-				
-				drawClassForSubjectManagement(2);
-				drawOpenClassForSubject();
-				drawListClassForSubject(lcfs, lsj, currentClass, row);
-				highlightOpenClass(selected, LIGHTBLUE);
-			}
-			else if(clickInRange(x, y, LISTSPOINTX + 540, LISTSPOINTY + 460, LISTSPOINTX + 710, LISTSPOINTY + 500) && lcfs.size != 0){ // xoa lop 
-				
-			}
-			else if(clickInRange(x, y, LISTSPOINTX + 790, LISTSPOINTY + 460, LISTSPOINTX + 960, LISTSPOINTY + 500)){ // huy lop
-				
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 			}
 			else if(clickInRange(x, y, LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430)){ // tim kiem
 				setcolor(LIGHTBLUE);
@@ -2615,7 +2505,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 				            ascii += 255;
 				    	}
 						if(ascii == ET){
-<<<<<<< HEAD
 							if(idClass == emptyStr){
 								setfillstyle(SOLID_FILL, WHITE);
 								bar(LISTSPOINTX + 151, LISTSPOINTY + 401, LISTSPOINTX + 340, LISTSPOINTY + 430); // xoa du lieu trong hop nhap
@@ -2630,10 +2519,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 								break;
 							}
 							else{
-=======
-							
-							if((int)idClass.size() == 5){
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 								int i = findIndexClass(lcfs, stringtoint(idClass)); 
 								if(i >= 0 && i < lcfs.size && lcfs.list[i] != NULL){
 									setfillstyle(SOLID_FILL, WHITE);
@@ -2644,11 +2529,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									
 									setbkcolor(LIGHTBLUE);
 									setcolor(BLACK);
-<<<<<<< HEAD
 									outtextxy(LISTSPOINTX + 50, LISTSPOINTY + 85, tochar(to_string(lcfs.list[i]->idclass)));
-=======
-									outtextxy(LISTSPOINTX + 50, LISTSPOINTY + 85, tochar(formatIdClass(lcfs.list[i]->idclass)));
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 									outtextxy(LISTSPOINTX + 150, LISTSPOINTY + 85, tochar(findNameSubject(lcfs.list[i]->idSubject, lsj.root))); // findNameSubject trong datastructure
 									outtextxy(LISTSPOINTX + 500, LISTSPOINTY + 85, tochar(to_string(lcfs.list[i]->academicYear)));
 									outtextxy(LISTSPOINTX + 580, LISTSPOINTY + 85, tochar(to_string(lcfs.list[i]->semester)));
@@ -2656,7 +2537,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									outtextxy(LISTSPOINTX + 740, LISTSPOINTY + 85, tochar(to_string(lcfs.list[i]->studentMin)));
 									outtextxy(LISTSPOINTX + 820, LISTSPOINTY + 85, tochar(to_string(lcfs.list[i]->studentMax)));
 									
-<<<<<<< HEAD
 									if(lcfs.list[i]->unClass == true){
 										setcolor(BLACK);
 										outtextxy(LISTSPOINTX + 900, LISTSPOINTY + 85, "Da huy");
@@ -2677,15 +2557,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									line(LISTSPOINTX + 640, LISTSPOINTY + 40, LISTSPOINTX + 640, LISTSPOINTY + 390);
 									line(LISTSPOINTX + 720, LISTSPOINTY + 40, LISTSPOINTX + 720, LISTSPOINTY + 390);
 									line(LISTSPOINTX + 800, LISTSPOINTY + 40, LISTSPOINTX + 800, LISTSPOINTY + 390);
-=======
-									setcolor(LIGHTGRAY);
-									line(LISTSPOINTX + 140, LISTSPOINTY + 40, LISTSPOINTX + 140, LISTSPOINTY + 390);
-									line(LISTSPOINTX + 490, LISTSPOINTY + 40, LISTSPOINTX + 490, LISTSPOINTY + 390);
-									line(LISTSPOINTX + 570, LISTSPOINTY + 40, LISTSPOINTX + 570, LISTSPOINTY + 390);
-									line(LISTSPOINTX + 650, LISTSPOINTY + 40, LISTSPOINTX + 650, LISTSPOINTY + 390);
-									line(LISTSPOINTX + 730, LISTSPOINTY + 40, LISTSPOINTX + 730, LISTSPOINTY + 390);
-									line(LISTSPOINTX + 810, LISTSPOINTY + 40, LISTSPOINTX + 810, LISTSPOINTY + 390);
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 									line(LISTSPOINTX + 890, LISTSPOINTY + 40, LISTSPOINTX + 890, LISTSPOINTY + 390);
 									// ve cac duong ke trong danh sach lop
 									
@@ -2713,19 +2584,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									setDefault();
 								}
 							}
-<<<<<<< HEAD
-=======
-							else{
-								setbkcolor(WHITE);
-								setcolor(LIGHTRED);
-								outtextxy(LISTSPOINTX + 390,  LISTSPOINTY + 410, "Vui long nhap du Ma lop!");
-								
-								Sleep(1000);
-								setfillstyle(SOLID_FILL, WHITE);
-								bar(LISTSPOINTX + 380, LISTSPOINTY + 410, LISTSPOINTX + 700, LISTSPOINTY + 450); // xoa dong thong bao
-								setDefault();
-							}
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 						}
 						else if(ascii == BP && (int)idClass.size() > 0){
 							idClass.pop_back();
@@ -2774,7 +2632,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 }
 
 
-<<<<<<< HEAD
 void printRegisteredStudentList(ptrClassForSubject listOpeningClass[], int &currentClass, listSubject &lsj, listStudent &ls){
 	
 	drawPrintRegisteredStudentList(listOpeningClass, currentClass, lsj); // ve khung in ra danh sach 
@@ -3076,9 +2933,6 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 }
 
 void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls){
-=======
-void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj){
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 	int selected = 1;
 	drawClassForSubjectManagement(selected);
 	
@@ -3098,7 +2952,6 @@ void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj){
 			switch(ascii){
 				case ET: 
 					switch(selected){
-<<<<<<< HEAD
 						case 1: // mo lop tin chi
 							openClassForSubject(lcfs, lsj);
 							drawClassForSubjectManagement(selected);
@@ -3108,17 +2961,6 @@ void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj){
 							drawClassForSubjectManagement(selected);
 							break;
 						case 3: // dang ky lop tin chi
-=======
-						case 1: 
-							openClassForSubject(lcfs, lsj);
-							drawClassForSubjectManagement(selected);
-							break;
-						case 2:
-							break;
-						case 3: 
-							break;
-						case 4:
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 							break;
 					}
 					break;
@@ -3129,11 +2971,7 @@ void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj){
 					}
 					break;
 				case DOWN:
-<<<<<<< HEAD
 					if(selected < 3){
-=======
-					if(selected < 4){
->>>>>>> 6a7bfc0ba19fa0859842d33531da05f6acf5fec3
 						selected++;
 						drawClassForSubjectManagement(selected);
 					}
@@ -3147,3 +2985,4 @@ void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj){
 
 
 #endif 
+
