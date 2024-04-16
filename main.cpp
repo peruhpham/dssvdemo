@@ -23,7 +23,7 @@ int main(){
 	// tao tien xu ly, khai bao 
 	string nameFileListStudent = "data\\studentlist.txt";
 	string nameFileListClass = "data\\classlist.txt";
-	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
+	string nameFileListClassForSubject = "data\\classforsubjectlist.txt"; 
 	string nameFileListSubject = "data\\subjectlist.txt";      
 	  
 	listStudent ls; 
@@ -31,26 +31,26 @@ int main(){
 	listClassForSubject lcfs;   
 	listSubject lsj;        
 	     
-	readListStudent(ls, nameFileListStudent);
+	readListStudent(ls, nameFileListStudent);                
 	readListClass(lc, nameFileListClass);
 	readListClassForSubject(lcfs, nameFileListClassForSubject);
 	readListSubject(lsj, nameFileListSubject);
-	
+	 
 	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day 
 	   
 //  getch();
 	int selected = 1; 
 	createMenu(selected);
 
-	while(1){
-		char key = getch();
-		       
+	while(1){   
+		char key = getch();  
+		             
 		int ascii = static_cast<int>(key); 
         if (ascii == 0) { 
-            key = getch();
-            ascii = static_cast<int>(key);
+            key = getch();       
+            ascii = static_cast<int >(key);  
             ascii += 255; 
-    	}
+    	}  
     
 		switch(ascii){
 			case ET:    	   

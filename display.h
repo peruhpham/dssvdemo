@@ -11,7 +11,7 @@
 #define BP 8 // backspace
 #define SPOINTX 0
 #define SPOINTY 0
-#define LPOINTX 1350
+#define LPOINTX 1380
 #define LPOINTY 700
 
 #define HEADSPOINTX 0

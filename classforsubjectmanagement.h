@@ -1906,7 +1906,9 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 				while(sizeList != 0){
 					mouseHighlightCancelClass(on, cancel);
 					if(kbhit()){
+
 					}
+
 					if(ismouseclick(WM_LBUTTONDOWN)){
 						getmouseclick(WM_LBUTTONDOWN, x, y);
 						clearmouseclick(WM_LBUTTONDOWN);
@@ -2107,7 +2109,6 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
-				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 480, LISTSPOINTX + 340, LISTSPOINTY + 510); // to muc nhap thanh mau den
 							
@@ -2141,7 +2142,6 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 							outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 445, tochar(academicTemp));
 							outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 485, tochar(semesterTemp));
 							break;
-							
 						}
 						else if(ascii == BP){
 							if(semesterTemp != emptyStr){
@@ -2168,8 +2168,8 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 		}
 	}
 }
+
 void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
-	
 	drawOpenClassForSubject();
 	// khai bao, tien xu ly;
 	int sizeYear = 0, sizeSemester = MAXSEMESTER;
@@ -2244,7 +2244,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									drawListClassForSubject(lcfs, lsj, currentClass, row);
 									highlightOpenClass(selected, LIGHTBLUE);
 								}
-								
 								else{
 									text = "Sinh vien da co diem, Khong the sua!"; 
 									setbkcolor(WHITE);
@@ -2255,12 +2254,10 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					    			bar(OPENSPOINTX - 301, OPENSPOINTY - 60, OPENLPOINTX + 50, OPENLPOINTY - 59);
 					    			setDefault();
 								}
-								
-								break;
+							break;
 							case 3: // chuc nang xoa lop
 								if(lcfs.size != 0 && !existStudentHaveGrade(lcfs.list[currentClass]->lr)){ // lop hien tai khong co sinh vien dang ky
 									deleteClass(lcfs, currentClass);
-									
 									
 									setfillstyle(SOLID_FILL, WHITE);
 									bar(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // 
@@ -2305,7 +2302,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					    			bar(OPENSPOINTX - 301, OPENSPOINTY - 60, OPENLPOINTX + 50, OPENLPOINTY - 59);
 					    			setDefault();
 								}
-								break;
+							break;
 							case 4: // chuc nang huy lop 
 								if(lcfs.size != 0){ // so luong sinh vien dang ky > min
 									cancelClass(lcfs, lsj);
@@ -2315,7 +2312,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									highlightOpenClass(selected, LIGHTBLUE);
 									setDefault();
 								}
-								break;
+							break;
 						}
 					}
 					break;
@@ -2373,7 +2370,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					}
 					else if(finded == 0){
 						return;
-						
 					}
 					break;
 				
@@ -2573,7 +2569,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									break;
 								}
 								else{
-									
 									setfillstyle(SOLID_FILL, WHITE);
 									bar(LISTSPOINTX + 41, LISTSPOINTY + 81, LISTLPOINTX, LISTSPOINTY + 389); // xoa du lieu trong bang
 									
@@ -2610,7 +2605,6 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 							}							
 						}
 						else if(ascii == ESC){
-							
 							setfillstyle(SOLID_FILL, WHITE);
 							bar(LISTSPOINTX + 151, LISTSPOINTY + 401, LISTSPOINTX + 340, LISTSPOINTY + 430); // xoa du lieu trong hop nhap
 							setcolor(BLACK);
@@ -2757,7 +2751,6 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
-				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // to muc nhap thanh mau den
 							
@@ -2818,7 +2811,6 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
-				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 440, LISTSPOINTX + 340, LISTSPOINTY + 470); // to muc nhap thanh mau den
 							
