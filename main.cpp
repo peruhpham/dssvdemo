@@ -45,18 +45,18 @@ int main(){
 	while(1){   
 		char key = getch();  
 		             
-		int ascii = static_cast<int>(key); 
+		int ascii = static_cast<int>(key);  
         if (ascii == 0) { 
-            key = getch();       
-            ascii = static_cast<int >(key);  
-            ascii += 255; 
-    	}  
-        
+            key = getch();        
+            ascii = static_cast<int >(key);        
+            ascii += 255;      
+    	}    
+          
 		switch(ascii){  
 			case ET:    	   
-				switch(selected){          
+				switch(selected){            
 					case 1:  
-						studentManagement(ls, lc);   
+						studentManagement(ls, lc);    
 						createMenu(selected);	         
 					break;  
 					case 2:

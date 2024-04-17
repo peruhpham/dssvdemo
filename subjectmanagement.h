@@ -510,32 +510,40 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 	
 	setDefault();
 }
-//hightlight khi co click mouse vao khung nhap chu
+
+//Hightlight khi co click mouse vao khung nhap chu
 void highlightClickMouse(int x, int y, listSubject &lsb){
-	const int sizeText = 50;
-	int index = 0;
-	char textSearch[sizeText];
-	 
 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
 	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
 
-		//xu li nhâp du lieu vao khung search
-		// char key;
-		// const int sizeText = 100; 
-		// char textSearch[sizeText]; 
-		// int index = 0; 
+		//Xu li nhâp du lieu vao khung search 
+		const int sizeText = 30;
+		int index = 0;
+		char textSearch[sizeText];
+		bool isPrevSpace = true;
+
 		std::cout << "Nhap vao mot chuoi search (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 				char text = getch(); 
+
+				if (text == SPACE) {
+					if (index == 0 || isPrevSpace) { // Loại bỏ dấu cách đầu hoặc liên tiếp
+						continue;
+					}
+					isPrevSpace = true;
+				} else {
+					isPrevSpace = false;
+				}
+
 				if (text == ENTER) { 
 					break; 
 				}
-				else if(text == SPACE){
-					continue;
-				}
+				// else if(text == SPACE){
+				// 	continue;
+				// }
 				else if (text == BACKSPACE) { 
 					if (index > 0) { 
 						std::cout << "\b \b"; 
@@ -553,6 +561,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 				}
 				else if (index < sizeText - 1) { 
 					textSearch[index++] = text; 
+					textSearch[0] = toupper(textSearch[0]);
 					std::cout << text; 
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
@@ -582,8 +591,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
 
 		//xu li nhâp du lieu vao khung id
-		
-		const int sizeTextId = 10; 
+		const int sizeTextId = 8; 
 		char stringTextId[sizeTextId]; 
 		int indexId = 0; 
 		std::cout << "Nhap vao mot chuoi id (nhap Enter de ket thuc):\n";
@@ -612,8 +620,15 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					}
 				}
 				else if (indexId < sizeTextId - 1) { 
-					stringTextId[indexId++] = textId; 
-					std::cout << textId; 
+					//Neu 3 ki tu dau tien thi mac dinh la chu in hoa.
+					if((('A' <= textId && textId <= 'Z') || ('a' <= textId && textId <= 'z')) && (0 <= indexId && indexId <= 2)){
+						stringTextId[indexId++] = toupper(textId); 
+						std::cout << textId; 
+					}
+					else if((3 <= indexId && indexId <= 6) && ('0' <= textId && textId <= '9')){
+						stringTextId[indexId++] = textId;
+						std::cout << textId; 
+					}
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
 					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
@@ -627,34 +642,50 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		stringTextId[indexId] = '\0'; // Thêm ký tự kết thúc chuỗi
 		std::cout << "\nChuoi da nhap: " << stringTextId << std::endl;
 		setcolor(BLUE);
-		setbkcolor(YELLOW);
+		setbkcolor(WHITE);
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextId);
 
 		setDefault();
+
+		//----------------------------------------------------------------------------------------------
+		// xu ly bo nho tai day la xong phim.
+
+
+
+		//----------------------------------
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
 	}
 
-	// muc ten
+	// Muc ten mon hoc
 	if(TABLE_CONTROL_SX + 5 <= x && TABLE_CONTROL_SY + 60 + 30 + 30 <= y && TABLE_CONTROL_SX + 330 >= x && y <= TABLE_CONTROL_SY + 90 + 30 + 30){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);
 
 		//xu li nhâp du lieu vao khung search
-		const int sizeTextName = 100; 
+		const int sizeTextName = 25; 
 		char textName[sizeTextName]; 
 		int indexName = 0; 
-		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
+		bool isPrevSpace = true; // Biến để theo dõi xem ký tự trước đó có phải là dấu cách không
+
+		std::cout << "Nhap vao mot chuoi ten mon hoc (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 				char text = getch(); 
+
+				if (text == SPACE) {
+					if (indexName == 0 || isPrevSpace) { // Loại bỏ dấu cách đầu hoặc liên tiếp
+						continue;
+					}
+					isPrevSpace = true;
+				} else {
+					isPrevSpace = false;
+				}
+
 				if (text == ENTER) { 
 					break; 
-				}
-				else if(text == SPACE){
-					continue;
 				}
 				else if (text == BACKSPACE) { 
 					if (indexName > 0) { 
@@ -672,6 +703,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 				}
 				else if (indexName < sizeTextName - 1) { 
 					textName[indexName++] = text; 
+					textName[0] = toupper(textName[0]);
 					std::cout << text; 
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
@@ -680,13 +712,13 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
 					setDefault();
-				}
+				} 
 			}
 		}
 		textName[indexName] = '\0'; // Thêm ký tự kết thúc chuỗi
 		std::cout << "\nChuoi da nhap: " << textName << std::endl;
 		setcolor(BLUE);
-		setbkcolor(YELLOW);
+		setbkcolor(WHITE);
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
@@ -696,19 +728,19 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		highlightFrameDefault(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);
 	}
 
-	// Muc so tin chi li thuyet
+	// Muc so tin chi ly thuyet
 	if(TABLE_CONTROL_SX + 5 <= x && TABLE_CONTROL_SY + 175 + 20 <= y && TABLE_CONTROL_SX + 100 >= x && y <= TABLE_CONTROL_SY + 195 + 30){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 100, TABLE_CONTROL_SY + 195 + 30);
 
 		//xu li nhâp du lieu vao khung ly thuyet
 		// char key;
-		const int sizeTextLT = 100; 
+		const int sizeTextLT = 4; 
 		char textLT[sizeTextLT]; 
 		int indexLT = 0; 
-		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
+		std::cout << "Nhap vao mot chuoi so tin chi ly thuyet (nhap Enter de ket thuc):\n";
 		while (true) { 
-			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
+			if (kbhit()) { 
 				char text = getch(); 
 				if (text == ENTER) { 
 					break; 
@@ -725,19 +757,20 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
 						bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
-						outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
+						outtextxy(TABLE_CONTROL_SX + 5 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 						setDefault();
 					}
 				}
 				else if (indexLT < sizeTextLT - 1) { 
-					textLT[indexLT++] = text; 
+					if('0' <= text && text <= '9')
+						textLT[indexLT++] = text; 
 					std::cout << text; 
 					textLT[indexLT] = '\0'; // Thêm ký tự kết thúc chuỗi
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
 					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
-					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
+					outtextxy(TABLE_CONTROL_SX + 5 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 					setDefault();
 				}
@@ -746,9 +779,9 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		textLT[indexLT] = '\0'; // Thêm ký tự kết thúc chuỗi
 		std::cout << "\nChuoi da nhap: " << textLT << std::endl;
 		setcolor(BLUE);
-		setbkcolor(YELLOW);
+		setbkcolor(WHITE);
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
-		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
+		outtextxy(TABLE_CONTROL_SX + 5 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 		setDefault();
 	}
@@ -761,12 +794,12 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100, TABLE_CONTROL_SY + 195 + 30);
 
-		//xu li nhâp du lieu vao khung search
+		//xu li nhâp du lieu vao khung thuc hanh
 		// char key;
-		const int sizeTextTH = 100; 
+		const int sizeTextTH = 4; 
 		char textTH[sizeTextTH]; 
 		int indexTH = 0; 
-		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
+		std::cout << "Nhap vao mot chuoi so tin chi thuc hanh (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 				char text = getch(); 
@@ -785,19 +818,20 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 						setbkcolor(YELLOW);
 						bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
 						textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
-						outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
+						outtextxy(TABLE_CONTROL_SX + 5 + 150 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 						setDefault();
 					}
 				}
 				else if (indexTH < sizeTextTH - 1) { 
-					textTH[indexTH++] = text; 
+					if('0' <= text && text <= '9')
+						textTH[indexTH++] = text; 
 					std::cout << text; 
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
 					bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
 					textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
-					outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
+					outtextxy(TABLE_CONTROL_SX + 5 + 150 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 					setDefault();
 				}
@@ -806,16 +840,19 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
 		std::cout << "\nChuoi da nhap: " << textTH << std::endl;
 		setcolor(BLUE);
-		setbkcolor(YELLOW);
+		setbkcolor(WHITE);
 		bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
 		textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
-		outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
+		outtextxy(TABLE_CONTROL_SX + 5 + 150 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 		setDefault();
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100, TABLE_CONTROL_SY + 195 + 30);
 	}
+
+
+
 }
 
 // ham nhap chu vao khung 
@@ -834,8 +871,6 @@ void controlAddDeleteSubject(listSubject &lsb){
 	int x, y;
 
 	while(true){
-
-
 		if(kbhit()){
 			key = getch();
 			ascii = static_cast<int>(key);
@@ -860,6 +895,7 @@ void controlAddDeleteSubject(listSubject &lsb){
 
 
 		}
+		
 	}
 }
 
