@@ -505,8 +505,8 @@ void highlightFrame(int x1, int y1, int x2, int y2){
 void highlightFrameDefault(int x1, int y1, int x2, int y2){
 	setcolor(BLUE);
 	rectangle(x1, y1, x2, y2);	
-	setbkcolor(WHITE);
-	bar(x1 + 1, y1 + 1, x2 - 1, y2 - 1);
+	// setbkcolor(WHITE);
+	// bar(x1 + 1, y1 + 1, x2 - 1, y2 - 1);
 	
 	setDefault();
 }
@@ -545,6 +545,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
 						bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
+						textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
 						outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
 
 						setDefault();
@@ -556,6 +557,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
 					bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
+					textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
 					outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
 
 					setDefault();
@@ -603,6 +605,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
 						bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
+						stringTextId[indexId] = '\0'; // Thêm ký tự kết thúc chuỗi
 						outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextId);
 
 						setDefault();
@@ -614,6 +617,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
 					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
+					stringTextId[indexId] = '\0'; // Thêm ký tự kết thúc chuỗi
 					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextId);
 
 					setDefault();
@@ -639,10 +643,9 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);
 
 		//xu li nhâp du lieu vao khung search
-		// char key;
-		// const int sizeText = 100; 
-		// char textSearch[sizeText]; 
-		// int index = 0; 
+		const int sizeTextName = 100; 
+		char textName[sizeTextName]; 
+		int indexName = 0; 
 		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
@@ -654,52 +657,55 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					continue;
 				}
 				else if (text == BACKSPACE) { 
-					if (index > 0) { 
+					if (indexName > 0) { 
 						std::cout << "\b \b"; 
-						index--; 
-						textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
+						indexName--; 
 						// cout << textSearch << endl;
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
-						bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-						outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+						bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
+						textName[indexName] = '\0'; // Thêm ký tự kết thúc chuỗi
+						outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
 						setDefault();
 					}
 				}
-				else if (index < sizeText - 1) { 
-					textSearch[index++] = text; 
+				else if (indexName < sizeTextName - 1) { 
+					textName[indexName++] = text; 
 					std::cout << text; 
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
-					bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-					outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
+					textName[indexName] = '\0'; // Thêm ký tự kết thúc chuỗi
+					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
 					setDefault();
 				}
 			}
 		}
-		textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
-		std::cout << "\nChuoi da nhap: " << textSearch << std::endl;
+		textName[indexName] = '\0'; // Thêm ký tự kết thúc chuỗi
+		std::cout << "\nChuoi da nhap: " << textName << std::endl;
 		setcolor(BLUE);
-		setbkcolor(WHITE);
-		bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-		outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+		setbkcolor(YELLOW);
+		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
+		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
+
+		setDefault();
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);
 	}
 
-	// muc so tin chi li thuyet
+	// Muc so tin chi li thuyet
 	if(TABLE_CONTROL_SX + 5 <= x && TABLE_CONTROL_SY + 175 + 20 <= y && TABLE_CONTROL_SX + 100 >= x && y <= TABLE_CONTROL_SY + 195 + 30){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 100, TABLE_CONTROL_SY + 195 + 30);
 
-		//xu li nhâp du lieu vao khung search
+		//xu li nhâp du lieu vao khung ly thuyet
 		// char key;
-		// const int sizeText = 100; 
-		// char textSearch[sizeText]; 
-		// int index = 0; 
+		const int sizeTextLT = 100; 
+		char textLT[sizeTextLT]; 
+		int indexLT = 0; 
 		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
@@ -711,37 +717,40 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					continue;
 				}
 				else if (text == BACKSPACE) { 
-					if (index > 0) { 
+					if (indexLT > 0) { 
 						std::cout << "\b \b"; 
-						index--; 
-						textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
+						indexLT--; 
+						textLT[indexLT] = '\0'; // Thêm ký tự kết thúc chuỗi
 						// cout << textSearch << endl;
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
-						bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-						outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+						bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+						outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 						setDefault();
 					}
 				}
-				else if (index < sizeText - 1) { 
-					textSearch[index++] = text; 
+				else if (indexLT < sizeTextLT - 1) { 
+					textLT[indexLT++] = text; 
 					std::cout << text; 
+					textLT[indexLT] = '\0'; // Thêm ký tự kết thúc chuỗi
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
-					bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-					outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 					setDefault();
 				}
 			}
 		}
-		textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
-		std::cout << "\nChuoi da nhap: " << textSearch << std::endl;
+		textLT[indexLT] = '\0'; // Thêm ký tự kết thúc chuỗi
+		std::cout << "\nChuoi da nhap: " << textLT << std::endl;
 		setcolor(BLUE);
-		setbkcolor(WHITE);
-		bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-		outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+		setbkcolor(YELLOW);
+		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
+
+		setDefault();
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 100, TABLE_CONTROL_SY + 195 + 30);
@@ -754,9 +763,9 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 
 		//xu li nhâp du lieu vao khung search
 		// char key;
-		// const int sizeText = 100; 
-		// char textSearch[sizeText]; 
-		// int index = 0; 
+		const int sizeTextTH = 100; 
+		char textTH[sizeTextTH]; 
+		int indexTH = 0; 
 		std::cout << "Nhap vao mot chuoi (nhap Enter de ket thuc):\n";
 		while (true) { 
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
@@ -768,37 +777,41 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 					continue;
 				}
 				else if (text == BACKSPACE) { 
-					if (index > 0) { 
+					if (indexTH > 0) { 
 						std::cout << "\b \b"; 
-						index--; 
-						textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
+						indexTH--; 
 						// cout << textSearch << endl;
 						setcolor(BLUE);
 						setbkcolor(YELLOW);
-						bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-						outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+						bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+						textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
+						outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 						setDefault();
 					}
 				}
-				else if (index < sizeText - 1) { 
-					textSearch[index++] = text; 
+				else if (indexTH < sizeTextTH - 1) { 
+					textTH[indexTH++] = text; 
 					std::cout << text; 
 					setcolor(BLUE);
 					setbkcolor(YELLOW);
-					bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-					outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+					bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+					textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
+					outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 					setDefault();
 				}
 			}
 		}
-		textSearch[index] = '\0'; // Thêm ký tự kết thúc chuỗi
-		std::cout << "\nChuoi da nhap: " << textSearch << std::endl;
+		textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
+		std::cout << "\nChuoi da nhap: " << textTH << std::endl;
 		setcolor(BLUE);
-		setbkcolor(WHITE);
-		bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
-		outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
+		setbkcolor(YELLOW);
+		bar(TABLE_CONTROL_SX + 5 + 150 + 1, TABLE_CONTROL_SY + 175 + 20 + 1, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+		textTH[indexTH] = '\0'; // Thêm ký tự kết thúc chuỗi
+		outtextxy(TABLE_CONTROL_SX + 5 + 150 + 5, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
+
+		setDefault();
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100, TABLE_CONTROL_SY + 195 + 30);
