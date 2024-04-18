@@ -17,10 +17,16 @@
 #define TABLE_LX 1350
 #define TABLE_LY 440 + 1
 
+#define TABLE_FILTER_SX 700
+#define TABLE_FILTER_SY 460
+#define TABLE_FILTER_LX 1350
+#define TABLE_FILTER_LY 580
+
 #define TABLE_CONTROL_SX 340
 #define TABLE_CONTROL_SY 70
 #define TABLE_CONTROL_LX 680
 #define TABLE_CONTROL_LY 600
+
 
 
 #define ENTER 13
@@ -30,6 +36,8 @@
 
 #define MENU_ITEM_HEIGHT 40 //Chiều cao của mỗi mục trong menu
 #define D_ROW 22
+
+int dong = TABLE_FILTER_SY + 30;
 // #define MAX_MON_HOC 100
 
 
@@ -72,6 +80,10 @@ void mouseHighlightInputExamScores(int &selected, int &on);
 void highlightClickMouse(int x, int y, listSubject &lsb);
 
 void controlAddDeleteSubject();
+
+string findSubjectByName (string nameSubject, ptrSubject rootSub);
+void drawSearchFilter();
+nodeSubject* searchStartsWith(nodeSubject* root, string& key);
 //=====================================================================================================
 
 
@@ -346,7 +358,7 @@ void drawTableControlSubject(){ //draw bang do hoa xu ly them sua xoa mon hoc.
 	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
 	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
 	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
-	setDefault();
+	setDefault(); 
 
 	// draw muc search id hoac ten mon hoc sẽ hien ra thong tin can sua chua.
 	setcolor(BLUE);
@@ -513,10 +525,13 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 
 //Hightlight khi co click mouse vao khung nhap chu
 void highlightClickMouse(int x, int y, listSubject &lsb){
+
 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
+
 	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
+
 
 		//Xu li nhâp du lieu vao khung search 
 		const int sizeText = 30;
@@ -529,21 +544,16 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 			if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 				char text = getch(); 
 
-				if (text == SPACE) {
-					if (index == 0 || isPrevSpace) { // Loại bỏ dấu cách đầu hoặc liên tiếp
+				if (text == SPACE){
+					if (index == 0 || isPrevSpace) // Loại bỏ dấu cách đầu hoặc liên tiếp
 						continue;
-					}
 					isPrevSpace = true;
-				} else {
+				}else
 					isPrevSpace = false;
-				}
 
 				if (text == ENTER) { 
 					break; 
 				}
-				// else if(text == SPACE){
-				// 	continue;
-				// }
 				else if (text == BACKSPACE) { 
 					if (index > 0) { 
 						std::cout << "\b \b"; 
@@ -580,12 +590,48 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		bar(TABLE_CONTROL_SX + 1 + 10 + 1, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 1, TABLE_CONTROL_SX - 1 + 10 + 300 - 1, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60 - 1);
 		outtextxy(TABLE_CONTROL_SX + 1 + 10 + 5, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 + 5, textSearch);
 
+
+		// Xu li thanh search
+		/*Thanh search hien thi thong tin sang mot ben theo dang loc du lieu
+			- 
+		*/
+		drawSearchFilter();
+		string strSearch(textSearch);
+        cout << "Search for strings starting with '" << strSearch << "': \n";
+        nodeSubject* result1 = searchStartsWith(lsb.root, strSearch);
+        if (result1 != NULL){
+            cout << result1->data.nameSubject << endl;
+
+			// int i = TABLE_FILTER_SY;
+			outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, tochar(result1->data.nameSubject));
+			dong += 30;
+
+			// for(int i = TABLE_FILTER_SY + 30; i < TABLE_FILTER_LY; i += 30)
+			// 	outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, tochar(result1->data.nameSubject));
+		}
+        else{
+            cout << "Not found." << endl;
+
+			setfillstyle(SOLID_FILL, WHITE);
+			bar(TABLE_FILTER_SX, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
+			setcolor(LIGHTGRAY);
+			rectangle(TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_LY);
+			// int i = TABLE_FILTER_SY + 30;
+			outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, "Khong tim thay du lieu...");
+			dong -= 30;
+			// for(int i = TABLE_FILTER_SY + 30; i < TABLE_FILTER_LY; i += 30)
+			// 	outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, "Khong tim thay du lieu...");
+		}
+
+
+		// string strSubFind = findSubjectByName(strSearch, lsb.root);
+		// cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
 	}
 
-	// MUC ID
+	// MUC ID môn học
 	if(TABLE_CONTROL_SX + 5 <= x && TABLE_CONTROL_SY + 30 + 30 <= y && TABLE_CONTROL_SX + 120 >= x && y <= TABLE_CONTROL_SY + 60 + 30){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
@@ -649,8 +695,14 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 		setDefault();
 
 		//----------------------------------------------------------------------------------------------
-		// xu ly bo nho tai day la xong phim.
-
+		// xu lý bộ nhớ ở đây la xong phim.
+		/*Lấy dữ liệu nhập của IDsubject đưa vào cây avl
+		- Nếu IDsubject không tồn tại thì không cần thông báo không tìm thấy IDsubject
+			+Tiếp tục đưa dữ liệu này vào node của cây avl.
+		- Nếu IDsubject tồn tại thì thông báo tìm thấy IDsubject
+			+ Hiện ra màn hình thông báo lỗi "ĐÃ TỒN TẠI IDSUBJECT" và yêu cầu nhập lại IDsubject
+		
+		*/
 
 
 		//----------------------------------
@@ -853,16 +905,136 @@ void highlightClickMouse(int x, int y, listSubject &lsb){
 
 
 
+	// Highlight khung sang khi click mouse Them, Sua, Xoa.
+	// Muc Them
+	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 100 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
+		setbkcolor(BLUE);
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, BLUE);
+
+		bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
+	}else{
+		setbkcolor(WHITE);
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL, WHITE);
+	
+		bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
+	}
+	// Muc Xoa
+	if(TABLE_CONTROL_SX + 1 + 10 + 100 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
+		setbkcolor(BLUE);
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, BLUE);
+		
+		bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
+	}else{
+		setbkcolor(WHITE);
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL, WHITE);
+
+		bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
+	}
+	// Muc Sua
+	if(TABLE_CONTROL_SX + 1 + 10 + 110*2 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
+		setbkcolor(BLUE);
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, BLUE);
+
+		bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
+	}else{
+		setbkcolor(WHITE);
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL, WHITE);
+
+		bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX  + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
+		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
+	}
+
+	setDefault();
 }
 
-// ham nhap chu vao khung 
+// ham nhap chu vao khung -
 void enterText(listSubject &lsb){
 	while(1){
 
 	}
 }
 
-// Phan xu lý/////////////////////////////////////////
+// Ve danh sach loc thong tin tai muc tim kiem.
+void drawSearchFilter(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_LY);
+
+	setcolor(LIGHTGRAY);
+	rectangle (TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_LY);
+
+	// tieu de
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_SY + 30);
+	setcolor(BLACK);
+	setbkcolor(LIGHTBLUE);
+	outtextxy(TABLE_FILTER_SX + 5, TABLE_FILTER_SY + 5, "STT");
+	outtextxy(TABLE_FILTER_SX + 5 + 50 , TABLE_FILTER_SY + 5, "Ma mon hoc");
+	outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 , TABLE_FILTER_SY + 5, "Ten mon hoc");
+	outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , TABLE_FILTER_SY + 5, "STCLT");
+	outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, TABLE_FILTER_SY + 5, "STCTH");
+
+	// cac duong ke ngang
+	for(int i = TABLE_FILTER_SY + 30; i < TABLE_FILTER_LY; i += 30){
+		setcolor(LIGHTGRAY);
+		line(TABLE_FILTER_SX, i, TABLE_FILTER_LX, i);
+	}
+	// cac duong ke doc
+	setcolor(LIGHTGRAY);
+	line(TABLE_FILTER_SX + 50, TABLE_FILTER_SY, TABLE_FILTER_SX + 50, TABLE_FILTER_LY);
+	line(TABLE_FILTER_SX + 50 + 120, TABLE_FILTER_SY, TABLE_FILTER_SX + 50 + 120, TABLE_FILTER_LY);
+	line(TABLE_FILTER_SX + 50 + 120 + 340, TABLE_FILTER_SY, TABLE_FILTER_SX + 50 + 120 + 340, TABLE_FILTER_LY);
+	line(TABLE_FILTER_SX + 50 + 120 + 340 + 60, TABLE_FILTER_SY, TABLE_FILTER_SX + 50 + 120 + 340 + 60, TABLE_FILTER_LY);
+
+	setDefault();
+}
+// Tim kiem va loc mon hoc theo ten || theo bang sao cay avl chi muc dich hien thi thong tin thoi
+string findSubjectByName (string nameSubject, ptrSubject rootSub){
+	if(rootSub == nullptr) 
+		return "";
+	else {
+		if(nameSubject > rootSub->data.nameSubject)
+			return findSubjectByName(nameSubject, rootSub->right);
+		if(nameSubject < rootSub->data.nameSubject)
+			return findSubjectByName(nameSubject, rootSub->left);
+	}
+	return rootSub->data.nameSubject;
+}
+
+nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
+    if (root == NULL)
+        return NULL;
+
+    if (key.length() == 0) // Trường hợp đặc biệt: nếu chuỗi key rỗng, trả về root
+        return root;
+
+    if (root->data.nameSubject.compare(0, key.length(), key) < 0) // Nếu dữ liệu của nút nhỏ hơn key, tìm trong cây con bên phải
+        return searchStartsWith(root->right, key);
+    else if (root->data.nameSubject.compare(0, key.length(), key) > 0) // Nếu dữ liệu của nút lớn hơn key, tìm trong cây con bên trái
+        return searchStartsWith(root->left, key);
+    else {
+        // Nếu dữ liệu của nút bằng key, in ra nút này và tiếp tục tìm kiếm trong cả hai cây con
+        cout << root->data.nameSubject << endl;
+		// int i = TABLE_FILTER_SY;
+		outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
+		dong += 30;
+		// return root;
+        searchStartsWith(root->left, key);
+        searchStartsWith(root->right, key);
+        return NULL; // Trả về NULL để không làm gì thêm
+    }
+}
+// Phần xử lý điều khiển ---------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------
 //Dieu khien them sua xoa tai man hinh mon hoc
 void controlAddDeleteSubject(listSubject &lsb){
@@ -895,10 +1067,9 @@ void controlAddDeleteSubject(listSubject &lsb){
 
 
 		}
-		
+
 	}
 }
-
 
 
 // Hàm vẽ menu và cập nhật lựa chọn

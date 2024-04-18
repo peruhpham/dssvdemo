@@ -487,11 +487,10 @@ int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
 	return 0;
 }
 
-// danh sach mon hoc 
+
+
+// Danh sach mon hoc AVL
 //_______________________________________________________________________________________
-
-
-
 struct subject {
     string idSubject;
 	int STCLT, STCTH;
@@ -499,17 +498,14 @@ struct subject {
     
     friend bool operator>(const subject& subject1, const subject& subject2);
     friend bool operator<(const subject& subject1, const subject& subject2);
-
 };
 
 bool operator>(const subject& subject1, const subject& subject2) {
     return subject1.idSubject > subject2.idSubject;
 }
-
 bool operator<(const subject& subject1, const subject& subject2) {
     return subject1.idSubject < subject2.idSubject;
 }
-
 //-----
 struct nodeSubject {
     subject data;
@@ -522,9 +518,7 @@ struct nodeSubject {
 	}
 };
 
-
-typedef nodeSubject *ptrSubject;
-
+typedef nodeSubject* ptrSubject;
 struct listSubject{
 	ptrSubject root;
 	int size;
@@ -534,18 +528,14 @@ struct listSubject{
 	}
 };
 
-
 int height(ptrSubject sub) {
     if (sub == nullptr) 
         return 0;
     return sub->height;
 }
-
 int max(int a, int b) {
     return a > b ? a : b;
 }
-
-
 
 ptrSubject rightRotate(ptrSubject y) {
     ptrSubject x = y->left;
@@ -592,6 +582,7 @@ int getBalance(ptrSubject N) {
     return height(N->left) - height(N->right); 
 } 
 
+//insert node
 ptrSubject insert(ptrSubject nodeSub, subject key) {
     if (nodeSub == nullptr)
         return new nodeSubject(key);
@@ -625,7 +616,7 @@ ptrSubject insert(ptrSubject nodeSub, subject key) {
     return nodeSub;
 }
 
-
+//Doc file danh sach mon hoc
 void readListSubject(listSubject &lsb, string nameFileSubjectList) {
 	ptrSubject root = lsb.root;
 	
@@ -656,7 +647,7 @@ void readListSubject(listSubject &lsb, string nameFileSubjectList) {
     
     f.close();
 }
-
+//Tim kiem ten mon hoc thong qua ID trong cay AVL
 string findNameSubject(string idSubject, ptrSubject root) {
     if (root == NULL) return emptyStr;
 	if(idSubject > root->data.idSubject) return findNameSubject(idSubject, root->right);
