@@ -77,13 +77,15 @@ void highlightFrame(int x1, int y1, int x2, int y2);
 void highlightFrame();
 void highlightFrameDefault(int x1, int y1, int x2, int y2);
 void mouseHighlightInputExamScores(int &selected, int &on);
-void highlightClickMouse(int x, int y, ptrSubject &root);
+void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject);
 
 void controlAddDeleteSubject();
 
 string findSubjectByName (string nameSubject, ptrSubject rootSub);
 void drawSearchFilter();
 nodeSubject* searchStartsWith(nodeSubject* root, string& key);
+
+void searchStartWithArray(subject arraySubject[], int sizeArraySubject, string &keySearch);
 //=====================================================================================================
 
 
@@ -519,8 +521,6 @@ void highlightFrame(int x1, int y1, int x2, int y2){
 void highlightFrameDefault(int x1, int y1, int x2, int y2){
 	setcolor(BLUE);
 	rectangle(x1, y1, x2, y2);	
-	// setbkcolor(WHITE);
-	// bar(x1 + 1, y1 + 1, x2 - 1, y2 - 1);
 	
 	setDefault();
 }
@@ -550,7 +550,7 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 //}
 
 //Hightlight khi co click mouse vao khung nhap chu
-void highlightClickMouse(int x, int y, ptrSubject &root){
+void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject){
 	dong = TABLE_FILTER_SY + 30;
 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
 	string idSub, nameSub;
@@ -632,36 +632,44 @@ void highlightClickMouse(int x, int y, ptrSubject &root){
 
 		string strSearch(textSearch);
         cout << "Search for strings starting with '" << strSearch << "': \n";
-        ptrSubject root1 = root;
-		nodeSubject* result1 = searchStartsWith(root1, strSearch);
-        if (result1 != NULL){
-            cout << result1->data.nameSubject << endl;
-			cout <<"da in thanh cong du lieu duoc tim kiem\n";
-			// int i = TABLE_FILTER_SY;
-			// outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, tochar(result1->data.nameSubject));
-			// dong += 30;
-			for(int i = TABLE_FILTER_SY + 60; i < TABLE_FILTER_LY; i += 30){
-				setcolor(RED);
-				outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, tochar(result1->data.nameSubject));
-			}
-		}
-        else{
-            cout << "Not found." << endl;
 
-			// setfillstyle(SOLID_FILL, WHITE);
-			// bar(TABLE_FILTER_SX, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
-			// setcolor(LIGHTGRAY);
-			// rectangle(TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_LY);
-			// int i = TABLE_FILTER_SY + 30;
-			// outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, "Khong tim thay du lieu...");
-			// dong -= 30;
-			for(int i = TABLE_FILTER_SY + 30; i < TABLE_FILTER_LY; i += 30){
-				setcolor(GREEN);
-				outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, "Khong tim thay du lieu...");
-			}
-		}
-		// string strSubFind = findSubjectByName(strSearch, lsb.root);
-		// cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
+		//Xu ly tim kiem bang avl tree.
+
+        // ptrSubject root1 = root;
+		// nodeSubject* result1 = searchStartsWith(root1, strSearch);
+        // if (result1 != NULL){
+        //     cout << result1->data.nameSubject << endl;
+		// 	cout <<"da in thanh cong du lieu duoc tim kiem\n";
+		// 	// int i = TABLE_FILTER_SY;
+		// 	// outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, tochar(result1->data.nameSubject));
+		// 	// dong += 30;
+		// 	for(int i = TABLE_FILTER_SY + 60; i < TABLE_FILTER_LY; i += 30){
+		// 		setcolor(RED);
+		// 		outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, tochar(result1->data.nameSubject));
+		// 	}
+		// }
+        // else{
+        //     cout << "Not found." << endl;
+
+		// 	// setfillstyle(SOLID_FILL, WHITE);
+		// 	// bar(TABLE_FILTER_SX, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
+		// 	// setcolor(LIGHTGRAY);
+		// 	// rectangle(TABLE_FILTER_SX, TABLE_FILTER_SY, TABLE_FILTER_LX, TABLE_FILTER_LY);
+		// 	// int i = TABLE_FILTER_SY + 30;
+		// 	// outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, dong + 5, "Khong tim thay du lieu...");
+		// 	// dong -= 30;
+		// 	for(int i = TABLE_FILTER_SY + 30; i < TABLE_FILTER_LY; i += 30){
+		// 		setcolor(GREEN);
+		// 		outtextxy(TABLE_FILTER_SX + 10 + 50 + 120, i + 5, "Khong tim thay du lieu...");
+		// 	}
+		// }
+		// // string strSubFind = findSubjectByName(strSearch, lsb.root);
+		// // cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
+
+		// Thu lai xu li bang mang
+		searchStartWithArray(arraySubject, sizeArraySubject, strSearch);
+
+
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
@@ -727,8 +735,9 @@ void highlightClickMouse(int x, int y, ptrSubject &root){
 		setbkcolor(WHITE);
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextId);
-		idSub = stringTextId;
-		cout << "idSub: " << idSub << endl;
+
+		// idSub = stringTextId;
+		// cout << "idSub: " << idSub << endl;
 
 		setDefault();
 
@@ -812,8 +821,8 @@ void highlightClickMouse(int x, int y, ptrSubject &root){
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
-		nameSub = textName;
-		cout << "nameSub: " << nameSub << endl;
+		// nameSub = textName;
+		// cout << "nameSub: " << nameSub << endl;
 
 		setDefault();
 	}
@@ -877,8 +886,8 @@ void highlightClickMouse(int x, int y, ptrSubject &root){
 		outtextxy(TABLE_CONTROL_SX + 5 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 
-		stclt = stringtoint(textLT);
-		cout << "stclt : " << stclt << endl;
+		// stclt = stringtoint(textLT);
+		// cout << "stclt : " << stclt << endl;
 
 		setDefault();
 	}
@@ -943,8 +952,8 @@ void highlightClickMouse(int x, int y, ptrSubject &root){
 		outtextxy(TABLE_CONTROL_SX + 5 + 150 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 
-		stcth = stringtoint(textTH);
-		cout << "stcth: " << stcth << endl;
+		// stcth = stringtoint(textTH);
+		// cout << "stcth: " << stcth << endl;
 
 		setDefault();
 	}
@@ -1108,12 +1117,54 @@ nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
         return NULL; // Trả về NULL để không làm gì thêm
     }
 }
+
+// Tim kiem mon hoc thong qua array tmp duoc tao ra de xu li hien thi
+void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &keySearch){
+	int stt = 0;
+
+	//test doc data...
+	for(int i = 0; i < sizeArraySubject; i++){
+		cout << setw(3) << i + 1 << setw(30) << arraySubject[i].nameSubject << endl;
+	}
+
+	int hang = TABLE_FILTER_SY + 30;
+
+	if(keySearch == " "){
+		cout << "Chua nhap du lieu tim kiem......" << endl;
+	}else{
+		for(int i = 0; i < sizeArraySubject; i++){
+			cout << "dang tim kiem.............." << i + 1 << endl;
+			if(arraySubject[i].nameSubject.compare(0, keySearch.length(), keySearch) == 0){
+				cout << "Data is searched: ";
+				cout << setw(5)		<< to_string(stt + 1);
+				cout << setw(10) 	<< arraySubject[i].idSubject << " ";
+				cout << setw(30) 	<< arraySubject[i].nameSubject << " ";
+				cout << setw(5) 	<< arraySubject[i].STCLT << " ";
+				cout << setw(5) 	<< arraySubject[i].STCTH << " ";
+				cout << endl;
+
+				setcolor(GREEN);
+				outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
+				outtextxy(TABLE_FILTER_SX + 5 + 50 , hang + 5, tochar(arraySubject[i].idSubject));
+				outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, hang + 5, tochar(arraySubject[i].nameSubject));
+				outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , hang + 5, tochar(to_string(arraySubject[i].STCLT)));
+				outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, hang + 5, tochar(to_string(arraySubject[i].STCTH)));
+				hang += 30;
+
+				stt++;
+			}
+		}
+	}
+
+	cout << "Seach complete......" << endl;
+}
+
 // Phần xử lý điều khiển ---------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------
 //Dieu khien them sua xoa tai man hinh mon hoc
-void controlAddDeleteSubject(listSubject &lsb){
+void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject){
 	// drawSearchFilter();
-	// cout << "In bang filter\n";
+	// cout << "In bangarraySubject[i].
 
 	char key;
 	int ascii;
@@ -1140,7 +1191,7 @@ void controlAddDeleteSubject(listSubject &lsb){
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 
-			highlightClickMouse(x, y, lsb.root);
+			highlightClickMouse(x, y, lsb.root, arraySubject, sizeArraySubject);
 		}
 
 	}
@@ -1180,13 +1231,14 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
 				y += D_ROW;
 			}
-			delete[] subjectListArray;
 			drawHeaderAndBottom();
 
 			// Them phan dieu khien khi click mouse
 			reloadingDataSubject();
 			cout << "reload data list subject\n";
-			controlAddDeleteSubject(lsb);
+
+			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
+			delete[] subjectListArray;
 
 
 			// getch(); // dung man hinh de xem
