@@ -80,16 +80,16 @@ int main(){
 					createMenu(selected);
 				}  
 				break; 
-			case DOWN:
-				if(selected < 4){
+			case DOWN: 
+				if(selected < 4){ 
 					selected++;
-					createMenu(selected);
-				}
-				break;
-			case ESC:
+					createMenu(selected);    
+				} 
+				break; 
+			case ESC:  
 				if(!createNotice("Ban chac chan muon thoat!", "")){
 					closegraph();
-					return 0;
+					return 0;  
 				}
 				createMenu(selected);
 				break;

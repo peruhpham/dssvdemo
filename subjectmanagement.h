@@ -1036,6 +1036,9 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		if(checkListTable < 0){
 			checkListTable = 0;
 		}
+		if(checkListTable >= (lsb.size - 1)/15){
+			checkListTable = (lsb.size - 1)/15;
+		}
 		
 
 		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
@@ -1076,9 +1079,6 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
 		setfillstyle(SOLID_FILL, RED);
 		fillpoly(4, points1);
-
-
-		// checkBegin--;
 	}else{
 		drawScrollBarSubject();
 	}
@@ -1090,8 +1090,10 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		if(checkListTable >= (lsb.size - 1)/15){
 			checkListTable = (lsb.size - 1)/15;
 		}
+		if(checkListTable < 0){
+			checkListTable = 0;
+		}
 
-		
 		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
 		setfillstyle ( SOLID_FILL, LIGHTGRAY);
 		bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
@@ -1138,13 +1140,6 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 	}
 
 	setDefault();
-}
-
-// ham nhap chu vao khung -
-void enterText(listSubject &lsb){
-	while(1){
-
-	}
 }
 
 // Ve danh sach loc thong tin tai muc tim kiem.
@@ -1226,8 +1221,6 @@ nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
 		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
 		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
 		dong += 30;
-
-
 		// return root;
         searchStartsWith(root->left, key);
         searchStartsWith(root->right, key);
@@ -1260,8 +1253,8 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 				cout << setw(5) 	<< arraySubject[i].STCTH << " ";
 				cout << endl;
 				if(stt >= 3)
-					continue;
-					
+					continue; // tranh viec tran man hinh hien thi.
+
 				setcolor(GREEN);
 				outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
 				outtextxy(TABLE_FILTER_SX + 5 + 50 , hang + 5, tochar(arraySubject[i].idSubject));
@@ -1277,6 +1270,9 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 
 	cout << "Seach complete......" << endl;
 }
+
+
+
 
 // Phần xử lý điều khiển ---------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------
@@ -1368,9 +1364,6 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 
 			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
 			delete[] subjectListArray;
-
-
-			// getch(); // dung man hinh de xem
 		}
 		else if(selectedItem == 1){
 			cout << "selected 1" << endl;
@@ -1379,8 +1372,6 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			drawTableControlSubject();
 			// Xu li enter tai day
 			drawTableListSubject ();
-			//print Danh sach theo tên môn hoc.
-			// printSTT(lsb);
 			//===========================
 			int arraySize = 0;
 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
@@ -1432,7 +1423,6 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			//print Danh sach theo tên môn hoc.
 			printSTT(lsb);
 			cout << "selectedIrem 2" << endl;
-
 			// getch();
 		}
 
