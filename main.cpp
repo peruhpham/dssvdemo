@@ -63,22 +63,22 @@ int main(){
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi)
 						createMenu(selected);   
 					break; 
-					case 3:
+					case 3:  
 						subjectManagement1(lsj);       
 						cout << "1 main\n";                          
-						createMenu(selected);                 
-					break;						                                   
-					case 4:                     
-						studentGradeManagement(lcfs, lsj, ls);                
-						createMenu(selected);         
-					break;       
+						createMenu(selected);                      
+					break;						                                        	 
+					case 4:                             
+						studentGradeManagement(lcfs, lsj, ls);                  
+						createMenu(selected);           
+					break;         
 				}  
 				break;    
 			case UP:     
 				if(selected > 1){  
 					selected--; 
 					createMenu(selected);
-				} 
+				}  
 				break; 
 			case DOWN:
 				if(selected < 4){

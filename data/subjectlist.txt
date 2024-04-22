@@ -9,3 +9,9 @@ BAS1159#Tieng anh (C3)#4#0
 BAS1204#Giai tich 2#3#0
 BAS1224#Vat li 1 va thi nghiem#4#1
 ELE1433#Ky thuat so#3#1
+INT1358#Toan roi rac 1#3#0
+SKD1101#Ky nang thuyet trinh#1#0
+BAS1153#Lich su DCS Viet Nam#2#0
+INT1313#Co so du lieu#3#0
+INT1316#Lap trinh python#3#1
+INT1332#Lap trinh huong doi tuong#3#2

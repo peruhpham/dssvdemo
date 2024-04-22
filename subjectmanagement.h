@@ -77,7 +77,7 @@ void highlightFrame(int x1, int y1, int x2, int y2);
 void highlightFrame();
 void highlightFrameDefault(int x1, int y1, int x2, int y2);
 void mouseHighlightInputExamScores(int &selected, int &on);
-void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject);
+void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject, int &checkListTable);
 
 void controlAddDeleteSubject();
 
@@ -550,12 +550,15 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 //}
 
 //Hightlight khi co click mouse vao khung nhap chu
-void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject){
+void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[], int sizeArraySubject, int &checkListTable){
 	dong = TABLE_FILTER_SY + 30;
 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
 	string idSub, nameSub;
 	int stclt, stcth;
 
+	int checkOutList = (lsb.size - 1)/15;// check list nay se chạy tu 0 den checkOutList
+	// luc nay check out list = 1
+	int checkBegin = 0;
 
 
 	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){
@@ -1020,6 +1023,120 @@ void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[],
 		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
 	}
 
+
+
+	// Hight light thanh truot/cuon ========================///////////////////////////////
+	int rowTable = TABLE_SY + 40 + D_ROW/10 -1;
+
+	// len
+	if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 30 + 20){
+		drawTableListSubject ();
+
+		checkListTable--;
+		if(checkListTable < 0){
+			checkListTable = 0;
+		}
+		
+
+		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
+		setfillstyle ( SOLID_FILL, LIGHTGRAY);
+		bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+
+		
+		for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+			if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
+				continue;
+
+			char number[4]; // luu tru day so tu dong tang
+			sprintf(number, "%03d", i + 1);
+			setbkcolor(WHITE);
+			setcolor(RED);
+			// setfillstyle(SOLID_FILL, YELLOW);
+			outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number);	
+			
+
+			setbkcolor(WHITE);
+			setcolor(BLACK);
+			outtextxy(TABLE_SX + 20 + 50, rowTable, tochar(arraySubject[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120, rowTable, tochar(arraySubject[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, rowTable, tochar(to_string(arraySubject[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, rowTable, tochar(to_string(arraySubject[i].STCTH)));
+			rowTable += D_ROW;
+		}
+
+		setbkcolor(RED);
+		setcolor(RED);
+		int x1 = TABLE_LX - 20, y1 = TABLE_SY + 40 + 14;
+		int x2 = TABLE_LX - 20 + 8, y2 = TABLE_SY + 40;
+		int x3 = TABLE_LX - 20 + 16, y3 = TABLE_SY + 40 + 14;
+		
+		line(x1, y1, x2, y2);
+		line(x2, y2, x3, y3);
+		line(x3, y3, x1, y1);
+		int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
+		setfillstyle(SOLID_FILL, RED);
+		fillpoly(4, points1);
+
+
+		// checkBegin--;
+	}else{
+		drawScrollBarSubject();
+	}
+	//xuong
+	if((TABLE_LX - 20 <= x && TABLE_LY-20 <= y && x <= TABLE_LX && y <= TABLE_LY + 20)){
+		drawTableListSubject ();
+		//
+		checkListTable++;
+		if(checkListTable >= (lsb.size - 1)/15){
+			checkListTable = (lsb.size - 1)/15;
+		}
+
+		
+		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
+		setfillstyle ( SOLID_FILL, LIGHTGRAY);
+		bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+
+		for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+			if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
+				continue;
+
+			// print so thu tu theo du  lieu.
+			char number[4]; // luu tru day so tu dong tang
+			sprintf(number, "%03d", i + 1);
+			setbkcolor(WHITE);
+			setcolor(BLACK);
+			// setfillstyle(SOLID_FILL, YELLOW);
+			outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number); // print theo tung bang 15 hang	
+			
+			setbkcolor(WHITE);
+			setcolor(LIGHTRED);
+			outtextxy(TABLE_SX + 20 + 50, rowTable, tochar(arraySubject[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120, rowTable, tochar(arraySubject[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, rowTable, tochar(to_string(arraySubject[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, rowTable, tochar(to_string(arraySubject[i].STCTH)));
+			rowTable += D_ROW;
+		}
+		//
+		setbkcolor(RED);
+		setcolor(RED);
+
+		int x1 = TABLE_LX - 20, y1 = TABLE_SY + 40 + 14;
+		int x2 = TABLE_LX - 20 + 8, y2 = TABLE_SY + 40;
+		int x3 = TABLE_LX - 20 + 16, y3 = TABLE_SY + 40 + 14;
+
+		int u1 = TABLE_LX - 20 + 1, v1 = TABLE_LY - 14;
+		int u2 = TABLE_LX - 20 + 1 + 8, v2 = TABLE_LY;
+		int u3 = TABLE_LX - 20 + 1 + 16, v3 = TABLE_LY - 14;
+		line(u1, y1, u2, v2);
+		line(u2, y2, u3, v3);
+		line(u3, y3, u1, v1);
+		int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
+		setfillstyle(SOLID_FILL, RED);
+		fillpoly(4, points2);
+	}else{
+		drawScrollBarSubject();
+	}
+
 	setDefault();
 }
 
@@ -1142,7 +1259,9 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 				cout << setw(5) 	<< arraySubject[i].STCLT << " ";
 				cout << setw(5) 	<< arraySubject[i].STCTH << " ";
 				cout << endl;
-
+				if(stt >= 3)
+					continue;
+					
 				setcolor(GREEN);
 				outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
 				outtextxy(TABLE_FILTER_SX + 5 + 50 , hang + 5, tochar(arraySubject[i].idSubject));
@@ -1170,6 +1289,8 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 	int ascii;
 	int x, y;
 
+	int checkListTable = (lsb.size - 1)/15;
+
 	while(true){
 		if(kbhit()){
 			key = getch();
@@ -1191,7 +1312,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 
-			highlightClickMouse(x, y, lsb.root, arraySubject, sizeArraySubject);
+			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkListTable);
 		}
 
 	}
@@ -1211,18 +1332,26 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			// Xu li enter tai day
 			drawTableListSubject ();
 			//print Danh sach theo tên môn hoc.
-			printSTT(lsb);
+//			printSTT(lsb);
 			int arraySize = 0;
 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
 			y = TABLE_SY + 40 + D_ROW/10 -1;
 			drawTableListSubject();
-			printSTT(lsb);
+//			printSTT(lsb);
+			// print so thu tu theo du  lieu.
 
 			// In danh sach bang cay avl
 			// displaySubjectList(lsb.root);
 
 			//In danh sach bang mang.
-			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+			for(int i=0; i<15; i++){// print ra danh sach mon hoc
+				char number[4]; // luu tru day so tu dong tang
+				sprintf(number, "%03d", i + 1);
+				setbkcolor(WHITE);
+				setcolor(BLACK);
+				// setfillstyle(SOLID_FILL, YELLOW);
+				outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number); // print theo tung bang 15 hang	
+
 				setbkcolor(WHITE);
 				setcolor(LIGHTRED);
 				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
@@ -1251,7 +1380,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			// Xu li enter tai day
 			drawTableListSubject ();
 			//print Danh sach theo tên môn hoc.
-			printSTT(lsb);
+			// printSTT(lsb);
 			//===========================
 			int arraySize = 0;
 			subject* subjectListArray = arraySubject(lsb.root, arraySize);
@@ -1268,8 +1397,15 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 
 			y = TABLE_SY + 40 + D_ROW/10 -1;
 			drawTableListSubject();
-			printSTT(lsb);
-			for(int i=0; i<arraySize; i++){// print ra danh sach mon hoc
+			// printSTT(lsb);
+			for(int i=0; i<15; i++){// print ra danh sach mon hoc
+				char number[4]; // luu tru day so tu dong tang
+				sprintf(number, "%03d", i + 1);
+				setbkcolor(WHITE);
+				setcolor(RED);
+				// setfillstyle(SOLID_FILL, YELLOW);
+				outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number);	
+
 				setbkcolor(WHITE);
 				setcolor(GREEN);
 				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
@@ -1278,11 +1414,13 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
 				y += D_ROW;
 			}
+			
+			drawHeaderAndBottom();
 
+			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
 			delete[] subjectListArray;
 			//=================
 
-			drawHeaderAndBottom();
 
 			// getch();// dung man hinh de xem
 		}
