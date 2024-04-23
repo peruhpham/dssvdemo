@@ -82,6 +82,10 @@ void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[],
 void controlAddDeleteSubject();
 
 string findSubjectByName (string nameSubject, ptrSubject rootSub);
+// bool checkIdSubject (ptrSubject rootSubject, string idsSubject);
+bool checkIdSubject(nodeSubject* rootSubject, const std::string& idsSubject);
+bool checkNameSubject(nodeSubject* rootSubject, const std::string& nameSubject);
+
 void drawSearchFilter();
 nodeSubject* searchStartsWith(nodeSubject* root, string& key);
 
@@ -107,7 +111,6 @@ void drawTableListSubject (){
 	// vẽ thanh cuộn 
 	//----------------------------------------------------------------
 	drawScrollBarSubject();// ve thanh cuon cho bang subject.
-	
 	//-------
 	setlinestyle(SOLID_LINE, 0, 1);
 	setcolor(LIGHTGRAY);
@@ -124,10 +127,10 @@ void drawTableListSubject (){
     for (int y = TABLE_SY + 40; y < TABLE_LY; y += D_ROW) {
         line(TABLE_SX, y, TABLE_LX-20, y);
     }
-	// ve dupng thang phia sau
-	line(TABLE_LX-20, TABLE_SY+40, TABLE_LX-20, TABLE_LY);
-    // Thiet lap mau nen chu
-    setbkcolor(LIGHTBLUE);
+	
+	line(TABLE_LX-20, TABLE_SY+40, TABLE_LX-20, TABLE_LY);// ve dupng thang phia sau
+    
+    setbkcolor(LIGHTBLUE);// Thiet lap mau nen chu
     setcolor(BLACK);
     outtextxy(TABLE_SX + 5, TABLE_SY + 10, "STT");
     outtextxy(TABLE_SX + 2 + 50, TABLE_SY + 10, "MA MON HOC");
@@ -149,7 +152,7 @@ void displaySubjectList(ptrSubject root) {
             displaySubjectList(root->left);     
         }
         setbkcolor(WHITE);
-        setcolor(BLACK); 
+        setcolor(GREEN); 
         outtextxy(20 + x, y, const_cast<char*>(root->data.idSubject.c_str())); 
         outtextxy(20 + x + 120, y, const_cast<char*>(root->data.nameSubject.c_str())); 
         outtextxy(20 + x + 120 + 340, y, const_cast<char*>(to_string(root->data.STCLT).c_str())); 
@@ -192,7 +195,6 @@ void drawMenuSubject(){
 	for(int i = MENU_SUB_SY + 30; i <= MENU_SUB_LY; i+=30){
 		setfillstyle(SOLID_FILL, LIGHTGRAY);
 		line(MENU_SUB_SX, i, MENU_SUB_LX, i);
-
 	}
 
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
@@ -209,7 +211,7 @@ void printSTT (listSubject &lsb){
 	for(int i=0; i<lsb.size; i++){
 		sprintf(number, "%03d", i + 1);
 		setbkcolor(WHITE);
-		setcolor(BLACK);
+		setcolor(GREEN);
 		// setfillstyle(SOLID_FILL, YELLOW);
 		outtextxy(TABLE_SX + 10, TABLE_SY + 40 + i*D_ROW + D_ROW/10 - 1, number);	
 	}
@@ -236,8 +238,7 @@ void resetMenuSubject(int &selectedItem){
             outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
 		}
 
-        if (kbhit()) {
-			
+        if (kbhit()){
             key = getch();
             // cleardevice(); // Xóa màn hình để vẽ lại menu
             if (key == 72) {// Xử lý phím lên
@@ -273,6 +274,8 @@ void resetMenuSubject(int &selectedItem){
 }
 
 //----------------------------------------------------------------
+
+// data from avl tre to array static.
 void avlToArray (nodeSubject *currentNodeSubject, subject *arraySubject, int &currentIndex){
 	if(currentNodeSubject != nullptr){
 		avlToArray(currentNodeSubject->left, arraySubject, currentIndex);
@@ -285,20 +288,15 @@ void avlToArray (nodeSubject *currentNodeSubject, subject *arraySubject, int &cu
 
 
 
-//chuyen du lieu tu cay avl sang array
+//chuyen du lieu tu cay avl sang array action
 void AVLtoArray(nodeSubject* currentNodeSubject, subject *arrayTmp, int &currentIndex){
 	if(currentNodeSubject != nullptr){
 		AVLtoArray(currentNodeSubject->left, arrayTmp, currentIndex);
 		arrayTmp[currentIndex] = currentNodeSubject->data;
 		currentIndex++;
 		AVLtoArray(currentNodeSubject->right, arrayTmp, currentIndex);
-		// AVLtoArray(currentNodeSubject->left, arrayTmp, currentIndex);
-		// arrayTmp[currentIndex] = currentNodeSubject->data;
-		// currentIndex++;
-		// AVLtoArray(currentNodeSubject->right, arrayTmp, currentIndex);
 	}
 }
-
 void countNodeSubject(nodeSubject* currentNodeSubject, int &arraySize) {
 	if(currentNodeSubject != nullptr){
 		countNodeSubject(currentNodeSubject->left, arraySize);
@@ -308,7 +306,6 @@ void countNodeSubject(nodeSubject* currentNodeSubject, int &arraySize) {
 	cout << arraySize << " ";
 	cout << endl;
 }
-
 subject* arraySubject(nodeSubject* currentNodeSubject, int &arraySize) {
 	countNodeSubject(currentNodeSubject, arraySize);
 	subject *arraySub = new subject[arraySize];
@@ -322,6 +319,7 @@ void printListSubjectByName(subject *sub, int &x, int &y){
 	cout << "Danh sach mon hoc:............"<< endl;
 	for(int i=0; i<5; i++){
 		cout << sub->nameSubject << endl;
+		setcolor(GREEN);
 		outtextxy(TABLE_SX + 50, y, tochar(sub[i].idSubject));
 		outtextxy(TABLE_SX + 50 + 120, y, tochar(sub[i].nameSubject));
 		outtextxy(TABLE_SX + 50 + 120 + 340, y, tochar(to_string(sub[i].STCLT)));
@@ -371,21 +369,24 @@ void drawTableControlSubject(){ //draw bang do hoa xu ly them sua xoa mon hoc.
 	rectangle(TABLE_CONTROL_SX + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
 	rectangle(TABLE_CONTROL_SX + 10 + 110*2, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
 	setDefault();
-	setbkcolor(WHITE);
-	bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX - 1 + 10 + 100, TABLE_CONTROL_SY + 50 - 1 + 250 + 30);
-	bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX  - 1 + 10 + 100 + 110, TABLE_CONTROL_SY + 50 - 1 + 250 + 30);
-	bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 - 1 + 250 + 30);
+
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
+	bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
+	bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
 	setDefault();
+	
+	setbkcolor(LIGHTBLUE);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
-	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
-	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
-	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
+	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
+	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"DELETE");
+	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
 	setDefault(); 
 
 	// draw muc search id hoac ten mon hoc sẽ hien ra thong tin can sua chua.
 	setcolor(BLUE);
 	setbkcolor(LIGHTCYAN);
-	outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 50 + 250 + 5 + 35, "Tim kiem: ");
+	outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 50 + 250 + 5 + 35, "Search: ");
 
 	rectangle(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
 	setbkcolor(WHITE);
@@ -405,7 +406,6 @@ void removeTableConsolSubject(){
 //Load lai du lieu trong danh sach mon hoc.
 void reloadingDataSubject(){
 	string nameFileListSubject = "data\\subjectlist.txt";
-
 	listSubject lsub;
 
 	readListSubject(lsub, nameFileListSubject);
@@ -571,19 +571,21 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[], int sizeArraySubject, int &checkListTable){
 	dong = TABLE_FILTER_SY + 30;
 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
-	string idSub, nameSub;
-	int stclt, stcth;
+	string idSub = "", nameSub =  "";
+	int stclt = -1, stcth = -1;
+
+	// check da nhap du chua de insert
+	bool checkInputId = false;
+	bool checkInputName = false;
+	bool checkInputLT = false;
+	bool checkInputTH = false;
 
 	int checkOutList = (lsb.size - 1)/15;// check list nay se chạy tu 0 den checkOutList
 	// luc nay check out list = 1
-	int checkBegin = 0;
-
 
 	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){
 		// Neu click mouse gap thi hightlight thanh sang cho thanh search
 		highlightFrame(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
-
-
 		//Xu li nhâp du lieu vao khung search 
 		const int sizeText = 30;
 		int index = 0;
@@ -602,9 +604,8 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 				}else
 					isPrevSpace = false;
 
-				if (text == ENTER) { 
+				if (text == ENTER) 
 					break; 
-				}
 				else if (text == BACKSPACE) { 
 					if (index > 0) { 
 						std::cout << "\b \b"; 
@@ -649,8 +650,6 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		drawSearchFilter();
 		cout << "In bang filter\n";
 		// displaySubjectList(root); // in danh sach du lieu mon hoc bang avl  
-
-
 		string strSearch(textSearch);
         cout << "Search for strings starting with '" << strSearch << "': \n";
 
@@ -757,8 +756,6 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextId);
 
-		// idSub = stringTextId;
-		// cout << "idSub: " << idSub << endl;
 
 		setDefault();
 
@@ -771,6 +768,32 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 			+ Hiện ra màn hình thông báo lỗi "ĐÃ TỒN TẠI IDSUBJECT" và yêu cầu nhập lại IDsubject
 		
 		*/
+		
+		// chay kiem tra id nhap vao co bị trung lap voi database da co hay kkhong
+		if(checkIdSubject(lsb.root, stringTextId) == false){
+			idSub = stringTextId;
+			cout << "idSub: " << idSub << endl;
+
+			// xu li data insert vao avl tree
+
+
+
+
+			
+
+		}else{
+			cout << setw(10) << stringTextId << setw(15) << "Da ton tai id..." << endl;
+
+			setfillstyle(SOLID_FILL, WHITE);
+			bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);//an du lieu nhap khong hop le.
+			// Bao loi trung idsubject
+			setcolor(LIGHTRED);
+			setbkcolor(LIGHTCYAN);
+			outtextxy(TABLE_CONTROL_SX + 150, TABLE_CONTROL_SY + 70, "ID da ton tai!");
+			delay(3000);
+			setfillstyle(SOLID_FILL, LIGHTCYAN);
+			bar(TABLE_CONTROL_SX + 150-2, TABLE_CONTROL_SY + 70, TABLE_CONTROL_SX + 310, TABLE_CONTROL_SY + 100);
+		}
 
 
 		//----------------------------------
@@ -842,10 +865,29 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 60 + 30 + 30 + 1, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
 		outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 60 + 30 + 30 + 5, textName);
 
-		// nameSub = textName;
-		// cout << "nameSub: " << nameSub << endl;
 
 		setDefault();
+
+		if(checkNameSubject(lsb.root, textName) == false){
+			nameSub = textName;
+			cout << "nameSub: " << nameSub << endl;
+			// xu li 
+
+		}else{
+			// Thong bao loi trung du lieu.
+			cout << setw(30) << textName << setw(10) << "Mon hoc da ton tai!" << endl;
+
+			setfillstyle(SOLID_FILL, WHITE);
+			bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 60 + 30 + 30, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);//an du lieu nhap khong hop le.
+
+			setcolor(LIGHTRED);
+			setbkcolor(LIGHTCYAN);
+			outtextxy(TABLE_CONTROL_SX + 130, TABLE_CONTROL_SY + 70, "Mon hoc da ton tai!" ); 
+			delay(3000);
+			setfillstyle(SOLID_FILL, LIGHTCYAN);
+			bar(TABLE_CONTROL_SX + 130, TABLE_CONTROL_SY + 70,TABLE_CONTROL_SX + 335, TABLE_CONTROL_SY + 100);
+			setDefault();
+		}
 	}
 	else {
 		highlightFrameDefault(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);
@@ -907,8 +949,8 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		outtextxy(TABLE_CONTROL_SX + 5 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textLT);
 
 
-		// stclt = stringtoint(textLT);
-		// cout << "stclt : " << stclt << endl;
+		stclt = stringtoint(textLT);
+		cout << "stclt : " << stclt << endl;
 
 		setDefault();
 	}
@@ -973,8 +1015,8 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		outtextxy(TABLE_CONTROL_SX + 5 + 150 + 20, TABLE_CONTROL_SY + 175 + 20 + 5, textTH);
 
 
-		// stcth = stringtoint(textTH);
-		// cout << "stcth: " << stcth << endl;
+		stcth = stringtoint(textTH);
+		cout << "stcth: " << stcth << endl;
 
 		setDefault();
 	}
@@ -983,7 +1025,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 	}
 
 
-
+	//----------------------------------------------------
 	// Highlight khung sang khi click mouse Them, Sua, Xoa.
 	// Muc Them
 	if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 100 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
@@ -992,7 +1034,7 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		setfillstyle(SOLID_FILL, BLUE);
 
 		bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
+		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
 	
 		//Xu li them vao avl
 		
@@ -1001,12 +1043,12 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		
 		
 	}else{
-		setbkcolor(WHITE);
+		setbkcolor(LIGHTBLUE);
+		setfillstyle(SOLID_FILL, LIGHTBLUE);
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL, WHITE);
 	
 		bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+)THEM");
+		outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
 	}
 	// Muc Xoa
 	if(TABLE_CONTROL_SX + 1 + 10 + 100 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
@@ -1015,14 +1057,14 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		setfillstyle(SOLID_FILL, BLUE);
 		
 		bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
+		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"DELETE");
 	}else{
-		setbkcolor(WHITE);
+		setbkcolor(LIGHTBLUE);
+		setfillstyle(SOLID_FILL, LIGHTBLUE);
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL, WHITE);
 
 		bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"(-)XOA");
+		outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"DELETE");
 	}
 	// Muc Sua
 	if(TABLE_CONTROL_SX + 1 + 10 + 110*2 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
@@ -1031,21 +1073,20 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 		setfillstyle(SOLID_FILL, BLUE);
 
 		bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
+		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
 	}else{
-		setbkcolor(WHITE);
+		setbkcolor(LIGHTBLUE);
+		setfillstyle(SOLID_FILL, LIGHTBLUE);
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL, WHITE);
 
 		bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX  + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
-		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "(+-)SUA");
+		outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
 	}
 
 
 
 	// Hight light thanh truot/cuon ========================///////////////////////////////
 	int rowTable = TABLE_SY + 40 + D_ROW/10 -1;
-
 	// len
 	if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 30 + 20){
 		drawTableListSubject ();
@@ -1071,13 +1112,13 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 			char number[4]; // luu tru day so tu dong tang
 			sprintf(number, "%03d", i + 1);
 			setbkcolor(WHITE);
-			setcolor(RED);
+			setcolor(GREEN);
 			// setfillstyle(SOLID_FILL, YELLOW);
 			outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number);	
 			
 
 			setbkcolor(WHITE);
-			setcolor(BLACK);
+			setcolor(GREEN);
 			outtextxy(TABLE_SX + 20 + 50, rowTable, tochar(arraySubject[i].idSubject));
 			outtextxy(TABLE_SX + 20 + 50 + 120, rowTable, tochar(arraySubject[i].nameSubject));
 			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, rowTable, tochar(to_string(arraySubject[i].STCLT)));
@@ -1124,12 +1165,12 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 			char number[4]; // luu tru day so tu dong tang
 			sprintf(number, "%03d", i + 1);
 			setbkcolor(WHITE);
-			setcolor(BLACK);
+			setcolor(GREEN);
 			// setfillstyle(SOLID_FILL, YELLOW);
 			outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number); // print theo tung bang 15 hang	
 			
 			setbkcolor(WHITE);
-			setcolor(LIGHTRED);
+			setcolor(GREEN);
 			outtextxy(TABLE_SX + 20 + 50, rowTable, tochar(arraySubject[i].idSubject));
 			outtextxy(TABLE_SX + 20 + 50 + 120, rowTable, tochar(arraySubject[i].nameSubject));
 			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, rowTable, tochar(to_string(arraySubject[i].STCLT)));
@@ -1205,6 +1246,31 @@ string findSubjectByName (string nameSubject, ptrSubject rootSub){
 	}
 	return rootSub->data.nameSubject;
 }
+//Kiem tra id co bi trung hay khong
+bool checkIdSubject(ptrSubject rootSubject, const string& idsSubject) {
+    if (rootSubject == nullptr) {
+        return false; //khong thay
+    }
+    if (rootSubject->data.idSubject == idsSubject) {
+        return true; // Tim thay idSubject khop
+    }
+    
+    if (checkIdSubject(rootSubject->left, idsSubject)) {
+        return true; // Tim thay idSubject trong cay con ben trai
+    }
+    return checkIdSubject(rootSubject->right, idsSubject); // Tim kiem o node con ben phai
+}
+// Kiem tra ten mon hoc co bi trung hay khong
+bool checkNameSubject(nodeSubject* rootSubject, const std::string& namesSubject){
+	if(rootSubject == nullptr)
+		return false;
+	if(rootSubject->data.nameSubject == namesSubject)
+		return true;
+
+	if(checkNameSubject(rootSubject->left, namesSubject))
+		return true;
+	return checkNameSubject(rootSubject->right, namesSubject);
+}
 
 //Tim kiem va loc mon hoc theo ten || theo bang sao cay avl chi muc dich hien thi thong tin thoi
 nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
@@ -1265,15 +1331,15 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 			if(arraySubject[i].nameSubject.compare(0, keySearch.length(), keySearch) == 0){
 				cout << "Data is searched: ";
 				cout << setw(5)		<< to_string(stt + 1);
-				cout << setw(10) 	<< arraySubject[i].idSubject << " ";
-				cout << setw(30) 	<< arraySubject[i].nameSubject << " ";
-				cout << setw(5) 	<< arraySubject[i].STCLT << " ";
-				cout << setw(5) 	<< arraySubject[i].STCTH << " ";
+				cout << setw(10) 	<< arraySubject[i].idSubject;
+				cout << setw(30) 	<< arraySubject[i].nameSubject;
+				cout << setw(5) 	<< arraySubject[i].STCLT;
+				cout << setw(5) 	<< arraySubject[i].STCTH;
 				cout << endl;
 				if(stt >= 3)
 					continue; // tranh viec tran man hinh hien thi.
 
-				setcolor(GREEN);
+				setcolor(LIGHTRED);
 				outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
 				outtextxy(TABLE_FILTER_SX + 5 + 50 , hang + 5, tochar(arraySubject[i].idSubject));
 				outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, hang + 5, tochar(arraySubject[i].nameSubject));
@@ -1298,12 +1364,19 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject){
 	// drawSearchFilter();
 	// cout << "In bangarraySubject[i].
-
 	char key;
 	int ascii;
 	int x, y;
 
 	int checkListTable = (lsb.size - 1)/15;
+
+	// check da nhap du chua de insert
+	bool checkInputId = false;
+	bool checkInputName = false;
+	bool checkInputLT = false;
+	bool checkInputTH = false;
+
+
 
 	while(true){
 		if(kbhit()){
@@ -1328,7 +1401,6 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkListTable);
 		}
-
 	}
 }
 
@@ -1362,12 +1434,12 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 				char number[4]; // luu tru day so tu dong tang
 				sprintf(number, "%03d", i + 1);
 				setbkcolor(WHITE);
-				setcolor(BLACK);
+				setcolor(GREEN);
 				// setfillstyle(SOLID_FILL, YELLOW);
 				outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number); // print theo tung bang 15 hang	
 
 				setbkcolor(WHITE);
-				setcolor(LIGHTRED);
+				setcolor(GREEN);
 				outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
 				outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
 				outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
@@ -1426,7 +1498,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 				char number[4]; // luu tru day so tu dong tang
 				sprintf(number, "%03d", i + 1);
 				setbkcolor(WHITE);
-				setcolor(RED);
+				setcolor(GREEN);
 				// setfillstyle(SOLID_FILL, YELLOW);
 				outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number);	
 
