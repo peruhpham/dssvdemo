@@ -77,14 +77,14 @@ int main(){
 			case UP:     
 				if(selected > 1){    
 					selected--;   
-					createMenu(selected);   	       
+					createMenu(selected);   	         
 				}      
 				break;         
-			case DOWN:   
+			case DOWN:     
 				if(selected < 4){    
-					selected++;   
+					selected++;     
 					createMenu(selected);    
-				} 
+				}  
 				break;       
 			case ESC:  
 				if(!createNotice("Ban chac chan muon thoat!", "")){
