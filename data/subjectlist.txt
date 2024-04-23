@@ -31,6 +31,6 @@ INT1303#An toan va bao mat httt#3#0
 INT13147#Thuc tap co so#3#0
 INT1340#Nhap mon cong nghe phan mem#3#3
 INT1341#Nhap mon tri tue nhan tao#3#2
-INT14148#Co so du lieu phan tan#3#1
+INT1414#Co so du lieu phan tan#3#1
 INT1434#Lap trinh Web#3#1
 SKD1103#Ky nang tao lap Van ban#1#0				

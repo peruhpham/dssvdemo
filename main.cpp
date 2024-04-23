@@ -73,11 +73,11 @@ int main(){
 						createMenu(selected);           
 					break;         
 				}  
-				break;    
+				break;      
 			case UP:     
-				if(selected > 1){  
+				if(selected > 1){   
 					selected--; 
-					createMenu(selected);
+					createMenu(selected);   	    
 				}  
 				break; 
 			case DOWN: 

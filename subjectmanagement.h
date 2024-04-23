@@ -62,7 +62,7 @@ void printSTT (listSubject &lsb);
 void printListSubjectByName(subject *sub, int x, int y);
 // void inorderTraversal(ptrSubject root, subject staticArray[], int& index);
 void AVLToArray(ptrSubject currentNodeSubject, subject *arrayTmp, int &currentIndex);
-
+void avlToArray (nodeSubject *currentNodeSubject, subject *arraySubject, int &currentIndex);
 
 void drawTableControlSubject();// draw bang dieu khien
 void removeTableConsolSubject();// che lai man hinh khu vuc dieu khien va bang du lieu
@@ -273,6 +273,18 @@ void resetMenuSubject(int &selectedItem){
 }
 
 //----------------------------------------------------------------
+void avlToArray (nodeSubject *currentNodeSubject, subject *arraySubject, int &currentIndex){
+	if(currentNodeSubject != nullptr){
+		avlToArray(currentNodeSubject->left, arraySubject, currentIndex);
+		arraySubject[currentIndex] = currentNodeSubject->data;
+		currentIndex++;
+		avlToArray(currentNodeSubject->right, arraySubject, currentIndex);
+	}
+}
+
+
+
+
 //chuyen du lieu tu cay avl sang array
 void AVLtoArray(nodeSubject* currentNodeSubject, subject *arrayTmp, int &currentIndex){
 	if(currentNodeSubject != nullptr){
@@ -280,6 +292,10 @@ void AVLtoArray(nodeSubject* currentNodeSubject, subject *arrayTmp, int &current
 		arrayTmp[currentIndex] = currentNodeSubject->data;
 		currentIndex++;
 		AVLtoArray(currentNodeSubject->right, arrayTmp, currentIndex);
+		// AVLtoArray(currentNodeSubject->left, arrayTmp, currentIndex);
+		// arrayTmp[currentIndex] = currentNodeSubject->data;
+		// currentIndex++;
+		// AVLtoArray(currentNodeSubject->right, arrayTmp, currentIndex);
 	}
 }
 
@@ -303,7 +319,9 @@ subject* arraySubject(nodeSubject* currentNodeSubject, int &arraySize) {
 
 //In danh sach theo thu tu ten mon hoc.
 void printListSubjectByName(subject *sub, int &x, int &y){
+	cout << "Danh sach mon hoc:............"<< endl;
 	for(int i=0; i<5; i++){
+		cout << sub->nameSubject << endl;
 		outtextxy(TABLE_SX + 50, y, tochar(sub[i].idSubject));
 		outtextxy(TABLE_SX + 50 + 120, y, tochar(sub[i].nameSubject));
 		outtextxy(TABLE_SX + 50 + 120 + 340, y, tochar(to_string(sub[i].STCLT)));
@@ -1373,18 +1391,33 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			// Xu li enter tai day
 			drawTableListSubject ();
 			//===========================
-			int arraySize = 0;
-			subject* subjectListArray = arraySubject(lsb.root, arraySize);
-			for(int i = 0; i < arraySize; i++){ 
-				int indexCurrent = i;
-				while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
-					subject temp = subjectListArray[indexCurrent];
-					subjectListArray[indexCurrent] = subjectListArray[indexCurrent-1];
-					subjectListArray[indexCurrent-1] = temp;
+			int sizeArraySubject = 0;
+			subject subjectListArray[500];
+			avlToArray(lsb.root, subjectListArray, sizeArraySubject);
 
-					indexCurrent--;
+			for(int i = 0; i < sizeArraySubject; ++i){
+				int indexCerrent = i;
+				while(indexCerrent > 0 && subjectListArray[indexCerrent - 1].nameSubject > subjectListArray[indexCerrent].nameSubject){
+					subject nodeTmp = subjectListArray[indexCerrent];
+					subjectListArray[indexCerrent] = subjectListArray[indexCerrent - 1];
+					subjectListArray[indexCerrent - 1] = nodeTmp;
+
+					indexCerrent--;
 				}
 			}
+
+			// int arraySize = 0;
+			// subject* subjectListArray = arraySubject(lsb.root, arraySize);
+			// for(int i = 0; i < arraySize; i++){ 
+			// 	int indexCurrent = i;
+			// 	while(indexCurrent > 0 && subjectListArray[indexCurrent-1].nameSubject > subjectListArray[indexCurrent].nameSubject){
+			// 		subject temp = subjectListArray[indexCurrent];
+			// 		subjectListArray[indexCurrent] = subjectListArray[indexCurrent-1];
+			// 		subjectListArray[indexCurrent-1] = temp;
+
+			// 		indexCurrent--;
+			// 	}
+			// }
 
 			y = TABLE_SY + 40 + D_ROW/10 -1;
 			drawTableListSubject();
@@ -1408,7 +1441,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			
 			drawHeaderAndBottom();
 
-			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
+			controlAddDeleteSubject(lsb, subjectListArray, sizeArraySubject);
 			delete[] subjectListArray;
 			//=================
 
