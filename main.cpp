@@ -69,7 +69,7 @@ int main(){
 						createMenu(selected);                      
 					break;						                                        	 
 					case 4:                             
-						studentGradeManagement(lcfs, lsj, ls);                     
+						studentGradeManagement(lcfs, lsj, ls);                      
 						createMenu(selected);            
 					break;         
 				}  
@@ -77,13 +77,13 @@ int main(){
 			case UP:     
 				if(selected > 1){    
 					selected--;   
-					createMenu(selected);   	         
-				}      
-				break;         
-			case DOWN:     
-				if(selected < 4){    
+					createMenu(selected);   	           
+				}       
+				break;               
+			case DOWN:       
+				if(selected < 4){     
 					selected++;     
-					createMenu(selected);    
+					createMenu(selected);     
 				}  
 				break;       
 			case ESC:  

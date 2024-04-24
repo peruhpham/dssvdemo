@@ -1381,6 +1381,7 @@ void noticeError(){
 
 // Phần xử lý điều khiển ---------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------
+// Xu li ghi file
 //Dieu khien them sua xoa tai man hinh mon hoc
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject){
 	// drawSearchFilter();
@@ -1544,7 +1545,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// // cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
 
 				// Thu lai xu li bang mang
-				searchStartWithArray(arraySubject, sizeArraySubject, strSearch);
+				searchStartWithArray(arraySubject, lsb.size, strSearch);
 
 
 			}
@@ -1894,9 +1895,42 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
 			
 				//Xu li them vao avl
-				// if(){
+				if(idSub != "" && nameSub != "" && stclt != -1 && stcth != -1){
+					// Thuc hien insert
+					subject nodeNewSubject;
+					nodeNewSubject.idSubject = idSub;
+					nodeNewSubject.nameSubject = nameSub;
+					nodeNewSubject.STCLT = stclt;
+					nodeNewSubject.STCTH = stcth;
 
-				// }
+					insert(lsb.root, nodeNewSubject);
+					lsb.size++;
+					cout << "size node subject: " << lsb.size << endl;
+					arraySubject[lsb.size-1] = nodeNewSubject;
+					cout << "Xem danh sach subject moi...\n";
+					for(int i = 0; i < lsb.size; i++){
+						cout << setw(5) << i + 1 << setw(10) << arraySubject[i].idSubject << setw(30) << arraySubject[i].nameSubject << endl;	
+					}
+					// cout << "\n loading lai data from avl to arrray................................\n";
+					// int sizeCurArrSub = 0;
+					// avlToArray(lsb.root, arraySubject, sizeCurArrSub);
+
+					// An data subject
+					setfillstyle(SOLID_FILL, WHITE);
+
+
+
+				}else{
+					cout << "Error! Not complete data subject input..." << endl;
+					setcolor(RED);
+					setbkcolor(LIGHTCYAN);
+					outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap du data subject!");
+					
+					delay(3000);
+					setfillstyle(SOLID_FILL, LIGHTCYAN);
+					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+					setDefault();
+				}
 				
 
 
@@ -1910,7 +1944,8 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
 				outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
 			}
-			// Muc Xoa
+
+			// Muc Xoa - Delete Subject
 			if(TABLE_CONTROL_SX + 1 + 10 + 100 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
 				setbkcolor(BLUE);
 				setcolor(WHITE);
@@ -1926,7 +1961,8 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
 				outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"DELETE");
 			}
-			// Muc Sua
+
+			// Muc Update Subject
 			if(TABLE_CONTROL_SX + 1 + 10 + 110*2 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
 				setbkcolor(BLUE);
 				setcolor(WHITE);
@@ -2080,8 +2116,10 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			drawTableListSubject ();
 			//print Danh sach theo tên môn hoc.
 //			printSTT(lsb);
+			subject subjectListArray[500];
 			int arraySize = 0;
-			subject* subjectListArray = arraySubject(lsb.root, arraySize);
+			// subject* subjectListArray = arraySubject(lsb.root, arraySize);
+			avlToArray(lsb.root, subjectListArray, arraySize);
 			y = TABLE_SY + 40 + D_ROW/10 -1;
 			drawTableListSubject();
 //			printSTT(lsb);
@@ -2112,9 +2150,10 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			// Them phan dieu khien khi click mouse
 			reloadingDataSubject();
 			cout << "reload data list subject\n";
-
+			
+			cout << "\nsize subject truoc khi vao control" << arraySize << endl;
 			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
-			delete[] subjectListArray;
+			// delete[] subjectListArray;
 		}
 		else if(selectedItem == 1){
 			cout << "selected 1" << endl;
@@ -2175,7 +2214,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			drawHeaderAndBottom();
 
 			controlAddDeleteSubject(lsb, subjectListArray, sizeArraySubject);
-			delete[] subjectListArray;
+			// delete[] subjectListArray;hj
 			//=================
 
 
