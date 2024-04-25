@@ -102,6 +102,8 @@ void noticeError();
 nodeSubject * minValueNode(nodeSubject* node);
 nodeSubject* deleteNode(nodeSubject* root, string & key);
 void printRootLeftRight(nodeSubject * root);
+
+void printUserManual ();
 //=====================================================================================================
 
 
@@ -1544,12 +1546,25 @@ void printRootLeftRight(nodeSubject *root){
 	}
 }
 
+void printUserManual (){
+	setcolor(BLACK);
+	outtextxy(200, 610, "ESC : Thoat!");
+	outtextxy(200, 635, "ENTER : Ket thuc du lieu nhap vao."); 
+	outtextxy(200, 660, "Nhap data truoc - Click INSERT sau || Click DELETE truoc - Nhap data can xoa sau.");
+}
+
 
 // Phần xử lý điều khiển ---------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------
 // Xu li ghi file
 //Dieu khien them sua xoa tai man hinh mon hoc
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject){
+	printUserManual();
+
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
+	setfillstyle ( SOLID_FILL, LIGHTBLUE);
+	bar(TABLE_LX - 16, TABLE_SY + 60, TABLE_LX - 6, TABLE_SY + 120);
 	// drawSearchFilter();
 	// cout << "In bangarraySubject[i].
 	char key;
@@ -2183,53 +2198,33 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			if(checkIdDelete == true){
 				checkIdDelete = false;
-				// if(TABLE_CONTROL_SX + 5 <= x && TABLE_CONTROL_SY + 30 + 30 <= y && TABLE_CONTROL_SX + 120 >= x && y <= TABLE_CONTROL_SY + 60 + 30){
-					cout << "click dung muc ID de xoa thong tin" << endl;
-					// Neu click mouse gap thi hightlight thanh sang cho thanh search
-					highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
+				cout << "click dung muc ID de xoa thong tin" << endl;
+				// Highlight sang len de user nhan thay.
+				highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
 
-					//xu li nhâp du lieu vao khung id
-					const int sizeTextIdDelete = 8; 
-					char stringTextIdDelete[sizeTextIdDelete]; 
-					string tmpTextIdDelete;
-					int indexIdDelete = 0; 
-					std::cout << "Nhap vao mot chuoi id (nhap Enter de ket thuc):\n";
+				//xu li nhâp du lieu vao khung id
+				const int sizeTextIdDelete = 8; 
+				char stringTextIdDelete[sizeTextIdDelete]; 
+				string tmpTextIdDelete;
+				int indexIdDelete = 0; 
+				std::cout << "Nhap vao mot chuoi id (nhap Enter de ket thuc):\n";
 
-					while (true) { 
-						if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
-							char textIdDelete = getch(); 
-							if (textIdDelete == ENTER && tmpTextIdDelete.length() == 7) { 
-								cout << "size mtpTextId: " << tmpTextIdDelete << endl;
-								break; 
-							}
-							else if(textIdDelete == SPACE){
-								continue;
-							}
-							else if (textIdDelete == BACKSPACE) { 
-								if (indexIdDelete > 0) { 
-									std::cout << "\b \b"; 
-									indexIdDelete--; 
-									stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
-									// cout << textSearch << endl;
-									setcolor(BLUE);
-									setbkcolor(YELLOW);
-									bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
-									stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
-									outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextIdDelete);
-
-									setDefault();
-								}
-							}
-							else if (indexIdDelete < sizeTextIdDelete - 1) { 
-								//Neu 3 ki tu dau tien thi mac dinh la chu in hoa.
-								if((('A' <= textIdDelete && textIdDelete <= 'Z') || ('a' <= textIdDelete && textIdDelete <= 'z')) && (0 <= indexIdDelete && indexIdDelete <= 2)){
-									stringTextIdDelete[indexIdDelete++] = toupper(textIdDelete); 
-									std::cout << textIdDelete; 
-								}
-								else if((3 <= indexIdDelete && indexIdDelete <= 6) && ('0' <= textIdDelete && textIdDelete <= '9')){
-									stringTextIdDelete[indexIdDelete++] = textIdDelete;
-									std::cout << textIdDelete; 
-								}
+				while (true) { 
+					if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
+						char textIdDelete = getch(); 
+						if (textIdDelete == ENTER && tmpTextIdDelete.length() == 7) { 
+							cout << "size mtpTextId: " << tmpTextIdDelete << endl;
+							break; 
+						}
+						else if(textIdDelete == SPACE){
+							continue;
+						}
+						else if (textIdDelete == BACKSPACE) { 
+							if (indexIdDelete > 0) { 
+								std::cout << "\b \b"; 
+								indexIdDelete--; 
+								stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
+								// cout << textSearch << endl;
 								setcolor(BLUE);
 								setbkcolor(YELLOW);
 								bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
@@ -2239,20 +2234,39 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 								setDefault();
 							}
 						}
-						tmpTextIdDelete = stringTextIdDelete;
-					}
-					stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
-					std::cout << "\nID subject can xoa: " << stringTextIdDelete << std::endl;
-					setcolor(BLUE);
-					setbkcolor(WHITE);
-					bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
-					outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextIdDelete);
-					setDefault();
+						else if (indexIdDelete < sizeTextIdDelete - 1) { 
+							//Neu 3 ki tu dau tien thi mac dinh la chu in hoa.
+							if((('A' <= textIdDelete && textIdDelete <= 'Z') || ('a' <= textIdDelete && textIdDelete <= 'z')) && (0 <= indexIdDelete && indexIdDelete <= 2)){
+								stringTextIdDelete[indexIdDelete++] = toupper(textIdDelete); 
+								std::cout << textIdDelete; 
+							}
+							else if((3 <= indexIdDelete && indexIdDelete <= 6) && ('0' <= textIdDelete && textIdDelete <= '9')){
+								stringTextIdDelete[indexIdDelete++] = textIdDelete;
+								std::cout << textIdDelete; 
+							}
+							setcolor(BLUE);
+							setbkcolor(YELLOW);
+							bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
+							stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
+							outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextIdDelete);
 
-					string textDelete = string(stringTextIdDelete);
-					deleteNode(lsb.root, textDelete);
-					lsb.size--;
-					cout << "xoa node id = " << textDelete << " thanh cong ..." << endl; 
+							setDefault();
+						}
+					}
+					tmpTextIdDelete = stringTextIdDelete;
+				}
+				stringTextIdDelete[indexIdDelete] = '\0'; // Thêm ký tự kết thúc chuỗi
+				std::cout << "\nID subject can xoa: " << stringTextIdDelete << std::endl;
+				setcolor(BLUE);
+				setbkcolor(WHITE);
+				bar(TABLE_CONTROL_SX + 5 + 1, TABLE_CONTROL_SY + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
+				outtextxy(TABLE_CONTROL_SX + 5 + 5, TABLE_CONTROL_SY + 30 + 30 + 5, stringTextIdDelete);
+				setDefault();
+
+				string textDelete = string(stringTextIdDelete);
+				deleteNode(lsb.root, textDelete);
+				lsb.size--;
+				cout << "xoa node id = " << textDelete << " thanh cong ..." << endl; 
 			}
 
 			// Muc Update Subject
@@ -2289,9 +2303,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				}
 				
 
-				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
-				setfillstyle ( SOLID_FILL, LIGHTGRAY);
-				bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+				// bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
+				// setfillstyle ( SOLID_FILL, LIGHTGRAY);
+				// bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
 
 				
 				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
@@ -2342,9 +2356,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					checkListTable = 0;
 				}
 
-				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
-				setfillstyle ( SOLID_FILL, LIGHTGRAY);
-				bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+				// bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
+				// setfillstyle ( SOLID_FILL, LIGHTGRAY);
+				// bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
 
 				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
@@ -2387,9 +2401,28 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				drawScrollBarSubject();
 			}
 
+
+			// Hien thi khung chi muc du lieu
+			if(checkListTable == 0){// re chuot o dau danh sach
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
+				setfillstyle ( SOLID_FILL, LIGHTBLUE);
+				bar(TABLE_LX - 16, TABLE_SY + 60, TABLE_LX - 6, TABLE_SY + 120);
+			}
+			else if(checkListTable == ((lsb.size - 1)/15)){//re chuot den cuoi danh sach.
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
+				setfillstyle ( SOLID_FILL, LIGHTBLUE);
+				bar(TABLE_LX - 16, TABLE_LY - 76, TABLE_LX - 6, TABLE_LY - 16);
+			}
+			else{
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
+				setfillstyle ( SOLID_FILL, LIGHTBLUE);
+				bar(TABLE_LX - 16, TABLE_LY - 200, TABLE_LX - 6, TABLE_LY - 16 - 140);
+			}
+
 			setDefault();
-
-
 		}
 	}
 }
