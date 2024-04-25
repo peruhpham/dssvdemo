@@ -348,10 +348,9 @@ void drawTableControlSubject(){ //draw bang do hoa xu ly them sua xoa mon hoc.
 	setcolor(BLUE);
 	rectangle(TABLE_CONTROL_SX, TABLE_CONTROL_SY, TABLE_CONTROL_LX, TABLE_CONTROL_LY-10); // draw vien do
 
-	setfillstyle(SOLID_FILL, LIGHTCYAN);
 	bar(TABLE_CONTROL_SX+1, TABLE_CONTROL_SY+1, TABLE_CONTROL_LX-1, TABLE_CONTROL_LY-11); // draw nen gray
 	
-	
+	setfillstyle(SOLID_FILL, LIGHTCYAN);
 	outtextxy(TABLE_CONTROL_SX + 2, TABLE_CONTROL_SY, "CAP NHAT THONG TIN");// tieu de bang dieu khien
 	setDefault();
 	//------------------------
@@ -1551,6 +1550,7 @@ void printUserManual (){
 	outtextxy(200, 610, "ESC : Thoat!");
 	outtextxy(200, 635, "ENTER : Ket thuc du lieu nhap vao."); 
 	outtextxy(200, 660, "Nhap data truoc - Click INSERT sau || Click DELETE truoc - Nhap data can xoa sau.");
+	setDefault();
 }
 
 
@@ -2291,6 +2291,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			// Hight light thanh truot/cuon ========================///////////////////////////////
 			int rowTable = TABLE_SY + 40 + D_ROW/10 -1;
+			// checkListTable = 0;
 			// len
 			if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 60){
 				drawTableListSubject ();
@@ -2303,12 +2304,6 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					checkListTable = (lsb.size - 1)/15;
 				}
 				
-
-				// bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
-				// setfillstyle ( SOLID_FILL, LIGHTGRAY);
-				// bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
-
-				
 				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 						continue;
@@ -2319,7 +2314,6 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					setcolor(GREEN);
 					// setfillstyle(SOLID_FILL, YELLOW);
 					outtextxy(TABLE_SX + 10, TABLE_SY + 40 + (i%15)*D_ROW + D_ROW/10 - 1, number);	
-					
 
 					setbkcolor(WHITE);
 					setcolor(GREEN);
@@ -2356,10 +2350,6 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				if(checkListTable < 0){
 					checkListTable = 0;
 				}
-
-				// bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
-				// setfillstyle ( SOLID_FILL, LIGHTGRAY);
-				// bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
 
 				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
@@ -2402,8 +2392,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				drawScrollBarSubject();
 			}
 
-
-			// Hien thi khung chi muc du lieu
+			// Hien thi khung chi muc du lieu thanh cuon
 			if(checkListTable == 0){// re chuot o dau danh sach
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
@@ -2478,7 +2467,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			reloadingDataSubject();
 			cout << "reload data list subject\n";
 			
-			cout << "\nsize subject truoc khi vao control" << arraySize << endl;
+			cout << "\nSize subject truoc khi vao control" << setw(5) << arraySize << endl;
 			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
 			// delete[] subjectListArray;
 		}
