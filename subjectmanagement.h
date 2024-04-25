@@ -1572,6 +1572,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 	int x, y;
 
 	int checkListTable = (lsb.size - 1)/15;
+	int tmpCheckListTable = checkListTable;
 
 	// check da nhap du chua de insert
 	bool checkInputId = false;
@@ -2291,7 +2292,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			// Hight light thanh truot/cuon ========================///////////////////////////////
 			int rowTable = TABLE_SY + 40 + D_ROW/10 -1;
 			// len
-			if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 30 + 20){
+			if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 60){
 				drawTableListSubject ();
 
 				checkListTable--;
@@ -2419,7 +2420,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
-				bar(TABLE_LX - 16, TABLE_LY - 200, TABLE_LX - 6, TABLE_LY - 16 - 140);
+				bar(TABLE_LX - 16, (TABLE_SY + 60 + checkListTable*(295)/tmpCheckListTable) - 30, TABLE_LX - 6, (TABLE_SY + 60 + checkListTable*(295)/tmpCheckListTable) + 30);
 			}
 
 			setDefault();

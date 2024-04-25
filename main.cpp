@@ -60,7 +60,7 @@ int main(){
 						createMenu(selected);	         
 					break;  
 					case 2:
-						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi)
+						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 
 						createMenu(selected);   
 					break; 
 					case 3:  
@@ -69,9 +69,9 @@ int main(){
 						createMenu(selected);                      
 					break;						                                        	 
 					case 4:                             
-						studentGradeManagement(lcfs, lsj, ls);                      
+						studentGradeManagement(lcfs, lsj, ls);                         
 						createMenu(selected);              
-					break;         
+					break;           
 				}  
 				break;       
 			case UP:     
