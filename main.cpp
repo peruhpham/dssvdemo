@@ -57,20 +57,20 @@ int main(){
 				switch(selected){              
 					case 1:  
 						studentManagement(ls, lc);    
-						createMenu(selected);	         
-					break;  
+						createMenu(selected);	          
+					break;   
 					case 2:
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 
 						createMenu(selected);   
 					break; 
 					case 3:  
-						subjectManagement1(lsj);       
-						cout << "1 main\n";                            
-						createMenu(selected);                          
-					break;						                                         	 
-					case 4:                             
-						studentGradeManagement(lcfs, lsj, ls);                           
-						createMenu(selected);              
+						subjectManagement1(lsj);        
+						cout << "1 main\n";                                   
+						createMenu(selected);                               
+					break;						                                             	 
+					case 4:                                   
+						studentGradeManagement(lcfs, lsj, ls);                              
+						createMenu(selected);               
 					break;           
 				}  
 				break;       

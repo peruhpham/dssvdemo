@@ -2672,6 +2672,7 @@ void printRegisteredStudentList(ptrClassForSubject listOpeningClass[], int &curr
 	}
 	
 }
+
 void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls){
 	
 	ptrClassForSubject ListOpeningClass[MAXCLASS]; // mang chua danh sach cac lop dang mo

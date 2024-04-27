@@ -1,12 +1,8 @@
 #ifndef SUBJECTMANAGEMENT_H 
 #define SUBJECTMANAGEMENT_H
 
-//#include "datastructure.h"
-//#include "datahanding.h"
-//#include "display.h"
-// using namespace std;
  
-
+// Cac thong so co dinh.
 #define MENU_SUB_SX 0
 #define MENU_SUB_SY 190
 #define MENU_SUB_LX 300
@@ -32,8 +28,6 @@
 #define TABLE_ERROR_LX 300
 #define TABLE_ERROR_LY 550
 
-
-
 #define ENTER 13
 #define ESC 27
 #define SPACE 32
@@ -46,83 +40,66 @@ int dong = TABLE_FILTER_SY + 30;
 // #define MAX_MON_HOC 100
 
 
-
 // Khai bao nguyen mau ham
 void subjectManagement(listSubject &lsb);
 void drawTableListSubject ();
 void displaySubjectList(ptrSubject root);
 void resetDisplaySubjectList(int &x, int &y);
-
 void hightlightLineSubject();
 void drawHeaderAndBottom();
-
 void drawMenuSubject();
 void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem);
 // void drawMenuAndUpdateSelection(listSubject &lsb);
-
 void copyAVLToArray(ptrSubject root, subject arrSubject[], int& index);
 //void displaySubjectListByControl();
-
 void printSTT (listSubject &lsb);
 void printListSubjectByName(subject *sub, int x, int y);
 // void inorderTraversal(ptrSubject root, subject staticArray[], int& index);
 void AVLToArray(ptrSubject currentNodeSubject, subject *arrayTmp, int &currentIndex);
 void avlToArray (nodeSubject *currentNodeSubject, subject *arraySubject, int &currentIndex);
-
 void drawTableControlSubject();// draw bang dieu khien
 void removeTableConsolSubject();// che lai man hinh khu vuc dieu khien va bang du lieu
 void reloadingDataSubject();
 void drawMenuStartSubject();
 void drawScrollBarSubject();
-
 void menuTQSubject(int selected);
-
 void enterText(listSubject &lsb);// ham nhap chu
 void highlightFrame(int x1, int y1, int x2, int y2);
 void highlightFrame();
 void highlightFrameDefault(int x1, int y1, int x2, int y2);
 void mouseHighlightInputExamScores(int &selected, int &on);
 void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject, int &checkListTable);
-
-void controlAddDeleteSubject();
-
+// void controlAddDeleteSubject();
+void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject, bool checkSeletedItem);
 string findSubjectByName (string nameSubject, ptrSubject rootSub);
 // bool checkIdSubject (ptrSubject rootSubject, string idsSubject);
 bool checkIdSubject(nodeSubject* rootSubject, const std::string& idsSubject);
 bool checkNameSubject(nodeSubject* rootSubject, const std::string& nameSubject);
-
 void drawSearchFilter();
 nodeSubject* searchStartsWith(nodeSubject* root, string& key);
 nodeSubject* searchAVL(nodeSubject* root, string &key);
-
 void searchStartWithArray(subject arraySubject[], int sizeArraySubject, string &keySearch);
-
 void noticeError();
-
 nodeSubject * minValueNode(nodeSubject* node);
 nodeSubject* deleteNode(nodeSubject* root, string & key);
 void printRootLeftRight(nodeSubject * root);
-
 void printUserManual ();
-//=====================================================================================================
+void selectionSort(subject *listSubject, int sizeListSubject);
 
+void searchAVL2(nodeSubject* root, string& key);
+//=================================================================================================================================================
 
 
 // Tao giao dien moi cDanh sach mon hoc
 void drawTableListSubject (){
 	setcolor(LIGHTGRAY);
 	rectangle(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
-
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
 	//----------------------------------------------------------------
-	// new table
-	setlinestyle(SOLID_LINE, 0, 1);
-	//khung 
-	setcolor(LIGHTGRAY);
+	setlinestyle(SOLID_LINE, 0, 1);// new table
+	setcolor(LIGHTGRAY);//khung 
 	rectangle(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_LY);
-	//----------------
-	// vẽ thanh cuộn 
 	//----------------------------------------------------------------
 	drawScrollBarSubject();// ve thanh cuon cho bang subject.
 	//-------
@@ -135,15 +112,12 @@ void drawTableListSubject (){
 	
     setfillstyle(SOLID_FILL, LIGHTBLUE);// Thiet lap mau fill la mau xanh lam
     bar(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_SY + 40);// Ve hinh chu nhat
-	
 	setlinestyle(SOLID_LINE, 0, 1);
 	setcolor(LIGHTGRAY);
-    for (int y = TABLE_SY + 40; y < TABLE_LY; y += D_ROW) {
+    for (int y = TABLE_SY + 40; y < TABLE_LY; y += D_ROW) 
         line(TABLE_SX, y, TABLE_LX-20, y);
-    }
 	
 	line(TABLE_LX-20, TABLE_SY+40, TABLE_LX-20, TABLE_LY);// ve dupng thang phia sau
-    
     setbkcolor(LIGHTBLUE);// Thiet lap mau nen chu
     setcolor(BLACK);
     outtextxy(TABLE_SX + 5, TABLE_SY + 10, "STT");
@@ -192,12 +166,14 @@ void hightlightLineSubject(){
 
 }
 //----------------------------------------------------------------
+//Ve lai khu vuc Header va Bottom.
 void drawHeaderAndBottom(){
 	createHeader();
 	createBottom();
 }
 
 //----------------------------------------------------------------
+//Ve menu cua phan subject
 void drawMenuSubject(){
 	setfillstyle(SOLID_FILL, WHITE);//Thiet lap mau cho khung menu subject
 	setcolor(WHITE);
@@ -230,8 +206,8 @@ void printSTT (listSubject &lsb){
 		outtextxy(TABLE_SX + 10, TABLE_SY + 40 + i*D_ROW + D_ROW/10 - 1, number);	
 	}
 	setDefault();
-	cout << lsb.size << endl;
-	cout << "da in so thu tu thanh cong\n";
+	std::cout << lsb.size << endl;
+	std::cout << "da in so thu tu thanh cong\n";
 }
 //----------------------------------------------------------------
 
@@ -246,7 +222,7 @@ void resetMenuSubject(int &selectedItem){
     outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">> Nhap mon hoc");
 
     char key;
-    while (1) {
+    while (true) {
 		if(selectedItem == 0){
 			setcolor(BLUE);
             outtextxy(MENU_SUB_SX, 10 + y, ">> Danh sach mon theo ID");
@@ -317,8 +293,8 @@ void countNodeSubject(nodeSubject* currentNodeSubject, int &arraySize) {
 		arraySize++;
 		countNodeSubject(currentNodeSubject->right, arraySize);
 	}
-	cout << arraySize << " ";
-	cout << endl;
+	std::cout << arraySize << " ";
+	std::cout << endl;
 }
 subject* arraySubject(nodeSubject* currentNodeSubject, int &arraySize) {
 	countNodeSubject(currentNodeSubject, arraySize);
@@ -330,9 +306,9 @@ subject* arraySubject(nodeSubject* currentNodeSubject, int &arraySize) {
 
 //In danh sach theo thu tu ten mon hoc.
 void printListSubjectByName(subject *sub, int &x, int &y){
-	cout << "Danh sach mon hoc:............"<< endl;
+	std::cout << "Danh sach mon hoc:............"<< endl;
 	for(int i=0; i<5; i++){
-		cout << sub->nameSubject << endl;
+		std::cout << sub->nameSubject << endl;
 		setcolor(GREEN);
 		outtextxy(TABLE_SX + 50, y, tochar(sub[i].idSubject));
 		outtextxy(TABLE_SX + 50 + 120, y, tochar(sub[i].nameSubject));
@@ -422,7 +398,7 @@ void reloadingDataSubject(){
 	listSubject lsub;
 
 	readListSubject(lsub, nameFileListSubject);
-	std::cout << "\n" << "DA RELOADING THANH CONG DANH SACH SSUBJECT.\n";
+	std::cout << "DA RELOADING THANH CONG DANH SACH SSUBJECT.\n";
 }
 
 // Ve thanh cuon cho table subject.
@@ -455,6 +431,7 @@ void drawScrollBarSubject(){
 	setDefault();
 }
 
+//Ve menu dieu khien tong quat chuong trinh.
 void menuTQSubject(int selected){
 	char text[50];
 	cleardevice();
@@ -494,9 +471,9 @@ void menuTQSubject(int selected){
 		setcolor(BLUE);
 		outtextxy(10, MENUSPOINTY + 95 + 40, text);
 	}
-	else{
+	else
 		outtextxy(10, MENUSPOINTY + 95 + 40, text);
-	}
+	
 
 	// tao menu 2
 	sprintf(text, "%c Danh sach theo ten", 62);
@@ -505,9 +482,9 @@ void menuTQSubject(int selected){
 		setcolor(BLUE);
 		outtextxy(10, MENUSPOINTY + 135 + 40 , text);
 	}
-	else{
+	else
 		outtextxy(10, MENUSPOINTY + 135 + 40 , text);
-	}
+	
 	
 	sprintf(text, "%c Cap nhat danh sach", 62);
 	setcolor(BLACK);
@@ -515,9 +492,9 @@ void menuTQSubject(int selected){
 		setcolor(BLUE);
 		outtextxy(10, MENUSPOINTY + 175 + 40 , text);
 	}
-	else{
+	else
 		outtextxy(10, MENUSPOINTY + 175 + 40, text);
-	}
+	
 
 	setDefault();
 }
@@ -1284,45 +1261,75 @@ bool checkNameSubject(nodeSubject* rootSubject, const std::string& namesSubject)
 	return checkNameSubject(rootSubject->right, namesSubject);
 }
 
-//Tim kiem va loc mon hoc theo ten || theo bang sao cay avl chi muc dich hien thi thong tin thoi
-nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
-    if (root == NULL){
-		cout << "Not found!!!" << endl;
-		setcolor(RED);
-		outtextxy(TABLE_FILTER_SX + 5, dong + 5, "Khong tim thay du lieu ...");
-		dong += 30;
-        return NULL;
-	}
+// Tìm và in ra các môn học bắt đầu bằng một chuỗi cho trước
+void searchAVL2(nodeSubject* root, string& key) {
+    if (root == nullptr)
+        return;
 
-    if (key.length() == 0) // Trường hợp đặc biệt: nếu chuỗi key rỗng, trả về root
-        return root;
+    if (key.length() == 0) { // Trường hợp đặc biệt: nếu chuỗi key rỗng, in ra tất cả các môn học
+        cout << "Data is: " << endl;
+        cout << setw(5) << root->data.idSubject << " ";
+        cout << setw(20) << root->data.nameSubject << " ";
+        cout << setw(5) << root->data.STCLT << " ";
+        cout << setw(5) << root->data.STCTH << endl;
+        searchAVL2(root->left, key);
+        searchAVL2(root->right, key);
+    }
 
     if (root->data.nameSubject.compare(0, key.length(), key) < 0) // Nếu dữ liệu của nút nhỏ hơn key, tìm trong cây con bên phải
-        return searchStartsWith(root->right, key);
+        searchAVL2(root->right, key);
     else if (root->data.nameSubject.compare(0, key.length(), key) > 0) // Nếu dữ liệu của nút lớn hơn key, tìm trong cây con bên trái
-        return searchStartsWith(root->left, key);
+        searchAVL2(root->left, key);
     else {
-        // Nếu dữ liệu của nút bằng key, in ra nút này và tiếp tục tìm kiếm trong cả hai cây con
+        // Nếu dữ liệu của nút bằng key, in ra nút này và tiếp tục tìm kiếm trong cây con bên trái và bên phải
         cout << "Data is: " << endl;
-		cout << setw(5) << root->data.idSubject << "";
-		cout << setw(20) << root->data.nameSubject << " ";
-		cout << setw(5) << root->data.STCLT << " ";
-		cout << setw(5) << root->data.STCTH << "";
-		cout << endl;
-		
-		setcolor(GREEN);
-		outtextxy(TABLE_FILTER_SX + 5, dong + 5, "001");
-		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
-		dong += 30;
-		// return root;
-        searchStartsWith(root->left, key);
-        searchStartsWith(root->right, key);
-        return NULL; // Trả về NULL để không làm gì thêm
+        cout << setw(5) << root->data.idSubject << " ";
+        cout << setw(20) << root->data.nameSubject << " ";
+        cout << setw(5) << root->data.STCLT << " ";
+        cout << setw(5) << root->data.STCTH << endl;
+        searchAVL2(root->left, key);
+        searchAVL2(root->right, key);
     }
 }
+// //Tim kiem va loc mon hoc theo ten || theo bang sao cay avl chi muc dich hien thi thong tin thoi
+// nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
+//     if (root == NULL){
+// 		std::cout << "Not found!!!" << endl;
+// 		setcolor(RED);
+// 		outtextxy(TABLE_FILTER_SX + 5, dong + 5, "Khong tim thay du lieu ...");
+// 		dong += 30;
+//         return NULL;
+// 	}
+
+//     if (key.length() == 0) // Trường hợp đặc biệt: nếu chuỗi key rỗng, trả về root
+//         return root;
+
+//     if (root->data.nameSubject.compare(0, key.length(), key) < 0) // Nếu dữ liệu của nút nhỏ hơn key, tìm trong cây con bên phải
+//         return searchStartsWith(root->right, key);
+//     else if (root->data.nameSubject.compare(0, key.length(), key) > 0) // Nếu dữ liệu của nút lớn hơn key, tìm trong cây con bên trái
+//         return searchStartsWith(root->left, key);
+//     else {
+//         // Nếu dữ liệu của nút bằng key, in ra nút này và tiếp tục tìm kiếm trong cả hai cây con
+//         std::cout << "Data is: " << endl;
+// 		std::cout << setw(5) << root->data.idSubject << "";
+// 		std::cout << setw(20) << root->data.nameSubject << " ";
+// 		std::cout << setw(5) << root->data.STCLT << " ";
+// 		std::cout << setw(5) << root->data.STCTH << "";
+// 		std::cout << endl;
+		
+// 		setcolor(GREEN);
+// 		outtextxy(TABLE_FILTER_SX + 5, dong + 5, "001");
+// 		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
+// 		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
+// 		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
+// 		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
+// 		dong += 30;
+// 		// return root;
+//         searchStartsWith(root->left, key);
+//         searchStartsWith(root->right, key);
+//         return NULL; // Trả về NULL để không làm gì thêm
+//     }
+// }
 
 //search lai
 nodeSubject* searchAVL(nodeSubject* root, string &key){
@@ -1349,27 +1356,28 @@ nodeSubject* searchAVL(nodeSubject* root, string &key){
 // Tim kiem mon hoc thong qua array tmp duoc tao ra de xu li hien thi
 void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &keySearch){
 	int stt = 0;
+	bool checkSearch = false;
 
 	//test doc data...
 	for(int i = 0; i < sizeArraySubject; i++){
-		cout << setw(3) << i + 1 << setw(30) << arraySubject[i].nameSubject << endl;
+		std::cout << setw(3) << i + 1 << setw(30) << arraySubject[i].nameSubject << endl;
 	}
 
 	int hang = TABLE_FILTER_SY + 30;
 
-	if(keySearch == " "){
-		cout << "Chua nhap du lieu tim kiem......" << endl;
-	}else{
+	if(keySearch == " ")
+		std::cout << "Chua nhap du lieu tim kiem......" << endl;
+	else{
 		for(int i = 0; i < sizeArraySubject; i++){
-			cout << "dang tim kiem.............." << i + 1 << endl;
+			std::cout << "dang tim kiem.............." << i + 1 << endl;
 			if(arraySubject[i].nameSubject.compare(0, keySearch.length(), keySearch) == 0){
-				cout << "Data is searched: ";
-				cout << setw(5)		<< to_string(stt + 1);
-				cout << setw(10) 	<< arraySubject[i].idSubject;
-				cout << setw(30) 	<< arraySubject[i].nameSubject;
-				cout << setw(5) 	<< arraySubject[i].STCLT;
-				cout << setw(5) 	<< arraySubject[i].STCTH;
-				cout << endl;
+				std::cout << "Data is searched: ";
+				std::cout << setw(5)		<< to_string(stt + 1);
+				std::cout << setw(10) 	<< arraySubject[i].idSubject;
+				std::cout << setw(30) 	<< arraySubject[i].nameSubject;
+				std::cout << setw(5) 	<< arraySubject[i].STCLT;
+				std::cout << setw(5) 	<< arraySubject[i].STCTH;
+				std::cout << endl;
 				if(stt >= 3)
 					continue; // tranh viec tran man hinh hien thi.
 
@@ -1382,11 +1390,25 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 				hang += 30;
 
 				stt++;
+				checkSearch = true;
 			}
 		}
 	}
 
-	cout << "Seach complete......" << endl;
+	if(checkSearch == false){
+		std::cout << "Khong tim thay data can tim kiem...\n";
+
+		setfillstyle(SOLID_FILL, WHITE);
+		bar(TABLE_FILTER_SX + 1, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
+
+		setcolor(LIGHTGRAY);
+		setbkcolor(WHITE);
+		outtextxy(TABLE_FILTER_SX + 180, TABLE_FILTER_SY + 50, "KHONG TIM KIEM THAY DU LIEU...");	
+
+		setDefault();
+	}
+
+	std::cout << "Seach complete......" << endl;
 }
 
 // Thong bao co hanh dong thoat man hinh
@@ -1534,7 +1556,7 @@ nodeSubject* deleteNode(nodeSubject* root, string & key)
 // In danh sach avl tree
 void printRootLeftRight(nodeSubject *root){
 	if(root != nullptr){
-		cout 
+		std::cout 
 		<< setw(10) << root->data.idSubject 
 		<< setw(30) << root->data.nameSubject 
 		<< setw(5) << root->data.STCLT 
@@ -1549,8 +1571,22 @@ void printUserManual (){
 	setcolor(BLACK);
 	outtextxy(200, 610, "ESC : Thoat!");
 	outtextxy(200, 635, "ENTER : Ket thuc du lieu nhap vao."); 
-	outtextxy(200, 660, "Nhap data truoc - Click INSERT sau || Click DELETE truoc - Nhap data can xoa sau.");
+	outtextxy(200, 660, "Nhap data truoc - Click INSERT sau | Click DELETE truoc - Nhap data can xoa sau.");
 	setDefault();
+}
+
+//Sap xep theo ten mon hoc.
+void selectionSort(subject *listSubject, int sizeListSubject){
+	for(int i = 0; i < sizeListSubject - 1; i++){
+		int indexMin = i;
+		for(int j = i+ 1; j < sizeListSubject; j++){
+			if(listSubject[j].nameSubject < listSubject[indexMin].nameSubject)
+				indexMin = j;
+		}
+		subject tmpListSubject = listSubject[i];
+		listSubject[i] = listSubject[indexMin];
+		listSubject[indexMin] = tmpListSubject;
+	}
 }
 
 
@@ -1558,9 +1594,10 @@ void printUserManual (){
 //----------------------------------------------------------------
 // Xu li ghi file
 //Dieu khien them sua xoa tai man hinh mon hoc
-void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject){
+void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject, bool checkSeletedItem){
 	printUserManual();
 
+	//Mac dinh thanh sang thanh cuon luc dau
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 	setfillstyle ( SOLID_FILL, LIGHTBLUE);
@@ -1573,6 +1610,10 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 	int checkListTable = (lsb.size - 1)/15;
 	int tmpCheckListTable = checkListTable;
+	int tmp2 = 0;
+
+	bool clickLan1 = false;
+	int click = 0;
 
 	// check da nhap du chua de insert
 	bool checkInputId = false;
@@ -1614,7 +1655,8 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 		if(ismouseclick(WM_LBUTTONDOWN)){
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
-
+			
+			++click;
 			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkListTable);
 
 
@@ -1690,10 +1732,10 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					- 
 				*/
 				drawSearchFilter();
-				cout << "In bang filter\n";
+				std::cout << "In bang filter\n";
 				// displaySubjectList(root); // in danh sach du lieu mon hoc bang avl  
-				string strSearch(textSearch);
-				cout << "Search for strings starting with '" << strSearch << "': \n";
+				std::string strSearch(textSearch);
+				std::cout << "Search for strings starting with '" << strSearch << "': \n";
 
 				//Xu ly tim kiem bang avl tree.
 
@@ -1730,7 +1772,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
 
 				// Thu lai xu li bang mang
-				searchStartWithArray(arraySubject, lsb.size, strSearch);
+				searchAVL2(lsb.root, strSearch);
+				std::cout << "da tim kiem xong\n";
+ 				// searchStartWithArray(arraySubject, lsb.size, strSearch);
 
 
 			}
@@ -1746,7 +1790,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				//xu li nhâp du lieu vao khung id
 				const int sizeTextId = 8; 
 				char stringTextId[sizeTextId]; 
-				string tmpTextId;
+				std::string tmpTextId;
 				int indexId = 0; 
 				std::cout << "Nhap vao mot chuoi id (nhap Enter de ket thuc):\n";
 
@@ -1754,7 +1798,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 						char textId = getch(); 
 						if (textId == ENTER && tmpTextId.length() == 7) { 
-							cout << "size mtpTextId: " << tmpTextId << endl;
+							std::cout << "size mtpTextId: " << tmpTextId << endl;
 							break; 
 						}
 						else if(textId == SPACE){
@@ -1819,21 +1863,21 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// chay kiem tra id nhap vao co bị trung lap voi database da co hay kkhong
 				if(checkIdSubject(lsb.root, stringTextId) == false && stringTextId != ""){
 					idSub = stringTextId;
-					cout << "idSub: " << idSub << endl;
+					std::cout << "idSub: " << idSub << endl;
 
 					// xu li data insert vao avl tree
 					checkInputId = true;
 				}else{
-					cout << setw(10) << stringTextId << setw(15) << "Da ton tai id..." << endl;
+					std::cout << setw(10) << stringTextId << setw(15) << "Da ton tai id..." << endl;
 
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);//an du lieu nhap khong hop le.
 					// Bao loi trung idsubject
 					setcolor(LIGHTRED);
-					setbkcolor(LIGHTCYAN);
+					setbkcolor(WHITE);
 					outtextxy(TABLE_CONTROL_SX + 150, TABLE_CONTROL_SY + 70, "ID da ton tai!");
 					delay(3000);
-					setfillstyle(SOLID_FILL, LIGHTCYAN);
+					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 150-2, TABLE_CONTROL_SY + 70, TABLE_CONTROL_SX + 310, TABLE_CONTROL_SY + 100);
 				}
 
@@ -1912,22 +1956,22 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				if(checkNameSubject(lsb.root, textName) == false && textName != ""){
 					nameSub = textName;
-					cout << "nameSub: " << nameSub << endl;
+					std::cout << "nameSub: " << nameSub << endl;
 					// xu li 
 					checkInputName = true;
 
 				}else{
 					// Thong bao loi trung du lieu.
-					cout << setw(30) << textName << setw(10) << "Mon hoc da ton tai!" << endl;
+					std::cout << setw(30) << textName << setw(10) << "Mon hoc da ton tai!" << endl;
 
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 60 + 30 + 30, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);//an du lieu nhap khong hop le.
 
 					setcolor(LIGHTRED);
-					setbkcolor(LIGHTCYAN);
+					setbkcolor(WHITE);
 					outtextxy(TABLE_CONTROL_SX + 130, TABLE_CONTROL_SY + 70, "Mon hoc da ton tai!" ); 
 					delay(3000);
-					setfillstyle(SOLID_FILL, LIGHTCYAN);
+					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 130, TABLE_CONTROL_SY + 70,TABLE_CONTROL_SX + 335, TABLE_CONTROL_SY + 100);
 					setDefault();
 				}
@@ -1943,7 +1987,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				//xu li nhâp du lieu vao khung ly thuyet
 				// char key;
-				const int sizeTextLT = 4; 
+				const int sizeTextLT = 3; 
 				char textLT[sizeTextLT]; 
 				int indexLT = 0; 
 				std::cout << "Nhap vao mot chuoi so tin chi ly thuyet (nhap Enter de ket thuc):\n";
@@ -1993,7 +2037,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				if(textLT != ""){
 					stclt = stringtoint(textLT);
-					cout << "stclt : " << stclt << endl;
+					std::cout << "stclt : " << stclt << endl;
 
 					checkInputLT = true;
 				}
@@ -2011,7 +2055,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				//xu li nhâp du lieu vao khung thuc hanh
 				// char key;
-				const int sizeTextTH = 4; 
+				const int sizeTextTH = 3; 
 				char textTH[sizeTextTH]; 
 				int indexTH = 0; 
 				std::cout << "Nhap vao mot chuoi so tin chi thuc hanh (nhap Enter de ket thuc):\n";
@@ -2062,7 +2106,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				if(textTH != ""){
 					stcth = stringtoint(textTH);
-					cout << "stcth: " << stcth << endl;
+					std::cout << "stcth: " << stcth << endl;
 
 					checkInputTH = true;
 				}
@@ -2076,6 +2120,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			//----------------------------------------------------
 			// Highlight khung sang khi click mouse Them, Sua, Xoa.
+
 			// Muc Them - insert
 			if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 100 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
 				setbkcolor(BLUE);
@@ -2094,12 +2139,12 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 					insert(lsb.root, nodeNewSubject);// insert vao node avl tree.
 					lsb.size++;
-					cout << "size node subject: " << lsb.size << endl;
+					std::cout << "size node subject: " << lsb.size << endl;
 					arraySubject[lsb.size-1] = nodeNewSubject;
-					cout << "Xem danh sach subject moi...\n";
-					for(int i = 0; i < lsb.size; i++){
-						cout << setw(5) << i + 1 << setw(10) << arraySubject[i].idSubject << setw(30) << arraySubject[i].nameSubject << endl;	
-					}
+					// cout << "Xem danh sach subject moi...\n";
+					// for(int i = 0; i < lsb.size; i++){
+					// 	cout << setw(5) << i + 1 << setw(10) << arraySubject[i].idSubject << setw(30) << arraySubject[i].nameSubject << endl;	
+					// }
 					// An data subject
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
@@ -2114,46 +2159,46 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					checkInputTH = false;
 				}else{
 					if(checkInputId == false){
-						cout << "Error! Not complete data input idsubject..." << endl;
+						std::cout << "Error! Not complete data input idsubject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
 						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap IDsubject!");
 						
-						delay(3000);
-						setfillstyle(SOLID_FILL, LIGHTCYAN);
+						delay(1000);
+						setfillstyle(SOLID_FILL, WHITE);
 						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
 						setDefault();
 					}
 					if(checkInputName == false){
-						cout << "Error! Not complete data input nameSubject..." << endl;
+						std::cout << "Error! Not complete data input nameSubject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
 						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap nameSubject!");
 						
-						delay(3000);
-						setfillstyle(SOLID_FILL, LIGHTCYAN);
+						delay(1000);
+						setfillstyle(SOLID_FILL, WHITE);
 						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
 						setDefault();
 					}
 					if(checkInputLT == false){
-						cout << "Error! Not complete data input STCLT subject..." << endl;
+						std::cout << "Error! Not complete data input STCLT subject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
 						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap STCLT!");
 						
-						delay(3000);
-						setfillstyle(SOLID_FILL, LIGHTCYAN);
+						delay(1000);
+						setfillstyle(SOLID_FILL, WHITE);
 						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
 						setDefault();
 					}
 					if(checkInputTH == false){
-						cout << "Error! Not complete data input STCTH subject..." << endl;
+						std::cout << "Error! Not complete data input STCTH subject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
 						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap STCTH!");
 						
-						delay(3000);
-						setfillstyle(SOLID_FILL, LIGHTCYAN);
+						delay(1000);
+						setfillstyle(SOLID_FILL, WHITE);
 						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
 						setDefault();
 					}
@@ -2178,7 +2223,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			// Muc Xoa - Delete Subject
 			if(TABLE_CONTROL_SX + 1 + 10 + 100 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
-				cout << "\nXoa - Delete Subject" << endl;
+				std::cout << "\nXoa - Delete Subject" << endl;
 				setbkcolor(BLUE);
 				setcolor(WHITE);
 				setfillstyle(SOLID_FILL, BLUE);
@@ -2199,7 +2244,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			if(checkIdDelete == true){
 				checkIdDelete = false;
-				cout << "click dung muc ID de xoa thong tin" << endl;
+				std::cout << "click dung muc ID de xoa thong tin" << endl;
 				// Highlight sang len de user nhan thay.
 				highlightFrame(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);
 
@@ -2214,7 +2259,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
 						char textIdDelete = getch(); 
 						if (textIdDelete == ENTER && tmpTextIdDelete.length() == 7) { 
-							cout << "size mtpTextId: " << tmpTextIdDelete << endl;
+							std::cout << "size mtpTextId: " << tmpTextIdDelete << endl;
 							break; 
 						}
 						else if(textIdDelete == SPACE){
@@ -2267,7 +2312,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				string textDelete = string(stringTextIdDelete);
 				deleteNode(lsb.root, textDelete);
 				lsb.size--;
-				cout << "xoa node id = " << textDelete << " thanh cong ..." << endl; 
+				std::cout << "xoa node id = " << textDelete << " thanh cong ..." << endl; 
 			}
 
 			// Muc Update Subject
@@ -2294,17 +2339,23 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			// checkListTable = 0;
 			// len
 			if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 60){
+				int index1 = 0;
+				avlToArray(lsb.root, arraySubject, index1);
+
 				drawTableListSubject ();
 
-				checkListTable--;
-				if(checkListTable < 0){
-					checkListTable = 0;
+				tmp2--;
+				if(tmp2 < 0){
+					tmp2 = 0;
 				}
-				if(checkListTable >= (lsb.size - 1)/15){
-					checkListTable = (lsb.size - 1)/15;
+				if(tmp2 >= (lsb.size - 1)/15){
+					tmp2 = (lsb.size - 1)/15;
 				}
+
+				if(checkSeletedItem == true)// khi dang o muc xem danh sach theo ten
+					selectionSort(arraySubject, index1);
 				
-				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+				for(int i = 15*tmp2; i < 15 + 15*tmp2; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 						continue;
 
@@ -2341,17 +2392,23 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			}
 			//xuong
 			if((TABLE_LX - 20 <= x && TABLE_LY-20 <= y && x <= TABLE_LX && y <= TABLE_LY + 20)){
+				int index2 = 0;
+				avlToArray(lsb.root, arraySubject, index2);
+
 				drawTableListSubject ();
 				//
-				checkListTable++;
-				if(checkListTable >= (lsb.size - 1)/15){
-					checkListTable = (lsb.size - 1)/15;
+				tmp2++;
+				if(tmp2 >= (lsb.size - 1)/15){
+					tmp2 = (lsb.size - 1)/15;
 				}
-				if(checkListTable < 0){
-					checkListTable = 0;
+				if(tmp2 < 0){
+					tmp2 = 0;
 				}
+				
+				if(checkSeletedItem == true)// khi xem danh sach tai muc dnah sach theo ten
+					selectionSort(arraySubject, index2);
 
-				for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+				for(int i = 15*tmp2; i < 15 + 15*tmp2; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 						continue;
 
@@ -2393,13 +2450,13 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			}
 
 			// Hien thi khung chi muc du lieu thanh cuon
-			if(checkListTable == 0){// re chuot o dau danh sach
+			if(tmp2 == 0){// re chuot o dau danh sach, mac dinh thi checkListtable == ((lsb.size - 1)/15 roi.
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
 				bar(TABLE_LX - 16, TABLE_SY + 60, TABLE_LX - 6, TABLE_SY + 120);
 			}
-			else if(checkListTable == ((lsb.size - 1)/15)){//re chuot den cuoi danh sach.
+			else if(tmp2 == ((lsb.size - 1)/15) ){//re chuot den cuoi danh sach.
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
@@ -2409,7 +2466,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
-				bar(TABLE_LX - 16, (TABLE_SY + 60 + checkListTable*(295)/tmpCheckListTable) - 30, TABLE_LX - 6, (TABLE_SY + 60 + checkListTable*(295)/tmpCheckListTable) + 30);
+				bar(TABLE_LX - 16, (TABLE_SY + 60 + tmp2*(295)/tmpCheckListTable) - 30, TABLE_LX - 6, (TABLE_SY + 60 + tmp2*(295)/tmpCheckListTable) + 30);
 			}
 
 			setDefault();
@@ -2420,12 +2477,14 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 // Hàm vẽ menu và cập nhật lựa chọn
 void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
+	bool checkSelectedItem = false;
+
     int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
-	cout << selectedItem << " draw menu" << endl;
+	std::cout << selectedItem << " draw menu" << endl;
 	char key;
-	while(1){
+	while(true){
 		if(selectedItem == 0){
-			cout << "selectItem 0" << endl;
+			std::cout << "selectItem 0" << endl;
 			reloadingDataSubject();
 			drawTableControlSubject();
 			// Xu li enter tai day
@@ -2465,14 +2524,16 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 
 			// Them phan dieu khien khi click mouse
 			reloadingDataSubject();
-			cout << "reload data list subject\n";
+			std::cout << "reload data list subject\n";
 			
-			cout << "\nSize subject truoc khi vao control" << setw(5) << arraySize << endl;
-			controlAddDeleteSubject(lsb, subjectListArray, arraySize);
+			std::cout << "\nSize subject truoc khi vao control" << setw(5) << arraySize << endl;
+			controlAddDeleteSubject(lsb, subjectListArray, arraySize, checkSelectedItem);
 			// delete[] subjectListArray;
 		}
 		else if(selectedItem == 1){
-			cout << "selected 1" << endl;
+			checkSelectedItem = true;
+
+			std::cout << "selected 1" << endl;
 			reloadingDataSubject();
 
 			drawTableControlSubject();
@@ -2483,16 +2544,17 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			subject subjectListArray[500];
 			avlToArray(lsb.root, subjectListArray, sizeArraySubject);
 
-			for(int i = 0; i < sizeArraySubject; ++i){
-				int indexCerrent = i;
-				while(indexCerrent > 0 && subjectListArray[indexCerrent - 1].nameSubject > subjectListArray[indexCerrent].nameSubject){
-					subject nodeTmp = subjectListArray[indexCerrent];
-					subjectListArray[indexCerrent] = subjectListArray[indexCerrent - 1];
-					subjectListArray[indexCerrent - 1] = nodeTmp;
+			selectionSort(subjectListArray, sizeArraySubject);
+			// for(int i = 0; i < sizeArraySubject; ++i){
+			// 	int indexCerrent = i;
+			// 	while(indexCerrent > 0 && subjectListArray[indexCerrent - 1].nameSubject > subjectListArray[indexCerrent].nameSubject){
+			// 		subject nodeTmp = subjectListArray[indexCerrent];
+			// 		subjectListArray[indexCerrent] = subjectListArray[indexCerrent - 1];
+			// 		subjectListArray[indexCerrent - 1] = nodeTmp;
 
-					indexCerrent--;
-				}
-			}
+			// 		indexCerrent--;
+			// 	}
+			// }
 
 			// int arraySize = 0;
 			// subject* subjectListArray = arraySubject(lsb.root, arraySize);
@@ -2529,7 +2591,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			
 			drawHeaderAndBottom();
 
-			controlAddDeleteSubject(lsb, subjectListArray, sizeArraySubject);
+			controlAddDeleteSubject(lsb, subjectListArray, sizeArraySubject, checkSelectedItem);
 			// delete[] subjectListArray;hj
 			//=================
 
@@ -2543,7 +2605,7 @@ void drawMenuAndUpdateSelection(listSubject &lsb, int &selectedItem) {
 			drawTableListSubject ();
 			//print Danh sach theo tên môn hoc.
 			printSTT(lsb);
-			cout << "selectedIrem 2" << endl;
+			std::cout << "selectedIrem 2" << endl;
 			// getch();
 		}
 
@@ -2573,50 +2635,42 @@ void subjectManagement1(listSubject &lsb){
 			}
 			switch(ascii){
 				case ENTER:
-					cout << "3 case subject mana" << selected << endl;
+					std::cout << "3 case subject mana" << selected << endl;
 					/* code */
 					switch(selected){
 						case 0: 
-							cout << "case 1 subject mana" << endl;
-							// xu ly hien giao dien danh sach theo id tai day
-							drawMenuAndUpdateSelection(lsb, selected);
-							
-							// highlightFrame(100, 100, 200, 200);
-							
+							std::cout << "case 1 subject mana" << endl;
+							drawMenuAndUpdateSelection(lsb, selected);// xu ly hien giao dien danh sach theo id tai day
 							menuTQSubject(selected);
 							break;
 						case 1: 
-							cout << "case 2 subject manager" << endl;
-							// xu ly hien giao dien danh sach theo ten mon hoc tai day
-							drawMenuAndUpdateSelection(lsb, selected);
-							// hightlight mousee chuot
-							menuTQSubject(selected);
+							std::cout << "case 2 subject manager" << endl;
+							drawMenuAndUpdateSelection(lsb, selected);// xu ly hien giao dien danh sach theo ten mon hoc tai day
+							menuTQSubject(selected);// hightlight mousee chuot
 							break;
 						case 2: 
-							cout << "case 3 subject manager" << endl;
-							// xu ly hien giao dien cap nhat
-							drawMenuAndUpdateSelection(lsb, selected);
-							menuTQSubject(selected);
+							std::cout << "case 3 subject manager" << endl;
+							drawMenuAndUpdateSelection(lsb, selected);// xu ly hien giao dien cap nhat
+							menuTQSubject(selected);// hightlight mousee chuot
 							break;
 					}
-					break;
+				break;
 				case UP:
 					if(selected >= 0){
 						selected = (selected - 1 + 3)%3;
 						menuTQSubject(selected);
 					}
-					break;
+				break;
 				case DOWN:
 					if(selected <= 2){
 						selected = (selected + 1)%3 ;
 						menuTQSubject(selected);
 					}
-					break;
+				break;
 				case ESC:
 					return;
-
-				cout << "4\n";
-				//----------------------------------------------------------------
+				break;
+				std::cout << "4\n";
 			}
 		}
 	}
