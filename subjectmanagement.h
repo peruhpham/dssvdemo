@@ -1272,6 +1272,15 @@ void searchAVL2(nodeSubject* root, string& key) {
         cout << setw(20) << root->data.nameSubject << " ";
         cout << setw(5) << root->data.STCLT << " ";
         cout << setw(5) << root->data.STCTH << endl;
+
+		setcolor(LIGHTRED);
+		// outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
+		dong += 30;
+
         searchAVL2(root->left, key);
         searchAVL2(root->right, key);
     }
@@ -1287,6 +1296,15 @@ void searchAVL2(nodeSubject* root, string& key) {
         cout << setw(20) << root->data.nameSubject << " ";
         cout << setw(5) << root->data.STCLT << " ";
         cout << setw(5) << root->data.STCTH << endl;
+
+		setcolor(LIGHTRED);
+		// outtextxy(TABLE_FILTER_SX + 5, dong + 5, tochar(to_string(stt+1)));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
+		dong += 30;
+
         searchAVL2(root->left, key);
         searchAVL2(root->right, key);
     }
@@ -1781,7 +1799,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// Thu lai xu li bang mang
 				searchAVL2(lsb.root, strSearch);
 				std::cout << "da tim kiem xong\n";
- 				// searchStartWithArray(arraySubject, lsb.size, strSearch);
+ 				searchStartWithArray(arraySubject, lsb.size, strSearch);
 
 
 			}
@@ -2328,19 +2346,27 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// kiem tra xem co click vao o nao khong
 				int indexTable = (y - TABLE_SY - 40) / 22;
 
-				setfillstyle(SOLID_FILL, WHITE);
-				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 62, TABLE_CONTROL_SX + 119, TABLE_CONTROL_SY + 89);
-				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 121, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 150 - 1);
-				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 225 - 1);
-				bar(TABLE_CONTROL_SX + 6 + 150, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 5 + 250 - 1, TABLE_CONTROL_SY + 225 - 1);
-				
-				setbkcolor(WHITE);
-				setcolor(RED);
-				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 64, tochar(arraySubject[15*tmp2 + indexTable].idSubject));
-				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 123, tochar(arraySubject[15*tmp2 + indexTable].nameSubject));
-				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCLT)));
-				outtextxy(TABLE_CONTROL_SX + 10 + 150, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCTH)));
-
+				if(tmp2*15 + indexTable < lsb.size){
+					setfillstyle(SOLID_FILL, WHITE);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 62, TABLE_CONTROL_SX + 119, TABLE_CONTROL_SY + 89);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 121, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 150 - 1);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 225 - 1);
+					bar(TABLE_CONTROL_SX + 6 + 150, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 5 + 250 - 1, TABLE_CONTROL_SY + 225 - 1);
+					
+					setbkcolor(WHITE);
+					setcolor(RED);
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 64, tochar(arraySubject[15*tmp2 + indexTable].idSubject));
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 123, tochar(arraySubject[15*tmp2 + indexTable].nameSubject));
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCLT)));
+					outtextxy(TABLE_CONTROL_SX + 10 + 150, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCTH)));
+				}
+				else{
+					setfillstyle(SOLID_FILL, WHITE);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 62, TABLE_CONTROL_SX + 119, TABLE_CONTROL_SY + 89);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 121, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 150 - 1);
+					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 225 - 1);
+					bar(TABLE_CONTROL_SX + 6 + 150, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 5 + 250 - 1, TABLE_CONTROL_SY + 225 - 1);
+				}
 			}
 
 			// Muc Update Subject

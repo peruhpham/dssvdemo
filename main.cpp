@@ -74,9 +74,9 @@ int main(){
 					break;            
 				}    
 				break;         
-			case UP:     
-				if(selected > 1){       
-					selected--;   
+			case UP:       
+				if(selected > 1){          
+					selected--;     
 					createMenu(selected);   	              
 				}         
 				break;                         
