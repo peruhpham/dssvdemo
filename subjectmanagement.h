@@ -1597,6 +1597,13 @@ void selectionSort(subject *listSubject, int sizeListSubject){
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject, bool checkSeletedItem){
 	printUserManual();
 
+	setcolor(RED);
+	line(TABLE_SX, TABLE_SY + 40, TABLE_LX, TABLE_SY + 40);
+	line(TABLE_SX, TABLE_SY + 62, TABLE_LX, TABLE_SY + 62);
+	line(TABLE_SX, TABLE_SY + 84, TABLE_LX, TABLE_SY + 84);
+	line(TABLE_SX, TABLE_SY + 106, TABLE_LX, TABLE_SY + 106);
+
+
 	//Mac dinh thanh sang thanh cuon luc dau
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
@@ -2157,49 +2164,50 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					checkInputName = false;
 					checkInputLT = false;
 					checkInputTH = false;
-				}else{
+				}
+				else{
 					if(checkInputId == false){
 						std::cout << "Error! Not complete data input idsubject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap IDsubject!");
+						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap IDsubject!");
 						
 						delay(1000);
 						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 						setDefault();
 					}
 					if(checkInputName == false){
 						std::cout << "Error! Not complete data input nameSubject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap nameSubject!");
+						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap nameSubject!");
 						
 						delay(1000);
 						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 						setDefault();
 					}
 					if(checkInputLT == false){
 						std::cout << "Error! Not complete data input STCLT subject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap STCLT!");
+						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCLT!");
 						
 						delay(1000);
 						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 						setDefault();
 					}
 					if(checkInputTH == false){
 						std::cout << "Error! Not complete data input STCTH subject..." << endl;
 						setcolor(RED);
 						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap STCTH!");
+						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCTH!");
 						
 						delay(1000);
 						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 						setDefault();
 					}
 					// Thong bao loi toan bo.
@@ -2315,6 +2323,26 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				std::cout << "xoa node id = " << textDelete << " thanh cong ..." << endl; 
 			}
 
+			// neu click vao bang du lieu     thi hien thi vao khung xu ly.
+			if(TABLE_SX + 50  <= x && x <= TABLE_LX - 30 && TABLE_SY + 40 <= y && y <= TABLE_LY){
+				// kiem tra xem co click vao o nao khong
+				int indexTable = (y - TABLE_SY - 40) / 22;
+
+				setfillstyle(SOLID_FILL, WHITE);
+				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 62, TABLE_CONTROL_SX + 119, TABLE_CONTROL_SY + 89);
+				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 121, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 150 - 1);
+				bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 225 - 1);
+				bar(TABLE_CONTROL_SX + 6 + 150, TABLE_CONTROL_SY + 1 + 195, TABLE_CONTROL_SX + 5 + 250 - 1, TABLE_CONTROL_SY + 225 - 1);
+				
+				setbkcolor(WHITE);
+				setcolor(RED);
+				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 64, tochar(arraySubject[15*tmp2 + indexTable].idSubject));
+				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 123, tochar(arraySubject[15*tmp2 + indexTable].nameSubject));
+				outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCLT)));
+				outtextxy(TABLE_CONTROL_SX + 10 + 150, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCTH)));
+
+			}
+
 			// Muc Update Subject
 			if(TABLE_CONTROL_SX + 1 + 10 + 110*2 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
 				setbkcolor(BLUE);
@@ -2323,6 +2351,16 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
 				outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
+
+
+				//xu li update khi nhan click chuot vao vị tri danh sách 
+
+
+				// du lieu hiẹn ra , neu xoa thi cat di duoi cua du lieu, neu them vao thi tao ra chuoi moi va cong vao.
+
+
+
+
 			}else{
 				setbkcolor(LIGHTBLUE);
 				setfillstyle(SOLID_FILL, LIGHTBLUE);
