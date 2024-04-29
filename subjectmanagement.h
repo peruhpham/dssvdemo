@@ -68,7 +68,7 @@ void highlightFrame(int x1, int y1, int x2, int y2);
 void highlightFrame();
 void highlightFrameDefault(int x1, int y1, int x2, int y2);
 void mouseHighlightInputExamScores(int &selected, int &on);
-void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject, int &checkListTable);
+void highlightClickMouse(int x, int y, ptrSubject &root, subject arraySubject[], int sizeArraySubject, int &checkPageListTable);
 // void controlAddDeleteSubject();
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject, bool checkSeletedItem);
 string findSubjectByName (string nameSubject, ptrSubject rootSub);
@@ -86,7 +86,7 @@ void printRootLeftRight(nodeSubject * root);
 void printUserManual ();
 void selectionSort(subject *listSubject, int sizeListSubject);
 
-void searchAVL2(nodeSubject* root, string& key);
+void searchAVL2(nodeSubject* root, string& key, int &line);
 //=================================================================================================================================================
 
 
@@ -557,7 +557,7 @@ void highlightFrameDefault(int x1, int y1, int x2, int y2){
 //}
 
 //Hightlight khi co click mouse vao khung nhap chu
-void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[], int sizeArraySubject, int &checkListTable){
+void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[], int sizeArraySubject, int &checkPageListTable){
 // 	dong = TABLE_FILTER_SY + 30;
 // 	// Neu click mouse gap thi hightlight thanh sang cho thanh search 
 // 	string idSub = "", nameSub =  "";
@@ -1080,21 +1080,21 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 // 	if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 30 + 20){
 // 		drawTableListSubject ();
 
-// 		checkListTable--;
-// 		if(checkListTable < 0){
-// 			checkListTable = 0;
+// 		checkPageListTable--;
+// 		if(checkPageListTable < 0){
+// 			checkPageListTable = 0;
 // 		}
-// 		if(checkListTable >= (lsb.size - 1)/15){
-// 			checkListTable = (lsb.size - 1)/15;
+// 		if(checkPageListTable >= (lsb.size - 1)/15){
+// 			checkPageListTable = (lsb.size - 1)/15;
 // 		}
 		
 
 // 		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
 // 		setfillstyle ( SOLID_FILL, LIGHTGRAY);
-// 		bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+// 		bar(TABLE_LX - 18, TABLE_SY + 60 + checkPageListTable*300, TABLE_LX - 2, TABLE_LY - checkPageListTable*300);
 
 		
-// 		for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+// 		for(int i = 15*checkPageListTable; i < 15 + 15*checkPageListTable; i++){
 // 			if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 // 				continue;
 
@@ -1134,19 +1134,19 @@ void highlightClickMouse(int x, int y, listSubject &lsb, subject arraySubject[],
 // 	if((TABLE_LX - 20 <= x && TABLE_LY-20 <= y && x <= TABLE_LX && y <= TABLE_LY + 20)){
 // 		drawTableListSubject ();
 // 		//
-// 		checkListTable++;
-// 		if(checkListTable >= (lsb.size - 1)/15){
-// 			checkListTable = (lsb.size - 1)/15;
+// 		checkPageListTable++;
+// 		if(checkPageListTable >= (lsb.size - 1)/15){
+// 			checkPageListTable = (lsb.size - 1)/15;
 // 		}
-// 		if(checkListTable < 0){
-// 			checkListTable = 0;
+// 		if(checkPageListTable < 0){
+// 			checkPageListTable = 0;
 // 		}
 
 // 		bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY);
 // 		setfillstyle ( SOLID_FILL, LIGHTGRAY);
-// 		bar(TABLE_LX - 18, TABLE_SY + 60 + checkListTable*300, TABLE_LX - 2, TABLE_LY - checkListTable*300);
+// 		bar(TABLE_LX - 18, TABLE_SY + 60 + checkPageListTable*300, TABLE_LX - 2, TABLE_LY - checkPageListTable*300);
 
-// 		for(int i = 15*checkListTable; i < 15 + 15*checkListTable; i++){
+// 		for(int i = 15*checkPageListTable; i < 15 + 15*checkPageListTable; i++){
 // 			if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 // 				continue;
 
@@ -1262,35 +1262,50 @@ bool checkNameSubject(nodeSubject* rootSubject, const std::string& namesSubject)
 }
 
 // Tìm và in ra các môn học bắt đầu bằng một chuỗi cho trước
-void searchAVL2(nodeSubject* root, string& key) {
+void searchAVL2(nodeSubject* root, string& key, int &line) {
     if (root == nullptr)
         return;
 
     if (key.length() == 0) { // Trường hợp đặc biệt: nếu chuỗi key rỗng, in ra tất cả các môn học
-        cout << "Data is: " << endl;
-        cout << setw(5) << root->data.idSubject << " ";
-        cout << setw(20) << root->data.nameSubject << " ";
-        cout << setw(5) << root->data.STCLT << " ";
-        cout << setw(5) << root->data.STCTH << endl;
+		std::cout << "Khong tim thay data can tim kiem...\n";
 
-		setcolor(LIGHTRED);
-		// outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
-		dong += 30;
+		setfillstyle(SOLID_FILL, WHITE);
+		bar(TABLE_FILTER_SX + 1, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
+		setcolor(LIGHTGRAY);
+		setbkcolor(WHITE);
+		outtextxy(TABLE_FILTER_SX + 180, TABLE_FILTER_SY + 50, "KHONG TIM KIEM THAY DU LIEU...");	
+		setDefault();
 
-        searchAVL2(root->left, key);
-        searchAVL2(root->right, key);
+		return;
+
+        // searchAVL2(root->left, key, line);
+
+        // cout << "Data is: " << endl;
+        // cout << setw(5) << root->data.idSubject << " ";
+        // cout << setw(20) << root->data.nameSubject << " ";
+        // cout << setw(5) << root->data.STCLT << " ";
+        // cout << setw(5) << root->data.STCTH << endl;
+
+		// setcolor(LIGHTRED);
+		// // outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
+		// outtextxy(TABLE_FILTER_SX + 5 + 50 , line + 5, tochar(root->data.idSubject));
+		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, line + 5, tochar(root->data.nameSubject));
+		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , line + 5, tochar(to_string(root->data.STCLT)));
+		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, line + 5, tochar(to_string(root->data.STCTH)));
+		// line += 30;
+		// std::cout << line << std::endl;
+
+        // searchAVL2(root->right, key, line);
     }
 
-    if (root->data.nameSubject.compare(0, key.length(), key) < 0) // Nếu dữ liệu của nút nhỏ hơn key, tìm trong cây con bên phải
-        searchAVL2(root->right, key);
-    else if (root->data.nameSubject.compare(0, key.length(), key) > 0) // Nếu dữ liệu của nút lớn hơn key, tìm trong cây con bên trái
-        searchAVL2(root->left, key);
-    else {
+    if (root->data.idSubject.compare(0, key.length(), key) < 0) // Nếu dữ liệu của nút nhỏ hơn key, tìm trong cây con bên phải
+        searchAVL2(root->right, key, line);
+    else if (root->data.idSubject.compare(0, key.length(), key) > 0) // Nếu dữ liệu của nút lớn hơn key, tìm trong cây con bên trái
+        searchAVL2(root->left, key, line);
+    else if(root->data.idSubject.compare(0, key.length(), key) == 0) {
         // Nếu dữ liệu của nút bằng key, in ra nút này và tiếp tục tìm kiếm trong cây con bên trái và bên phải
+        searchAVL2(root->left, key, line);
+
         cout << "Data is: " << endl;
         cout << setw(5) << root->data.idSubject << " ";
         cout << setw(20) << root->data.nameSubject << " ";
@@ -1299,15 +1314,29 @@ void searchAVL2(nodeSubject* root, string& key) {
 
 		setcolor(LIGHTRED);
 		// outtextxy(TABLE_FILTER_SX + 5, dong + 5, tochar(to_string(stt+1)));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
-		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
-		dong += 30;
+		outtextxy(TABLE_FILTER_SX + 5 + 50 , line + 5, tochar(root->data.idSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, line + 5, tochar(root->data.nameSubject));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , line + 5, tochar(to_string(root->data.STCLT)));
+		outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, line + 5, tochar(to_string(root->data.STCTH)));
+		line += 30;
+		if(line > 520)
+			return;
+		std::cout << line << std::endl;
 
-        searchAVL2(root->left, key);
-        searchAVL2(root->right, key);
+
+        searchAVL2(root->right, key, line);
     }
+	else{
+		std::cout << "Khong tim thay data can tim kiem...\n";
+
+		setfillstyle(SOLID_FILL, WHITE);
+		bar(TABLE_FILTER_SX + 1, TABLE_FILTER_SY + 31, TABLE_FILTER_LX, TABLE_FILTER_LY);
+		setcolor(LIGHTGRAY);
+		setbkcolor(WHITE);
+		outtextxy(TABLE_FILTER_SX + 180, TABLE_FILTER_SY + 50, "KHONG TIM KIEM THAY DU LIEU...");	
+		setDefault();
+	}
+	
 }
 // //Tim kiem va loc mon hoc theo ten || theo bang sao cay avl chi muc dich hien thi thong tin thoi
 // nodeSubject* searchStartsWith(nodeSubject* root, string& key) {
@@ -1350,26 +1379,26 @@ void searchAVL2(nodeSubject* root, string& key) {
 // }
 
 //search lai
-nodeSubject* searchAVL(nodeSubject* root, string &key){
-	// Trường hợp cơ sở: root là null hoặc khóa là root
-    if (root == nullptr || root->data.nameSubject == key){
-		// setcolor(GREEN);
-		// outtextxy(TABLE_FILTER_SX + 5, dong + 5, "001");
-		// outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
-		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
-		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
-		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
-		// dong += 30;
-       return root;
-	}
+// nodeSubject* searchAVL(nodeSubject* root, string &key){
+// 	// Trường hợp cơ sở: root là null hoặc khóa là root
+//     if (root == nullptr || root->data.nameSubject == key){
+// 		// setcolor(GREEN);
+// 		// outtextxy(TABLE_FILTER_SX + 5, dong + 5, "001");
+// 		// outtextxy(TABLE_FILTER_SX + 5 + 50 , dong + 5, tochar(root->data.idSubject));
+// 		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120, dong + 5, tochar(root->data.nameSubject));
+// 		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 , dong + 5, tochar(to_string(root->data.STCLT)));
+// 		// outtextxy(TABLE_FILTER_SX + 5 + 50 + 120 + 340 + 60, dong + 5, tochar(to_string(root->data.STCTH)));
+// 		// dong += 30;
+//        return root;
+// 	}
 
-    // Khóa lớn hơn khóa của root
-    if (root->data.nameSubject < key)
-       return searchAVL(root->right, key);
+//     // Khóa lớn hơn khóa của root
+//     if (root->data.nameSubject < key)
+//        return searchAVL(root->right, key);
 
-    // Khóa nhỏ hơn khóa của root
-    return searchAVL(root->left, key);
-}
+//     // Khóa nhỏ hơn khóa của root
+//     return searchAVL(root->left, key);
+// }
 
 // Tim kiem mon hoc thong qua array tmp duoc tao ra de xu li hien thi
 void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &keySearch){
@@ -1390,7 +1419,7 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 			std::cout << "dang tim kiem.............." << i + 1 << endl;
 			if(arraySubject[i].nameSubject.compare(0, keySearch.length(), keySearch) == 0){
 				std::cout << "Data is searched: ";
-				std::cout << setw(5)		<< to_string(stt + 1);
+				std::cout << setw(5)	<< to_string(stt + 1);
 				std::cout << setw(10) 	<< arraySubject[i].idSubject;
 				std::cout << setw(30) 	<< arraySubject[i].nameSubject;
 				std::cout << setw(5) 	<< arraySubject[i].STCLT;
@@ -1426,7 +1455,7 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 		setDefault();
 	}
 
-	std::cout << "Seach complete......" << endl;
+	std::cout << "Seach complete array ......" << endl;
 }
 
 // Thong bao co hanh dong thoat man hinh
@@ -1615,13 +1644,6 @@ void selectionSort(subject *listSubject, int sizeListSubject){
 void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeArraySubject, bool checkSeletedItem){
 	printUserManual();
 
-	setcolor(RED);
-	line(TABLE_SX, TABLE_SY + 40, TABLE_LX, TABLE_SY + 40);
-	line(TABLE_SX, TABLE_SY + 62, TABLE_LX, TABLE_SY + 62);
-	line(TABLE_SX, TABLE_SY + 84, TABLE_LX, TABLE_SY + 84);
-	line(TABLE_SX, TABLE_SY + 106, TABLE_LX, TABLE_SY + 106);
-
-
 	//Mac dinh thanh sang thanh cuon luc dau
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
@@ -1633,9 +1655,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 	int ascii;
 	int x, y;
 
-	int checkListTable = (lsb.size - 1)/15;
-	int tmpCheckListTable = checkListTable;
-	int tmp2 = 0;
+	int checkPageListTable = (lsb.size - 1)/15;
+	int tmpCheckListTable = checkPageListTable;
+	int tmpPage = 0;
 
 	bool clickLan1 = false;
 	int click = 0;
@@ -1647,6 +1669,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 	bool checkInputTH = false;
 
 	bool checkIdDelete = false;
+
+	bool checkClickDataTable = false;
+	subject subjectUpdate;
 
 	string idSub = "", nameSub =  "";
 	int stclt = -1, stcth = -1;
@@ -1682,7 +1707,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			clearmouseclick(WM_LBUTTONDOWN);
 			
 			++click;
-			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkListTable);
+			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkPageListTable);
 
 
 			// keo ra khoi highlightClickMouse
@@ -1797,11 +1822,12 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				// cout << "Chuoi sau khi loc du lieu: " << strSubFind << "\nhet!!" << endl;
 
 				// Thu lai xu li bang mang
-				searchAVL2(lsb.root, strSearch);
-				std::cout << "da tim kiem xong\n";
+				int line = TABLE_FILTER_SY + 30;
+				searchAVL2(lsb.root, strSearch, line);// tim kiem tren cay avl
+				std::cout << "Da tim kiem avl xong ... \n";
+
+
  				searchStartWithArray(arraySubject, lsb.size, strSearch);
-
-
 			}
 			else {
 				highlightFrameDefault(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
@@ -2343,10 +2369,12 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			// neu click vao bang du lieu     thi hien thi vao khung xu ly.
 			if(TABLE_SX + 50  <= x && x <= TABLE_LX - 30 && TABLE_SY + 40 <= y && y <= TABLE_LY){
+				checkClickDataTable = true;
+
 				// kiem tra xem co click vao o nao khong
 				int indexTable = (y - TABLE_SY - 40) / 22;
 
-				if(tmp2*15 + indexTable < lsb.size){
+				if(tmpPage*15 + indexTable < lsb.size){
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 62, TABLE_CONTROL_SX + 119, TABLE_CONTROL_SY + 89);
 					bar(TABLE_CONTROL_SX + 6, TABLE_CONTROL_SY + 121, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 150 - 1);
@@ -2355,10 +2383,21 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					
 					setbkcolor(WHITE);
 					setcolor(RED);
-					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 64, tochar(arraySubject[15*tmp2 + indexTable].idSubject));
-					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 123, tochar(arraySubject[15*tmp2 + indexTable].nameSubject));
-					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCLT)));
-					outtextxy(TABLE_CONTROL_SX + 10 + 150, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmp2 + indexTable].STCTH)));
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 64, tochar(arraySubject[15*tmpPage + indexTable].idSubject));
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 123, tochar(arraySubject[15*tmpPage + indexTable].nameSubject));
+					outtextxy(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmpPage + indexTable].STCLT)));
+					outtextxy(TABLE_CONTROL_SX + 10 + 150, TABLE_CONTROL_SY + 3 + 195, tochar(to_string(arraySubject[15*tmpPage + indexTable].STCTH)));
+
+					// dua data duoc chon vao bien tmp
+					idSub 	= arraySubject[15*tmpPage + indexTable].idSubject;
+					nameSub = arraySubject[15*tmpPage + indexTable].nameSubject;
+					stclt 	= stringtoint(to_string( arraySubject[15*tmpPage + indexTable].STCLT ));
+					stcth 	= stringtoint(to_string( arraySubject[15*tmpPage + indexTable].STCTH ));
+
+					subjectUpdate.idSubject		= idSub;
+					subjectUpdate.nameSubject 	= nameSub;
+					subjectUpdate.STCLT			= stclt;
+					subjectUpdate.STCTH			= stcth;
 				}
 				else{
 					setfillstyle(SOLID_FILL, WHITE);
@@ -2371,22 +2410,42 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			// Muc Update Subject
 			if(TABLE_CONTROL_SX + 1 + 10 + 110*2 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX  - 1 + 10 + 100 + 110*2 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
-				setbkcolor(BLUE);
-				setcolor(WHITE);
-				setfillstyle(SOLID_FILL, BLUE);
+				if(checkClickDataTable == true){
+					setbkcolor(BLUE);
+					setcolor(WHITE);
+					setfillstyle(SOLID_FILL, BLUE);
 
-				bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
-				outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
-
-
-				//xu li update khi nhan click chuot vao vị tri danh sách 
+					bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
+					outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
 
 
-				// du lieu hiẹn ra , neu xoa thi cat di duoi cua du lieu, neu them vao thi tao ra chuoi moi va cong vao.
+					//xu li update khi nhan click chuot vao vị tri danh sách 
+					deleteNode(lsb.root, idSub);// xoa node
+					lsb.size--;
+					insert(lsb.root, subjectUpdate);
+					lsb.size++;
 
+					std::cout << "update thanh cong..." << std::endl;
 
+					// du lieu hiẹn ra , neu xoa thi cat di duoi cua du lieu, neu them vao thi tao ra chuoi moi va cong vao.
 
-
+					// Update xong thi reset lai bien tmp, de tranh xung dot data.
+					idSub 	= " ";
+					nameSub = " ";
+					stclt 	= -1;
+					stcth 	= -1; 
+				}
+				else{
+					setfillstyle(SOLID_FILL, WHITE);
+					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+					setcolor(RED);
+					setbkcolor(WHITE);
+					outtextxy( TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua chon data de update...");
+					delay(1000);
+					setfillstyle(SOLID_FILL, WHITE);
+					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+					setDefault();
+				}
 			}else{
 				setbkcolor(LIGHTBLUE);
 				setfillstyle(SOLID_FILL, LIGHTBLUE);
@@ -2400,7 +2459,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 			// Hight light thanh truot/cuon ========================///////////////////////////////
 			int rowTable = TABLE_SY + 40 + D_ROW/10 -1;
-			// checkListTable = 0;
+			// checkPageListTable = 0;
 			// len
 			if(TABLE_LX - 20 <= x && TABLE_SY + 30 <= y && x <= TABLE_LX && y <= TABLE_SY + 60){
 				int index1 = 0;
@@ -2408,18 +2467,18 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				drawTableListSubject ();
 
-				tmp2--;
-				if(tmp2 < 0){
-					tmp2 = 0;
+				tmpPage--;
+				if(tmpPage < 0){
+					tmpPage = 0;
 				}
-				if(tmp2 >= (lsb.size - 1)/15){
-					tmp2 = (lsb.size - 1)/15;
+				if(tmpPage >= (lsb.size - 1)/15){
+					tmpPage = (lsb.size - 1)/15;
 				}
 
 				if(checkSeletedItem == true)// khi dang o muc xem danh sach theo ten
 					selectionSort(arraySubject, index1);
 				
-				for(int i = 15*tmp2; i < 15 + 15*tmp2; i++){
+				for(int i = 15*tmpPage; i < 15 + 15*tmpPage; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 						continue;
 
@@ -2461,18 +2520,18 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 
 				drawTableListSubject ();
 				//
-				tmp2++;
-				if(tmp2 >= (lsb.size - 1)/15){
-					tmp2 = (lsb.size - 1)/15;
+				tmpPage++;
+				if(tmpPage >= (lsb.size - 1)/15){
+					tmpPage = (lsb.size - 1)/15;
 				}
-				if(tmp2 < 0){
-					tmp2 = 0;
+				if(tmpPage < 0){
+					tmpPage = 0;
 				}
 				
 				if(checkSeletedItem == true)// khi xem danh sach tai muc dnah sach theo ten
 					selectionSort(arraySubject, index2);
 
-				for(int i = 15*tmp2; i < 15 + 15*tmp2; i++){
+				for(int i = 15*tmpPage; i < 15 + 15*tmpPage; i++){
 					if(i >= lsb.size) // tranh viec in ra nhieu hon so thu tu.
 						continue;
 
@@ -2514,13 +2573,13 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			}
 
 			// Hien thi khung chi muc du lieu thanh cuon
-			if(tmp2 == 0){// re chuot o dau danh sach, mac dinh thi checkListtable == ((lsb.size - 1)/15 roi.
+			if(tmpPage == 0){// re chuot o dau danh sach, mac dinh thi checkListtable == ((lsb.size - 1)/15 roi.
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
 				bar(TABLE_LX - 16, TABLE_SY + 60, TABLE_LX - 6, TABLE_SY + 120);
 			}
-			else if(tmp2 == ((lsb.size - 1)/15) ){//re chuot den cuoi danh sach.
+			else if(tmpPage == ((lsb.size - 1)/15) ){//re chuot den cuoi danh sach.
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
@@ -2530,7 +2589,7 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 				setfillstyle(SOLID_FILL, WHITE);
 				bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 				setfillstyle ( SOLID_FILL, LIGHTBLUE);
-				bar(TABLE_LX - 16, (TABLE_SY + 60 + tmp2*(295)/tmpCheckListTable) - 30, TABLE_LX - 6, (TABLE_SY + 60 + tmp2*(295)/tmpCheckListTable) + 30);
+				bar(TABLE_LX - 16, (TABLE_SY + 60 + tmpPage*(295)/tmpCheckListTable) - 30, TABLE_LX - 6, (TABLE_SY + 60 + tmpPage*(295)/tmpCheckListTable) + 30);
 			}
 
 			setDefault();
