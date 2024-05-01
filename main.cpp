@@ -77,8 +77,8 @@ int main(){
 				if(selected > 1){                  
 					selected--;      
 					createMenu(selected);   	              
-				}         
-				break;                         
+				}          
+				break;                           
 			case DOWN:              
 				if(selected < 4){        
 					selected++;     

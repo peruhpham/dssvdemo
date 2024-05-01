@@ -478,7 +478,7 @@ void menuTQSubject(int selected){
 	// tao menu 2
 	sprintf(text, "%c Danh sach theo ten", 62);
 	setcolor(BLACK);
-	
+
 	if(selected == 1){
 		setcolor(BLUE);
 		outtextxy(10, MENUSPOINTY + 135 + 40 , text);
@@ -2535,108 +2535,122 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 			//----------------------------------------------------
 			// Highlight khung sang khi click mouse Them, Sua, Xoa.
 
-			// Muc Them - insert
+			// Muc Them - Insert
 			if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 100 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30){
-				setbkcolor(BLUE);
-				setcolor(WHITE);
-				setfillstyle(SOLID_FILL, BLUE);
-				bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
-				outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
-				//Xu li them vao avl
-				if(checkInputId && checkInputName && checkInputLT && checkInputTH){
-					// Thuc hien insert
-					subject nodeNewSubject;
-					nodeNewSubject.idSubject = idSub;
-					nodeNewSubject.nameSubject = nameSub;
-					nodeNewSubject.STCLT = stclt;
-					nodeNewSubject.STCTH = stcth;
+				if(!checkClickDataTable){
+					setbkcolor(BLUE);
+					setcolor(WHITE);
+					setfillstyle(SOLID_FILL, BLUE);
+					bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
+					outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
+					//Xu li them vao avl
+					if(checkInputId && checkInputName && checkInputLT && checkInputTH){
+						// Thuc hien insert
+						subject nodeNewSubject;
+						nodeNewSubject.idSubject = idSub;
+						nodeNewSubject.nameSubject = nameSub;
+						nodeNewSubject.STCLT = stclt;
+						nodeNewSubject.STCTH = stcth;
 
-					insert(lsb.root, nodeNewSubject);// insert vao node avl tree.
-					lsb.size++;
-					std::cout << "size node subject: " << lsb.size << endl;
-					arraySubject[lsb.size-1] = nodeNewSubject;
+						insert(lsb.root, nodeNewSubject);// insert vao node avl tree.
+						lsb.size++;
+						std::cout << "size node subject: " << lsb.size << endl;
+						arraySubject[lsb.size-1] = nodeNewSubject;
 
+						setfillstyle(SOLID_FILL, WHITE);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+						setcolor(RED);
+						setbkcolor(WHITE);
+						outtextxy( TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Insert thanh cong...");
+						delay(1000);
+						setfillstyle(SOLID_FILL, WHITE);
+						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+						setDefault();
+						// cout << "Xem danh sach subject moi...\n";
+						// for(int i = 0; i < lsb.size; i++){
+						// 	cout << setw(5) << i + 1 << setw(10) << arraySubject[i].idSubject << setw(30) << arraySubject[i].nameSubject << endl;	
+						// }
+						// An data subject
+						setfillstyle(SOLID_FILL, WHITE);
+						bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
+						bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 60 + 30 + 30, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
+						bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+						bar(TABLE_CONTROL_SX + 1 + 5 + 150, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
+
+						// gan nhan false lai de khong insert lung tung
+						checkInputId = false;
+						checkInputName = false;
+						checkInputLT = false;
+						checkInputTH = false;
+					}
+					else{
+						if(checkInputId == false){
+							std::cout << "Error! Not complete data input idsubject..." << endl;
+							setcolor(RED);
+							setbkcolor(LIGHTCYAN);
+							outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap IDsubject!");
+							
+							delay(1000);
+							setfillstyle(SOLID_FILL, WHITE);
+							bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+							setDefault();
+						}
+						if(checkInputName == false){
+							std::cout << "Error! Not complete data input nameSubject..." << endl;
+							setcolor(RED);
+							setbkcolor(LIGHTCYAN);
+							outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap nameSubject!");
+							
+							delay(1000);
+							setfillstyle(SOLID_FILL, WHITE);
+							bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+							setDefault();
+						}
+						if(checkInputLT == false){
+							std::cout << "Error! Not complete data input STCLT subject..." << endl;
+							setcolor(RED);
+							setbkcolor(LIGHTCYAN);
+							outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCLT!");
+							
+							delay(1000);
+							setfillstyle(SOLID_FILL, WHITE);
+							bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+							setDefault();
+						}
+						if(checkInputTH == false){
+							std::cout << "Error! Not complete data input STCTH subject..." << endl;
+							setcolor(RED);
+							setbkcolor(LIGHTCYAN);
+							outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCTH!");
+							
+							delay(1000);
+							setfillstyle(SOLID_FILL, WHITE);
+							bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
+							setDefault();
+						}
+						// Thong bao loi toan bo.
+						// cout << "Error! Not complete data subject input..." << endl;
+						// setcolor(RED);
+						// setbkcolor(LIGHTCYAN);
+						// outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap du data subject!");
+						// delay(3000);
+						// setfillstyle(SOLID_FILL, LIGHTCYAN);
+						// bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
+						setDefault();
+					}
+				}
+				else{// neu truoc do click vao bang du lieu thi bao khong the nhan vao khung Insert
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 					setcolor(RED);
 					setbkcolor(WHITE);
-					outtextxy( TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Insert thanh cong...");
+					outtextxy( TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Khong the Insert ...");
 					delay(1000);
 					setfillstyle(SOLID_FILL, WHITE);
 					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 					setDefault();
-					// cout << "Xem danh sach subject moi...\n";
-					// for(int i = 0; i < lsb.size; i++){
-					// 	cout << setw(5) << i + 1 << setw(10) << arraySubject[i].idSubject << setw(30) << arraySubject[i].nameSubject << endl;	
-					// }
-					// An data subject
-					setfillstyle(SOLID_FILL, WHITE);
-					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
-					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 60 + 30 + 30, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);
-					bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
-					bar(TABLE_CONTROL_SX + 1 + 5 + 150, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);
-
-					// gan nhan false lai de khong insert lung tung
-					checkInputId = false;
-					checkInputName = false;
-					checkInputLT = false;
-					checkInputTH = false;
 				}
-				else{
-					if(checkInputId == false){
-						std::cout << "Error! Not complete data input idsubject..." << endl;
-						setcolor(RED);
-						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap IDsubject!");
-						
-						delay(1000);
-						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
-						setDefault();
-					}
-					if(checkInputName == false){
-						std::cout << "Error! Not complete data input nameSubject..." << endl;
-						setcolor(RED);
-						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap nameSubject!");
-						
-						delay(1000);
-						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
-						setDefault();
-					}
-					if(checkInputLT == false){
-						std::cout << "Error! Not complete data input STCLT subject..." << endl;
-						setcolor(RED);
-						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCLT!");
-						
-						delay(1000);
-						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
-						setDefault();
-					}
-					if(checkInputTH == false){
-						std::cout << "Error! Not complete data input STCTH subject..." << endl;
-						setcolor(RED);
-						setbkcolor(LIGHTCYAN);
-						outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, "Chua nhap STCTH!");
-						
-						delay(1000);
-						setfillstyle(SOLID_FILL, WHITE);
-						bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
-						setDefault();
-					}
-					// Thong bao loi toan bo.
-					// cout << "Error! Not complete data subject input..." << endl;
-					// setcolor(RED);
-					// setbkcolor(LIGHTCYAN);
-					// outtextxy(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, "Chua nhap du data subject!");
-					// delay(3000);
-					// setfillstyle(SOLID_FILL, LIGHTCYAN);
-					// bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 250, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 280);
-					setDefault();
-				}
+				
 			}else{
 				setbkcolor(LIGHTBLUE);
 				setfillstyle(SOLID_FILL, LIGHTBLUE);
@@ -2882,6 +2896,9 @@ void controlAddDeleteSubject(listSubject &lsb, subject arraySubject[], int sizeA
 					bar(TABLE_CONTROL_SX + 20, TABLE_CONTROL_SY + 270, TABLE_CONTROL_SX + 320, TABLE_CONTROL_SY + 300);
 					setDefault();
 				}
+
+				checkClickDataTable = false;// tranh viec sua nhieu lan
+				
 			}else{
 				setbkcolor(LIGHTBLUE);
 				setfillstyle(SOLID_FILL, LIGHTBLUE);
