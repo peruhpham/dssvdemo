@@ -64,19 +64,18 @@ int main(){
 						createMenu(selected);   
 					break; 
 					case 3:  
-						subjectManagement1(lsj);        
-						cout << "1 main\n";                                   
+						subjectManagement1(lsj);           
 						createMenu(selected);                                 
 					break;						                                              	 
 					case 4:                                      
 						studentGradeManagement(lcfs, lsj, ls);                                       
 						createMenu(selected);                    
-					break;            
+					break;                        
 				}             
-				break;               
-			case UP:          
-				if(selected > 1){             
-					selected--;     
+				break;                 
+			case UP:              
+				if(selected > 1){                  
+					selected--;      
 					createMenu(selected);   	              
 				}         
 				break;                         

@@ -32,3 +32,8 @@
 *.exe
 *.out
 *.app
+
+# Phat sinh tu may 
+*.code-workspace
+*.vscode
+*.idea
