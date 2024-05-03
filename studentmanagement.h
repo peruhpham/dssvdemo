@@ -1,7 +1,7 @@
 #ifndef STUDENTMANAGEMENT_H
 #define STUDENTMANAGEMENT_H
 
-#define emptyStr "" 
+#define emptyStr ""
 
 void outtextwith(int line, student s, int COLOR){ // outtext voi chi so dong line
 	
@@ -253,7 +253,6 @@ ptrStudent findNextStudentInClass(listStudent &ls, string idClass, string idStud
 	return NULL;
 }
 
-// dùng cái này  
 ptrStudent displayStudentWithId(listStudent ls, string id, string idStudent){ // id la ma dang nhap tu ban phim, 
 	// liet ke tat ca sinh vien co ma id tuong ung voi ma id dang nhap tu ban phim
 	// the hien tren bang bat dau bang sinh vien co ma la idStudent va tra ve sinh vien nay
@@ -278,7 +277,6 @@ ptrStudent displayStudentWithId(listStudent ls, string id, string idStudent){ //
 	}
 	return firstStudent;
 }
-
 void typeInforStudent(listStudent &ls, string idClass, ptrStudent firstStudent, int lineCurrent){
 	int currentBox = 1, maxCurrentBox = 1, finded = 1;
 	string idStudent, firstName, lastName, gender, phone, year;

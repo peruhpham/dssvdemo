@@ -188,6 +188,22 @@ void displayStudentList(listStudent ls){
 }
 
 
+
+
+ptrStudent findPtrStudent(listStudent &ls, string id){
+	ptrStudent cur = ls.head;
+	
+	while(cur != NULL){
+		if(cur->value.id == id){
+			return cur;
+		}
+		cur = cur->next;
+	}
+	return NULL;
+}
+
+
+
 // danh sach lop hoc 
 //_______________________________________________________________________________________
 
@@ -241,7 +257,7 @@ void readListClass(listClass &lc, string nameFileListClass){
 
 struct Register{  
     string idStudent;
-    double scores;
+    float scores;
     bool unSub;
 };
 
@@ -257,7 +273,6 @@ struct nodeRegister{
 
 typedef nodeRegister *ptrRegister;
 
-
 struct listRegister{
      int size;
      ptrRegister head;
@@ -269,52 +284,113 @@ struct listRegister{
 
 typedef listRegister *ptrListRegister;
 
-void insertRegister(listRegister &lr, Register data){
+void insertRegister(ptrListRegister &lr, Register data){
 	ptrRegister newnode = new nodeRegister(data);
-    ptrRegister cur = lr.head;
+    ptrRegister cur = lr->head;
     
     if(cur == NULL){ // truong hop rong
-    	lr.head = newnode;
+    	lr->head = newnode;
+    	lr->size += 1;
     	return;
 	}
 	
 	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
 	
 	if(cur->data.idStudent > data.idStudent){
-		newnode->next = lr.head;
-		lr.head = newnode;
+		newnode->next = lr->head;
+		lr->head = newnode;
+		lr->size += 1;
 		return;
 	}
 	
 	if(cur->data.idStudent < data.idStudent){
 		newnode->next = cur->next;
 		cur->next = newnode;
+		lr->size += 1;
 		return;
 	}
+
 	return;
 }
 
-void deleteRegister(listRegister &lr,Register find){
-	if(lr.head!=NULL){
-		ptrRegister p=lr.head;
-		ptrRegister q=NULL; 
-		while(p!=NULL && p->data.idStudent != find.idStudent){
-			q=p; 
-			p=p->next; 
-		} 
-		if(p==lr.head){
-			lr.head = p->next;
-			p->data.unSub=0; 
-			delete(p);  
-		} 
-		else{
-			q->next=p->next;
-			p->data.unSub=0; 
-			delete(p); 
+void addRegister(ptrListRegister &lr, Register data){
+	ptrRegister newnode = new nodeRegister(data);
+    ptrRegister cur = lr->head;
+    
+    if(cur == NULL){ // truong hop rong
+    	lr->head = newnode;
+    	lr->head->data.unSub=0;
+//    	lr->size += 1;
+    	return;
+	}
+	
+	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
+	
+	if(cur->data.idStudent > data.idStudent){
+		newnode->next = lr->head;
+		lr->head = newnode;
+		lr->head->data.unSub=0;
+		return;
+	}
+	
+	if(cur->data.idStudent < data.idStudent){
+		newnode->next = cur->next;
+		cur->next = newnode;
+		lr->head->data.unSub=0;
+		return;
+	}
+
+	return;
+}
+
+void deleteRegister(ptrListRegister &lr, Register d){
+	if(lr->head==NULL){
+		return;
+	}
+	else{
+		ptrRegister cur = lr->head;//node 
+		ptrRegister q=NULL;
+		while(cur != NULL && cur->data.idStudent != d.idStudent){
+			q=cur;
+			cur=cur->next;
+		}
+		if(cur != NULL && cur->data.scores == 0){
+			if(cur == lr->head){
+				lr->head = cur->next;
+			}
+			else{
+				q->next=cur->next;
+			}
+			cur->next=NULL;
+			cur->data.unSub=1;
+			delete(cur);
+			lr->size-=1;
 		}
 	}
-} 
+}
 
+//void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
+//	ptrStudent currentStudent = ls.head;
+//	
+//	Register r; 
+//	for(int i = 0; i < lcfs.size; i++){
+//		
+//		cout << "__________" << i << "__________" << endl;
+//		while(currentStudent != NULL){
+//			// moi cur la mot ptrStudent
+//			
+//			r.idStudent = currentStudent->value.id;
+//			r.scores = 0;
+//			r.unSub = 0;
+//
+//			cout << &(lcfs.list[i]->lr) << endl;
+//			insertRegister(lcfs.list[i]->lr, r);
+//			currentStudent = currentStudent->next;
+//		}
+//		currentStudent = ls.head;
+//		
+//	}
+//}
 
 // danh sach lop theo mon hoc (lop tin chi)
 //_______________________________________________________________________________________
@@ -333,6 +409,7 @@ struct classForSubject{
 	ptrListRegister lr;
 	classForSubject(){
 		this->lr = new listRegister;
+		
 		this->idclass = 0; this->idSubject = emptyStr;
 		this->group = this->academicYear = this->semester = this->studentMax = this->studentMin = 0;
 		this->unClass = true;
@@ -352,7 +429,8 @@ struct listClassForSubject{
 int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	if(lcfs.size == MAXCLASS) return -1; // danh sach day 
 	
-	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+	// kiem tra da ton tai hay chua
+	for(int i = 0; i < lcfs.size; i++){ 
 		if(lcfs.list[i]->idSubject == data->idSubject && lcfs.list[i]->academicYear == data->academicYear && 
 		   lcfs.list[i]->semester == data->semester && lcfs.list[i]->group == data->group){
 			return 0; // danh sach da co thong tin;
@@ -360,9 +438,11 @@ int addClassForSubject(listClassForSubject &lcfs, ptrClassForSubject &data){
 	}
 	
 	data->idclass = getAutoIdClass();
-	data->unClass = true;
+	data->unClass = false;
+	data->lr = new listRegister;
 	
 	lcfs.list[lcfs.size] = new classForSubject;
+
 	*lcfs.list[lcfs.size] = *data;	
 	lcfs.size += 1;
 
@@ -437,6 +517,67 @@ void readListClassForSubject(listClassForSubject &lcfs, string nameFileListClass
     f.close();
 }
 
+ptrClassForSubject findClassForSubject(listClassForSubject &lcfs, string idSubject, int academic, int semes, int group){
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idSubject == idSubject && lcfs.list[i]->academicYear ==academic && 
+		    lcfs.list[i]->semester == semes && lcfs.list[i]->group == group){
+			return lcfs.list[i]; // danh sach da co thong tin
+		}
+	}
+	return NULL;
+}
+
+ptrClassForSubject findClassForSubjectV2(listClassForSubject &lcfs, string idSubject, int academic, int semes, int group){
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idSubject == idSubject && lcfs.list[i]->academicYear ==academic && 
+		    lcfs.list[i]->semester == semes && lcfs.list[i]->group == group && lcfs.list[i]->lr->head->data.scores > 0 && lcfs.list[i]->lr->head->data.scores < 10){
+			return lcfs.list[i]; // danh sach da co thong tin
+		}
+	}
+	return NULL;
+}
+
+bool checkScoresInClass(ptrClassForSubject cfs){
+	if(cfs != NULL){
+		if(cfs->lr->head->data.scores > 0 && cfs->lr->head->data.scores < 10){
+			return true;
+		}
+	}
+	return false;
+}
+
+int existStudentHaveGrade(ptrListRegister &lr){
+	ptrRegister p = lr->head;
+	if(p == NULL) return 0;
+	while(p != NULL){
+		if(p->data.scores != 0){
+			return 1;
+		}
+		p = p->next;
+	}
+	return 0;
+}
+
+int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
+	if(lcfs.list[currentClass]->lr->head != NULL) return 1;
+	return 0;
+}
+
+
+int existStudentRegistingV2(ptrListRegister &lr,string idStudent){
+	ptrRegister current=lr->head;
+	
+	if(lr->head != NULL){
+		while(current != NULL && current->data.idStudent != idStudent){
+			current=current->next;
+		}
+		if(current != NULL){
+			return 1;
+		}
+	}
+	return 0;
+	
+} 
 
 // danh sach mon hoc 
 //_______________________________________________________________________________________
@@ -612,6 +753,13 @@ string findNameSubject(string idSubject, ptrSubject root) {
 	return root->data.nameSubject;
 }
 
+ptrSubject findSubject(string idSubject, ptrSubject root){
+	if (root == NULL) return NULL;
+	if(idSubject > root->data.idSubject) return findSubject(idSubject, root->right);
+	if(idSubject < root->data.idSubject) return findSubject(idSubject, root->left);
+	return root;
+}
+
 void readListYear(int *academicYear, int &sizeYear){
 	string nameFileListYear = "data\\yearlist.txt";
 	ifstream f(nameFileListYear);
@@ -630,18 +778,31 @@ void readListYear(int *academicYear, int &sizeYear){
     f.close();
 }
 
-string search(listSubject mh,string idSubject){
-	ptrSubject p = mh.root;
-	while(p!=NULL && p->data.idSubject != idSubject){
-		if(p->data.idSubject > idSubject){
-			p=p->left; 
-		} 
-		else{
-			p=p->right; 
-		} 
-	} 
-	return p->data.nameSubject; 
-} 
+void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
+	ptrStudent currentStudent = ls.head;
+	
+	Register r; 
+	for(int i = 0; i < lcfs.size; i++){
+		while(currentStudent != NULL){
+			// moi cur la mot ptrStudent
+			
+			r.idStudent = currentStudent->value.id;
+			r.scores = 11;
+			r.unSub = 0;
+		
+			insertRegister(lcfs.list[i]->lr, r);
+			
+			currentStudent = currentStudent->next;
+		}
+		currentStudent = ls.head;
+		
+	}
+}
 
+int checkNumberTC(listSubject &lsj, string idSubject){
+	ptrSubject find = findSubject(idSubject,lsj.root);
+	if(find == NULL) return 0; 
+	return find->data.STCLT + find->data.STCTH; 
+}
 
 #endif

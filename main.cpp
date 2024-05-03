@@ -3,81 +3,78 @@
 #include <conio.h>
 #include <stdio.h>
 #include <bits/stdc++.h>
-#include <string>
+#include <string> 
 #include "datahanding.h"
-#include "datastructure.h"
+#include "datastructure.h"    
 #include "display.h"
 #include "studentmanagement.h"
 #include "classforsubjectmanagement.h"
-#include "registerclass.h" 
+#include "studentgrademanagement.h"
+                     
+using namespace std; 
 
-  
-using namespace std;
-
-
-
-int main(){  
+int main(){   
+	       
+	initwindow(LPOINTX, LPOINTY);   
 	
-	initwindow(LPOINTX, LPOINTY);
-	
-	// tao tien xu ly, khai bao 
+	// tao tien xu ly, khai bao    
 	string nameFileListStudent = "data\\studentlist.txt";
-	string nameFileListClass = "data\\classlist.txt";
-	string nameFileListClassForSubject = "data\\classforsubjectlist.txt";
-	string nameFileListSubject = "data\\subjectlist.txt";
-	
+	string nameFileListClass = "data\\classlist.txt";                 
+	string nameFileListClassForSubject = "data\\classforsubjectlist.txt"; 
+	string nameFileListSubject = "data\\subjectlist.txt";   
+	   
 	listStudent ls;
-	listClass lc;
-	listClassForSubject lcfs;
+	listClass lc;   
+	listClassForSubject lcfs; 
 	listSubject lsj;
 	
-	readListStudent(ls, nameFileListStudent);
-	readListClass(lc, nameFileListClass);
-	readListClassForSubject(lcfs, nameFileListClassForSubject);
-	readListSubject(lsj, nameFileListSubject);
- 	
-//	getch();
-	
-	int selected = 1;
-	createMenu(selected);
-
-	while(1){
-		char key = getch();
-		       
-		int ascii = static_cast<int>(key); 
-        if (ascii == 0) { 
-            key = getch();
-            ascii = static_cast<int>(key);
-            ascii += 255; 
-    	}
+	readListStudent(ls, nameFileListStudent);  
+	readListClass(lc, nameFileListClass);        
+	readListClassForSubject(lcfs, nameFileListClassForSubject);   
+	readListSubject(lsj, nameFileListSubject);   
     
-		switch(ascii){
-			case ET:    	
-				switch(selected){
-					case 1:
-						studentManagement(ls, lc);
-						createMenu(selected);	         
-						break; 
-					case 2:
-						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi)
+ 	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day 
+//  getch();   
+	int selected = 1;
+	createMenu(selected);    
+
+	while(1){   
+		char key = getch();            
+		       
+		int ascii = static_cast<int>(key);     
+        if (ascii == 0) {     
+            key = getch();  
+            ascii = static_cast<int>(key); 
+            ascii += 255;     
+    	}       
+           
+		switch(ascii){    
+			case ET:    	          
+				switch(selected){ 
+					case 1:     
+						studentManagement(ls, lc);     
+						createMenu(selected);	          
+						break;                    
+					case 2:  
+						classForSubjectManagement(lcfs, lsj, ls ); // quan li lop theo mon hoc (lop tin chi)      
+						createMenu(selected);          
+						break;              
+					case 4:       
+						studentGradeManagement(lcfs, lsj, ls,lc);   
 						createMenu(selected);  
-						break;
-					case 3:
-						
-						createMenu(selected); 
-						break;
-//					case 4:    
-				}
+						break;  
+//					case 4:           
+				}       
 				break;
-			case UP:
-				if(selected > 1){ 
-					selected--;
+			case UP:     
+				if(selected > 1){             
+					selected--; 
 					createMenu(selected);
 				}
-				break; 
+				break;     
 			case DOWN:
 				if(selected < 4){
-					selected++;
+					selected++;     
 					createMenu(selected);
 				}
 				break;

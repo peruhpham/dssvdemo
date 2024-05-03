@@ -111,7 +111,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=registerclass.h
+FileName=studentgrademanagement.h
 CompileCpp=1
 Folder=
 Compile=1
