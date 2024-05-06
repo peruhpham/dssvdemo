@@ -28,7 +28,7 @@ INT1339#Ngon ngu lap trinh C++#3#2
 INT1319#He dieu hanh#3#1
 INT1336#Mang may tinh#3#1
 INT1303#An toan va bao mat httt#3#0
-INT13147#Thuc tap co so#3#0
+INT1317#Thuc tap co so#3#0
 INT1340#Nhap mon cong nghe phan mem#3#3
 INT1341#Nhap mon tri tue nhan tao#3#2
 INT1414#Co so du lieu phan tan#3#1

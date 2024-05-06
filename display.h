@@ -92,7 +92,7 @@
 #define NOTISPOINTX2 700
 #define NOTISPOINTY2 280
 #define NOTILPOINTX2 1040
-#define NOTILPOINTY2 450
+#define NOTILPOINTY2 450 
 
 int clickInRange(int x, int y, int left, int top, int right, int bot){ // nhan chuot trai vao pham vi
 	if((left <= x && x <= right) && (top <= y && y <= bot)) return 1;
@@ -183,7 +183,7 @@ void mouseHighlightUpdate(int &on, int &selected){
 			setfillstyle(SOLID_FILL, LIGHTBLUE);
 			setbkcolor(LIGHTBLUE);
 			bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
-			outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+			outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin"); 
 			on = 1;
 			selected = 1;
 		}

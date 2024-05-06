@@ -48,15 +48,15 @@ int main(){
 		int ascii = static_cast<int>(key);  
         if (ascii == 0) {  
             key = getch();          
-            ascii = static_cast<int >(key);             
+            ascii = static_cast<int >(key);                     
             ascii += 255;           
     	}       
              
 		switch(ascii){       
-			case ET:    	      
+			case ET:    	                
 				switch(selected){              
 					case 1:  
-						studentManagement(ls, lc);    
+						studentManagement(ls, lc);                  
 						createMenu(selected);	          
 					break;   
 					case 2:
@@ -64,21 +64,21 @@ int main(){
 						createMenu(selected);   
 					break; 
 					case 3:  
-						subjectManagement1(lsj);           
-						createMenu(selected);                                 
+						subjectManagement1(lsj, lcfs);                
+						createMenu(selected);                                    
 					break;						                                              	 
-					case 4:                                      
-						studentGradeManagement(lcfs, lsj, ls);                                       
-						createMenu(selected);                    
-					break;                        
-				}             
-				break;                 
-			case UP:              
-				if(selected > 1){                  
+					case 4:                                              
+						studentGradeManagement(lcfs, lsj, ls, lc);                                        
+						createMenu(selected);                     
+					break;                               
+				}                                        
+				break;                                                        
+			case UP:                  
+				if(selected > 1){                                 
 					selected--;      
-					createMenu(selected);   	              
-				}          
-				break;                           
+					createMenu(selected);   	                      
+				}                     
+				break;                            
 			case DOWN:              
 				if(selected < 4){        
 					selected++;     

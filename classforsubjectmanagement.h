@@ -185,6 +185,7 @@ int findIndexClass(listClassForSubject &lcfs, int idClass){
 	}
 	return -1;
 }
+
 void findListSemester(int *semester, int sizeSemester){
 	for(int i = 0; i < sizeSemester; i++){
 		if(i == 0){
