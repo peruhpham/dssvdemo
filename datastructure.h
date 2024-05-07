@@ -204,10 +204,6 @@ ptrStudent findPtrStudent(listStudent &ls, string id){
 
 // danh sach lop hoc 
 //_______________________________________________________________________________________
-
-
-
-
 struct listClass{
 	int size;
 	string idClass[MAXLISTCLASS]; // danh sach id lop hoc
@@ -250,9 +246,6 @@ void readListClass(listClass &lc, string nameFileListClass){
 
 // danh sach dang ky 
 //_______________________________________________________________________________________
-
-
-
 struct Register{  
     string idStudent;
     double scores;
@@ -309,6 +302,62 @@ void insertRegister(ptrListRegister &lr, Register data){
 	}
 
 	return;
+}
+
+void addRegister(ptrListRegister &lr, Register data){
+	ptrRegister newnode = new nodeRegister(data);
+    ptrRegister cur = lr->head;
+    
+    if(cur == NULL){ // truong hop rong
+    	lr->head = newnode;
+    	lr->head->data.unSub=0;
+//    	lr->size += 1;
+    	return;
+	}
+	
+	for(cur; cur->next != NULL && cur->next->data.idStudent <= data.idStudent; cur = cur->next);
+	
+	if(cur->data.idStudent > data.idStudent){
+		newnode->next = lr->head;
+		lr->head = newnode;
+		lr->head->data.unSub=0;
+		return;
+	}
+	
+	if(cur->data.idStudent < data.idStudent){
+		newnode->next = cur->next;
+		cur->next = newnode;
+		lr->head->data.unSub=0;
+		return;
+	}
+
+	return;
+}
+
+void deleteRegister(ptrListRegister &lr, Register d){
+	if(lr->head==NULL){
+		return;
+	}
+	else{
+		ptrRegister cur = lr->head;//node 
+		ptrRegister q=NULL;
+		while(cur != NULL && cur->data.idStudent != d.idStudent){
+			q=cur;
+			cur=cur->next;
+		}
+		if(cur != NULL && cur->data.scores == 0){
+			if(cur == lr->head){
+				lr->head = cur->next;
+			}
+			else{
+				q->next=cur->next;
+			}
+			cur->next=NULL;
+			cur->data.unSub=1;
+			delete(cur);
+			lr->size-=1;
+		}
+	}
 }
 //void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
 //	ptrStudent currentStudent = ls.head;
@@ -486,6 +535,21 @@ int existStudentRegisting(listClassForSubject &lcfs, int currentClass){
 	if(lcfs.list[currentClass]->lr->head != NULL) return 1;
 	return 0;
 }
+
+int existStudentRegistingV2(ptrListRegister &lr,string idStudent){
+	ptrRegister current=lr->head;
+	
+	if(lr->head != NULL){
+		while(current != NULL && current->data.idStudent != idStudent){
+			current=current->next;
+		}
+		if(current != NULL){
+			return 1;
+		}
+	}
+	return 0;
+	
+} 
 
 
 

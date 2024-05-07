@@ -1409,40 +1409,40 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
-					    		if(firstSubject != NULL){
-					    			setfillstyle(SOLID_FILL, WHITE);
-									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-									idSubject = firstSubject->data.idSubject; // du lieu duoc chon luu vao idSubject;
-									
-									outtextwithlineV2(0, firstSubject->data, BLACK);
-									
-									setcolor(LIGHTGRAY);
-									rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-									// neu da du thong tin thi cho phep nhap diem
-									cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
-									drawPrintRegisteredStudentListV4(cfs); // ve khung
-									if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
-										inputScores(cfs, ls);
-										idSubject = groupTemp = emptyStr;
-										academic = semes = 0;
-										group = 0;
-									} 
-								}
-								else{
-									setfillstyle(SOLID_FILL, WHITE);
-									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-									idSubject = emptyStr;	
-								}
-					    		
-					    		nameSubject = emptyStr;
-					    		lineCurrent = 1;
-					    		setcolor(LIGHTGRAY);
+							if(firstSubject != NULL){
+								setfillstyle(SOLID_FILL, WHITE);
+								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+								idSubject = firstSubject->data.idSubject; // du lieu duoc chon luu vao idSubject;
+								
+								outtextwithlineV2(0, firstSubject->data, BLACK);
+								
+								setcolor(LIGHTGRAY);
 								rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-								setDefault();
-								break;
+								// neu da du thong tin thi cho phep nhap diem
+								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
+								drawPrintRegisteredStudentListV4(cfs); // ve khung
+								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+									inputScores(cfs, ls);
+									idSubject = groupTemp = emptyStr;
+									academic = semes = 0;
+									group = 0;
+								} 
 							}
+							else{
+								setfillstyle(SOLID_FILL, WHITE);
+								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+								idSubject = emptyStr;	
+							}
+							
+							nameSubject = emptyStr;
+							lineCurrent = 1;
+							setcolor(LIGHTGRAY);
+							rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+							setDefault();
+							break;
+						}
 						else if(ascii == UP && firstSubject != NULL){
 							if(lineCurrent > 1){
 								ptrSubject prevSubject = findPrevSubjectV2(lsj.root,firstSubject, nameSubject);
@@ -2110,7 +2110,7 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 */
 void drawTableControlClassScores(){
 	//Tieu de bang tong ket cac mon hoc cua lop sinh vien
-	setfillstyle(SOLID_FILL, LIGHTGRAY);
+	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_CLASS_SX, TABLE_CLASS_SY, TABLE_CLASS_LX, TABLE_CLASS_LY);
 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10, "BANG DIEM TONG KET");
 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10 + 20, "Lop:  Chua chon lop ...");
@@ -2119,9 +2119,12 @@ void drawTableControlClassScores(){
 	bar(LISTSPOINTX, LISTSPOINTY - 10, LISTLPOINTX, LISTLPOINTY - 5); // xoa toan bo noi dung trong muc nhap diem
 	
 	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	setbkcolor(WHITE);
 	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 40);
+
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
 	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 10, "DANH SACH DIEM CUA LOP SINH VIEN");
+
 	setcolor(LIGHTGRAY);
 	line(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY);
 	line(LISTSPOINTX, LISTSPOINTY, LISTSPOINTX, LISTLPOINTY); // tao header cho muc nhap diem
@@ -2138,10 +2141,13 @@ void drawTableControlClassScores(){
 //Ve bang du lieu rong khi chua chon lop sinh vien
 void drawTableDataClassScoresEmpty(){
 	//Tieu de bang tong ket cac mon hoc cua lop sinh vien
-	setfillstyle(SOLID_FILL, LIGHTGRAY);
+	setfillstyle(SOLID_FILL, WHITE);
 	bar(TABLE_CLASS_SX, TABLE_CLASS_SY, TABLE_CLASS_LX, TABLE_CLASS_LY);
+
+	setcolor(BLACK);
+	setbkcolor(WHITE);
 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10, "BANG DIEM TONG KET");
-	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10 + 20, "Lop:  Chua chon lop ...");
+	outtextxy(TABLE_CLASS_SX + 220, TABLE_CLASS_SY + 10 + 20, "Lop: ...  ");
 
 	//-----------------
 	setfillstyle(SOLID_FILL, WHITE);
@@ -2156,7 +2162,7 @@ void drawTableDataClassScoresEmpty(){
 	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330);// KHUNG
 
 	setcolor(LIGHTMAGENTA);
-	outtextxy(TEXTSPOINTX1 + 200, TEXTLPOINTY1 + 30, "CHUA CHON DU LIEU ...");
+	outtextxy(TEXTSPOINTX1 + 200, TEXTLPOINTY1 + 30, "VUI LONG CHON LOP SINH VIEN DE HIEN THI DIEM ...");
 
 	setcolor(LIGHTGRAY);
 	line(TEXTSPOINTX1      , TEXTLPOINTY1 - 30, TEXTSPOINTX1      , TEXTLPOINTY1 );
@@ -2265,21 +2271,21 @@ void drawTableDataClassScores(){
 	
 	setbkcolor(WHITE);
 	setcolor(GREEN);
-	outtextxy(TEXTSPOINTX1       + 3, TEXTLPOINTY1 - 20 + 22 , "001");
-	outtextxy(TEXTSPOINTX1 + 30  + 3, TEXTLPOINTY1 - 20 + 22 , "N22DCCN193");
-	outtextxy(TEXTSPOINTX1 + 130 + 3, TEXTLPOINTY1 - 20 + 22 , "NGUYEN THI TU");
-	outtextxy(TEXTSPOINTX1 + 330 + 3, TEXTLPOINTY1 - 20 + 22 , "QUYNH");
-	outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 450 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 500 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 550 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 600 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 650 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 700 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 750 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 800 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 850 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
-	outtextxy(TEXTSPOINTX1 + 900 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1       + 3, TEXTLPOINTY1 - 20 + 22 , "001");
+	// outtextxy(TEXTSPOINTX1 + 30  + 3, TEXTLPOINTY1 - 20 + 22 , "N22DCCN193");
+	// outtextxy(TEXTSPOINTX1 + 130 + 3, TEXTLPOINTY1 - 20 + 22 , "NGUYEN THI TU");
+	// outtextxy(TEXTSPOINTX1 + 330 + 3, TEXTLPOINTY1 - 20 + 22 , "QUYNH");
+	// outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 450 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 500 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 550 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 600 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 650 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 700 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 750 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 800 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 850 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
+	// outtextxy(TEXTSPOINTX1 + 900 + 3, TEXTLPOINTY1 - 20 + 22 , "BAS1122");
 	
 	setcolor(LIGHTGRAY);
 	line(TEXTSPOINTX1      , TEXTLPOINTY1 - 30, TEXTSPOINTX1      , TEXTLPOINTY1 + 330);
@@ -2303,10 +2309,98 @@ void drawTableDataClassScores(){
 	setDefault(); 
 }
 
-//print danh sach diem theo lop
-void printListScoreByClass (listRegister lr, listClassForSubject lcfs, listStudent ls, listClass lc, string &idClass){
-	
+// chuyen double sang string voi 2 chu so thap phan
+std::string doubleToString(double value) {
+    std::ostringstream stream;
+    stream << std::fixed << std::setprecision(2) << value;
+    return stream.str();
 }
+
+// kiem tra xenm sinh vien dang duyet co nam trong danh sach mon dang duyet khong
+bool checkIdStudentForListRegister (ptrListRegister lr, string &idStudent){
+	for(ptrRegister current = lr->head; current != nullptr; current = current->next){
+		if(idStudent == current->data.idStudent){
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+//print danh sach diem theo lop
+void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idClass) {
+    bool checkDataInClass = false;
+    int stt = 0;
+    int hang = 22;
+    int cot = 0;
+
+	int countRow = 0;
+
+    for (ptrStudent curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
+        if (idClass == curStu->value.idClass) {
+            delay(100);
+            checkDataInClass = true;
+            stt++;
+
+            settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+            setcolor(GREEN);
+            setbkcolor(WHITE);
+            outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(stt)));
+            outtextxy(TEXTSPOINTX1 + 30 + 3, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+            outtextxy(TEXTSPOINTX1 + 130 + 3, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+            outtextxy(TEXTSPOINTX1 + 330 + 3, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+
+            for (int i = 0; i < lcfs.size; i++) {
+				if(lcfs.list[i]->lr->head->data.unSub || lcfs.list[i]->lr->head->data.scores > 10 || lcfs.list[i]->lr->head->data.scores < 0) // chỉ can in ra danh sach mon da co diem
+					continue;
+
+				std::cout << "lcfs thu: " << setw(5) << i << std::endl;//??
+				// In ra header mon hoc da co diem
+				settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+				setcolor(WHITE);
+				setbkcolor(LIGHTBLUE);
+				outtextxy(TEXTSPOINTX1 + 400 + 3 + cot, TEXTLPOINTY1 - 20, tochar(lcfs.list[i]->idSubject));// mon 1 den het
+
+                ptrRegister curReg = lcfs.list[i]->lr->head; // Con trỏ tạm thời
+                while (curReg != nullptr) {
+                    if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+                        settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+                        setcolor(RED);
+                        setbkcolor(WHITE);
+						outtextxy(TEXTSPOINTX1 + 400 + 3 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+                        
+                        cot += 50;
+                        break; // Đã tìm thấy và in ra điểm, nên thoát khỏi vòng lặp
+                    }
+                    curReg = curReg->next; // Di chuyển đến nút tiếp theo trong danh sách đăng ký
+                }
+                if (curReg == nullptr) {
+                    // Không tìm thấy dữ liệu đăng ký của sinh viên cho môn học này
+                    settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+                    setcolor(BLACK);
+                    setbkcolor(WHITE);
+                    outtextxy(TEXTSPOINTX1 + 400 + 3 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+                    cot += 50;
+                }
+            }
+
+            hang += 22;
+            cot = 0;
+        }
+    }
+
+    if (!checkDataInClass) {
+		setfillstyle(SOLID_FILL, WHITE);
+		bar(TEXTSPOINTX1 + 2 , TEXTLPOINTY1 , TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 330); // an bang du lieu truoc danh sach diem truoc do
+
+        settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+        setcolor(BLACK);
+        setbkcolor(YELLOW);
+        outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DU LIEU ... ");
+    }
+}
+
 
 
 void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls,listClass &lc){
@@ -2370,8 +2464,13 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 								setcolor(LIGHTGRAY);
 								rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
 								
-								
+								setfillstyle(SOLID_FILL, WHITE);
+								bar(TABLE_CLASS_SX + 200 + 70, TABLE_CLASS_SY + 10 + 20, TABLE_CLASS_SX + 200 + 150, TABLE_CLASS_SY + 10 + 20 + 20);
+								setcolor(RED);
+								outtextxy(TABLE_CLASS_SX + 200 + 70, TABLE_CLASS_SY + 10 + 20, tochar(idClass));// cap nhat lop dang hien thi
 								drawTableDataClassScores();
+
+								printListScoreByClass(lcfs, ls, idClass);
 								// searchNumberTC(lsj,lcfs,ls,idClass,order,lineCurrent);
 							}
 							else{

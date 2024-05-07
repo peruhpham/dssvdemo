@@ -49,16 +49,16 @@ int main(){
         if (ascii == 0) {  
             key = getch();          
             ascii = static_cast<int >(key);                     
-            ascii += 255;           
+            ascii += 255;                 
     	}       
-             
-		switch(ascii){       
-			case ET:    	                
-				switch(selected){              
+                   
+		switch(ascii){                                  
+			case ET:    	                            
+				switch(selected){                      
 					case 1:  
 						studentManagement(ls, lc);                  
 						createMenu(selected);	          
-					break;   
+					break;    
 					case 2:
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 
 						createMenu(selected);   
@@ -66,8 +66,8 @@ int main(){
 					case 3:  
 						subjectManagement1(lsj, lcfs);                
 						createMenu(selected);                                    
-					break;						                                              	 
-					case 4:                                              
+					break;						                                               	 
+					case 4:                                                                                           
 						studentGradeManagement(lcfs, lsj, ls, lc);                                        
 						createMenu(selected);                     
 					break;                               
