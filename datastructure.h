@@ -382,10 +382,11 @@ void deleteRegister(ptrListRegister &lr, Register d){
 //	}
 //}
 
+
+
+
 // danh sach lop theo mon hoc (lop tin chi)
 //_______________________________________________________________________________________
-
-
 
 struct classForSubject{
 	int idclass;// tu dong tang 

@@ -49,11 +49,11 @@ int main(){
         if (ascii == 0) {  
             key = getch();          
             ascii = static_cast<int >(key);                     
-            ascii += 255;                 
-    	}       
+            ascii += 255;                                          
+    	}                          
                    
-		switch(ascii){                                  
-			case ET:    	                            
+		switch(ascii){                                                       
+			case ET:    	                                                                       
 				switch(selected){                      
 					case 1:  
 						studentManagement(ls, lc);                  

@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "../../.."
+		},
+		{
+			"path": "../../../../Language to coding/python"
 		}
 	],
 	"settings": {

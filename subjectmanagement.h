@@ -132,8 +132,6 @@ void drawTableListSubject (){
 
 int x = TABLE_SX + 50, y = TABLE_SY + D_ROW/10 - 1 + 40;
 void displaySubjectList(ptrSubject root) {
-	// int x = TABLE_SX + 50;
-	// int y = TABLE_SY + D_ROW/10 - 1 + 40;
     if (root != nullptr) {
         if (root->left != nullptr)   
             displaySubjectList(root->left);     
