@@ -1767,10 +1767,8 @@ void displayStudentHaveScore(listStudent &ls,listStudent keep,int currentClass,i
 				}
 				else  outtextxy(X + 720,Y, tochar((to_string(CPA[num]))));
 				
-				
-
-				
-				Y += 30; cnt += 1;
+				Y += 30; 
+				cnt += 1;
 				++num; 
 			}
 		currentClass += 1;
@@ -2082,7 +2080,7 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 	-
 */
 // #define hang 22
-#define D_COT_SCORE 80
+#define D_COT_SCORE 85
 
 
 
@@ -2151,12 +2149,12 @@ void drawTableDataClassScoresEmpty(){
 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 );
 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 );
 	
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 );
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 );
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30				, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 );
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 );
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30		, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 );
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 );
 
 
 
@@ -2168,11 +2166,11 @@ void drawTableDataClassScoresEmpty(){
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 22, "Ho lot");
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 22, "Ten");
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 22, "Mon 1" );
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
+	outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 - 22, "Mon 7");
 	
 	// setbkcolor(WHITE);
@@ -2214,11 +2212,11 @@ void drawTableDataClassScores(){
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 22, "Ho lot");
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 22, "Ten");
 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 22, "Mon 1" );
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
-	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
+	outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
+	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
 	
 
 	setbkcolor(WHITE);
@@ -2229,12 +2227,12 @@ void drawTableDataClassScores(){
 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 + 330);
 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 + 330);
 	
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30				, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30		, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
 
 	setDefault(); 
 }
@@ -2268,12 +2266,12 @@ void drawNewListScoreByClass (){
 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 + 330);
 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 + 330);
 	
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30				, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30		, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
-	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
 	
 	//dong cuoi
 	line(TEXTSPOINTX1, TEXTLPOINTY1 + 330, TEXTSPOINTX1 + 980, TEXTLPOINTY1 + 330);
@@ -2332,7 +2330,7 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 				delay(100);
 				setcolor(WHITE);
 				setbkcolor(LIGHTBLUE);
-				outtextxy(TEXTSPOINTX1 + 2 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));// mon 1 den het
+				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));// mon 1 den het
 
 				ptrRegister curReg = lcfs.list[i]->lr->head; // Con trỏ tạm thời
 				while (curReg != nullptr) {
@@ -2340,8 +2338,8 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 						delay(100);
 						
 						setcolor(RED);
-						setbkcolor(WHITE);
-						outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+						// setbkcolor(WHITE);
+						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
 						
 						cot += D_COT_SCORE;
 						break; // thay roi thi thoat, tranh lap den cuoi
@@ -2352,8 +2350,8 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					delay(100);
 
 					setcolor(BLACK);
-					setbkcolor(WHITE);
-					outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+					// setbkcolor(WHITE);
+					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
 					cot += D_COT_SCORE;
 				}
 			}
@@ -2372,6 +2370,19 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
         setbkcolor(YELLOW);
         outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DIEM ... ");
     }
+
+	int x, y;
+	// while (true){
+	// 	if(ismouseclick(WM_LBUTTONDOWN)){
+	// 		getmouseclick(WM_LBUTTONDOWN, x, y);
+	// 		clearmouseclick(WM_LBUTTONDOWN);
+
+
+	// 	}
+	// 	/* code */
+	// 	// if()
+	// }
+	
 }
 
 
@@ -2444,7 +2455,6 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 								drawTableDataClassScores();
 
 								printListScoreByClass(lcfs, ls, idClass);
-								// searchNumberTC(lsj,lcfs,ls,idClass,order,lineCurrent);
 							}
 							else{
 								setfillstyle(SOLID_FILL, WHITE);
@@ -2592,12 +2602,7 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 							findListIdClass(lc,idClass,lineCurrent,nameClass);
 						}
 
-						if(ismouseclick(WM_LBUTTONDOWN)){
-							getmouseclick(WM_LBUTTONDOWN, x, y);
-							clearmouseclick(WM_LBUTTONDOWN);
-
-
-						}
+						
 					}
 				}
 			}
@@ -2606,7 +2611,7 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 }
 
 
-/*DIEU KIEN DIEM SINH VIEN
+/*DIEU KHIEN DIEM SINH VIEN
 */
 //================================================================================================
 
