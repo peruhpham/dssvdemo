@@ -20,8 +20,37 @@ void drawTableControlClassScores();
 void drawTableControlClassScoresEmpty();
 
 
-
-//============================================================================================================
+//struct extendRegister{ // mo rong register/ them bien luu giu du lieu khi nhap diem cho register/ sinh vien dang ky nay
+//	ptrRegister r;
+//	double imformalScore;
+//	extendRegister(){
+//	}
+//	extendRegister(ptrRegister r, double imformalScore){
+//		this->r = r;
+//		this->imformalScore = imformalScore;
+//	}
+//};
+//
+//typedef extendRegister *ptrExtendRegister;
+//
+//void pushBack(ptrExtendRegister *&arr, int &size, int &capacity, ptrRegister r, double informalScore) {
+//    if (size >= capacity) {
+//        int newCapacity = capacity * 2;
+//        
+//        ptrExtendRegister *newArr = new ptrExtendRegister[newCapacity];
+//
+//        for (int i = 0; i < size; ++i) {
+//            newArr[i] = arr[i];
+//        }
+//
+//        delete[] arr;
+//
+//        arr = newArr;
+//        capacity = newCapacity;
+//    }
+//
+//    arr[size++] = new extendRegister(r, informalScore);
+//}
 void outtextwithlineV2(int lineCurrent, subject s, int COLOR){
 	string text = s.nameSubject + "-" + s.idSubject;
 	setcolor(COLOR);
@@ -1784,6 +1813,7 @@ void searchNumberTC(listSubject &lsj,listClassForSubject &lcfs,listStudent &ls,l
 					STC+=checkNumberTC(lsj,lcfs.list[i]->idSubject);
 					CPA+=(r->data.scores)*checkNumberTC(lsj,lcfs.list[i]->idSubject);
 				}
+
 			}
 		}
 		if(CPA != 0 && STC != 0){
@@ -1796,8 +1826,11 @@ void searchNumberTC(listSubject &lsj,listClassForSubject &lcfs,listStudent &ls,l
 			listSTC[num]=0;
 			++num;
 		} 
+		
 		tmp=tmp->next;
 	}
+
+	
 }
 
 
@@ -2041,9 +2074,9 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 
 
 
+//==============================================================================================
+//PHAN 4 MUC 4 IN DIEM TONG KET
 
-
-//=======================================================================================================================================
 /*Hien thi bang diem tong hop cua lop sinh vien: 
 	- Moi sinh vien se c diem cua nhung mon cua lop tin chi da dang ki truoc do.
 	-
@@ -2601,6 +2634,7 @@ void studentGradeManagement(listClassForSubject &lcfs, listSubject &lsj, listStu
 						case 1: // nhap diem cho lop tin chi
 							inputExamScores(lcfs, lsj, ls);
 							drawStudentGradeManagement(selected);
+//							recordFileGrade(lcfs);
 							break;
 						case 2: // in diem thi cua lop tin chi
 							displayExamScores(lcfs,lsj,ls);

@@ -48,4 +48,3 @@ string toLowerCase(string text){
 
 
 #endif
-

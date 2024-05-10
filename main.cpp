@@ -1,10 +1,10 @@
 #include <graphics.h>
-#include <windows.h>
+#include <windows.h> 
 #include <conio.h>
 #include <stdio.h>
 #include <iostream>
 #include <bits/stdc++.h>
-#include <string>
+#include <string> 
 #include "datahanding.h"
 #include "datastructure.h"  
 #include "display.h"
@@ -42,7 +42,7 @@ int main(){
 //  getch();
 	int selected = 1; 
 	createMenu(selected);
-
+ 
 	while(1){   
 		char key = getch();  
 		             
@@ -51,12 +51,12 @@ int main(){
             key = getch();          
             ascii = static_cast<int >(key);                     
             ascii += 255;                                          
-    	}                          
-                     
+    	}                             
+                        
 		switch(ascii){                                                              
 			case ET:    	                                                                        
 				switch(selected){                      
-					case 1:  
+					case 1:      
 						studentManagement(ls, lc);                  
 						createMenu(selected);	
 						
@@ -64,7 +64,7 @@ int main(){
 					break;    
 					case 2:
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 
-						createMenu(selected);   
+						createMenu(selected);    
 					break; 
 					case 3:  
 						subjectManagement1(lsj, lcfs);                

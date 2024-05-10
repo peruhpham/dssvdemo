@@ -3031,6 +3031,7 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 //						outtextxy(LISTSPOINTX + 530, LISTSPOINTY + 445, tochar(academicYear));
 //						outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 485, tochar(semesterTemp));
 //					}
+					drawTableRegister();
 					return;
 					break;
 			}
@@ -3296,9 +3297,10 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 					markClass[temp] = true;
 					// ktra dsdk co sv(listClassAcademicYear[temp] nay chua neu co r va trang thai unsub = T cap nhat unsub = F) do chua 
 					// neu khong tim thay thi add vao dsdk 
-					
-					addRegister(listClassAcademicYear[temp]->lr,r);
-					listClassAcademicYear[temp]->lr->size+=1;
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
+						addRegister(listClassAcademicYear[temp]->lr,r);
+						listClassAcademicYear[temp]->lr->size+=1;
+					} 
 					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
@@ -3320,8 +3322,10 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 				if(temp < sizeList && markClass[temp] == false){
 					markClass[temp] = true;
 					//
-					addRegister(listClassAcademicYear[temp]->lr,r);
-					listClassAcademicYear[temp]->lr->size+=1;
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
+						addRegister(listClassAcademicYear[temp]->lr,r);
+						listClassAcademicYear[temp]->lr->size+=1;
+					}
 					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
@@ -3342,8 +3346,10 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 					markClass[temp] = true;
 					//
 					
-					addRegister(listClassAcademicYear[temp]->lr,r);
-					listClassAcademicYear[temp]->lr->size+=1;
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
+						addRegister(listClassAcademicYear[temp]->lr,r);
+						listClassAcademicYear[temp]->lr->size+=1;
+					}
 				    drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
@@ -3364,8 +3370,10 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 				if(temp < sizeList && markClass[temp] == false){
 					markClass[temp] = true;
 					//
-					addRegister(listClassAcademicYear[temp]->lr,r);
-					listClassAcademicYear[temp]->lr->size+=1;
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
+						addRegister(listClassAcademicYear[temp]->lr,r);
+						listClassAcademicYear[temp]->lr->size+=1;
+					}
 					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
