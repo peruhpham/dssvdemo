@@ -179,6 +179,7 @@ void readListStudent(listStudent &ls, string nameFileListStudent){
 void printfStudent(student stu){
     cout << stu.id << " " << stu.firstName << " " << stu.lastName << " " << stu.gender << " " << stu.phone << " " << stu.idClass << " " << stu.year << endl;
 }
+
 void displayStudentList(listStudent ls){
     ptrStudent p = ls.head;
     while(p != NULL){
@@ -200,17 +201,29 @@ ptrStudent findPtrStudent(listStudent &ls, string id){
 	return NULL;
 }
 
-// ghi lai file list student 
-void recordFileStudent(listStudent ls){
-	ofstream outPut;
-	outPut.open("data\\studentlist.txt", ios::out);
+ptrStudent findPtrStudentWithIdClass(listStudent &ls, string idClass){
 	ptrStudent cur = ls.head;
-	while(cur != NULL){
-		outPut <<  cur->value.id<<"#"<<cur->value.firstName<<"#"<<cur->value.lastName<<"#"<<cur->value.gender<<"#"<<cur->value.phone<<"#"<<cur->value.idClass<<"#"<<cur->value.year<<endl; 
-		cur=cur->next; 
-	} 
-	outPut.close(); 
+	
+	while(cur != NULL && cur->value.idClass <= idClass){
+		if(cur->value.idClass == idClass){
+			return cur;
+		}
+		cur = cur->next;
+	}
+	return NULL;
 }
+
+// // ghi lai file list student 
+// void recordFileStudent(listStudent ls){
+// 	ofstream outPut;
+// 	outPut.open("data\\studentlist.txt", ios::out);
+// 	ptrStudent cur = ls.head;
+// 	while(cur != NULL){
+// 		outPut <<  cur->value.id<<"#"<<cur->value.firstName<<"#"<<cur->value.lastName<<"#"<<cur->value.gender<<"#"<<cur->value.phone<<"#"<<cur->value.idClass<<"#"<<cur->value.year<<endl; 
+// 		cur=cur->next; 
+// 	} 
+// 	outPut.close(); 
+// }
 
 
 
@@ -531,6 +544,16 @@ ptrClassForSubject findClassForSubject(listClassForSubject &lcfs, string idSubje
 }
 
 
+bool checkScoresInClass(ptrClassForSubject cfs){
+	if(cfs != NULL){
+		if(cfs->lr->head->data.scores > 0 && cfs->lr->head->data.scores < 10){
+			return true;
+		}
+	}
+	return false;
+}
+
+
 
 int existStudentHaveGrade(ptrListRegister &lr){
 	ptrRegister p = lr->head;
@@ -757,25 +780,88 @@ void readListYear(int *academicYear, int &sizeYear){
     f.close();
 }
 
-void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
-	ptrStudent currentStudent = ls.head;
-	
-	Register r; 
-	for(int i = 0; i < lcfs.size; i++){
-		while(currentStudent != NULL){
-			// moi cur la mot ptrStudent
-			
-			r.idStudent = currentStudent->value.id;
-			r.scores = 11;
-			r.unSub = 0;
-		
-			insertRegister(lcfs.list[i]->lr, r);
-			
-			currentStudent = currentStudent->next;
+ptrClassForSubject findClassForSubjectV3(listClassForSubject &lcfs,int idClassForSubject){
+
+	for(int i = 0; i < lcfs.size; i++){ // toi uu bang binary search;
+		if(lcfs.list[i]->idclass == idClassForSubject){
+			return lcfs.list[i]; // danh sach da co thong tin
 		}
-		currentStudent = ls.head;
+	}
+	return NULL;
+
+	
+}
+
+// void testReadListRegister(listClassForSubject &lcfs, listStudent &ls){
+// 	ptrStudent currentStudent = ls.head;
+	
+// 	Register r; 
+// 	for(int i = 0; i < lcfs.size; i++){
+// 		while(currentStudent != NULL){
+// 			// moi cur la mot ptrStudent
+			
+// 			r.idStudent = currentStudent->value.id;
+// 			r.scores = 11;
+// 			r.unSub = 0;
+		
+// 			insertRegister(lcfs.list[i]->lr, r);
+			
+// 			currentStudent = currentStudent->next;
+// 		}
+// 		currentStudent = ls.head;
+		
+// 	}
+// }
+void testReadListRegister(listClassForSubject &lcfs){
+	string nameFileListRegister = "data\\registerlist.txt";
+	ifstream f(nameFileListRegister);
+	if (!f.is_open()) {
+        cout << "fail open file register list!" << endl;
+        return;
+    }
+    cout << "completed open file register list!" << endl;
+    int idClassForSubject;
+    string temp;
+    Register r;
+    string line;
+    while (getline(f, line)) {
+        stringstream ss(line);
+
+		getline(ss, temp, '#');
+		getline(ss, r.idStudent, '#');
+		ss >> r.scores; ss.ignore();
+		ss >> r.unSub; ss.ignore();
+
+		idClassForSubject=stringtoint(temp);
+		
+        ptrClassForSubject cfs=findClassForSubjectV3(lcfs,idClassForSubject);
+        
+        if(cfs != NULL){
+        	insertRegister(cfs->lr, r);
+        	cout << "da add vao cfs : " << cfs->idclass << endl;
+        	ptrRegister cur = cfs->lr->head;
+			while(cur != NULL) {
+				cout << cur->data.idStudent << endl;
+				cur= cur->next;
+			}
+		}
+		else{
+			cout<<"Not found ClassForSubject!"<<endl;
+		}
+		
 		
 	}
+    
 }
+
+int checkNumberTC(listSubject &lsj, string idSubject){
+	ptrSubject find = findSubject(idSubject,lsj.root);
+	if(find == NULL) return 0; 
+	return find->data.STCLT + find->data.STCTH; 
+}
+
+
+
+
 #endif
 

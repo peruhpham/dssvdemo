@@ -11,7 +11,7 @@
 #define BP 8 // backspace
 #define SPOINTX 0
 #define SPOINTY 0
-#define LPOINTX 1380
+#define LPOINTX 1350
 #define LPOINTY 700
 
 #define HEADSPOINTX 0
@@ -92,7 +92,7 @@
 #define NOTISPOINTX2 700
 #define NOTISPOINTY2 280
 #define NOTILPOINTX2 1040
-#define NOTILPOINTY2 450 
+#define NOTILPOINTY2 450
 
 int clickInRange(int x, int y, int left, int top, int right, int bot){ // nhan chuot trai vao pham vi
 	if((left <= x && x <= right) && (top <= y && y <= bot)) return 1;
@@ -181,12 +181,12 @@ void mouseHighlightUpdate(int &on, int &selected){
 	if(clickInRange(mousex(), mousey(), TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140)){
 		if(on == 0){
 			setfillstyle(SOLID_FILL, LIGHTBLUE);
-			setbkcolor(LIGHTBLUE);   
+			setbkcolor(LIGHTBLUE);
 			bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
-			outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin"); 
-			on = 1; 
+			outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+			on = 1;
 			selected = 1;
-		}   
+		}
 	}
 	else if(on == 1 && selected == 1){
 		setfillstyle(SOLID_FILL, LIGHTGRAY);
@@ -807,6 +807,21 @@ void highlightInputExamScores(int selected, int COLOR){
 	
 	setDefault();
 }
+void highlightInputExamScoresV2(int selected, int COLOR){
+	
+	if(selected == 1){
+		setcolor(COLOR);
+		rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+	}
+	else{
+		setcolor(LIGHTGRAY);
+		rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+	}
+	
+	
+	setDefault();
+}
+
 
 
 void mouseHighlightOpenClassForSubject(int &on, int &mouseSelected, int &selected){
@@ -1880,9 +1895,175 @@ void drawPrintRegisteredStudentListV2(ptrClassForSubject cfs){
 	
 	setDefault(); 
 
+}
 
+void drawPrintRegisteredStudentListV3(ptrClassForSubject cfs){
 	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 331); // xoa ta ca thong tin truoc do
 	
+	setcolor(LIGHTGRAY);
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330); // tao khung to ben ngoai
+
+	// tao header
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	int X = TEXTSPOINTX1;
+	outtextxy(X + 10, TEXTLPOINTY1 - 25, "STT");
+	outtextxy(X + 60, TEXTLPOINTY1 - 25, "MSSV");
+	outtextxy(X + 210, TEXTLPOINTY1 - 25, "HO");
+	outtextxy(X + 460, TEXTLPOINTY1 - 25, "TEN");
+	outtextxy(X + 610, TEXTLPOINTY1 - 25, "DIEM");
+	outtextxy(X + 710, TEXTLPOINTY1 - 25, "GHI CHU");
+	
+	// tao duong ke ngnang
+	if(cfs != NULL){
+		int Y = TEXTLPOINTY1 + 30;
+		setcolor(LIGHTGRAY);
+		for(int i = 0; i < 11; i++){
+			line(TEXTSPOINTX1, Y, TEXTLPOINTX3, Y);
+			Y += 30;
+		}
+		 
+		// tao duong ke doc
+		line(X + 50, TEXTLPOINTY1 - 30, X + 50, TEXTLPOINTY1 + 330);
+		line(X + 200, TEXTLPOINTY1 - 30, X + 200, TEXTLPOINTY1 + 330);
+		line(X + 450, TEXTLPOINTY1 - 30, X + 450, TEXTLPOINTY1 + 330);
+		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1 + 330);
+		line(X + 700, TEXTLPOINTY1 - 30, X + 700, TEXTLPOINTY1 + 330);
+		
+//		setfillstyle(SOLID_FILL, BLUE);
+//		bar(TEXTLPOINTX3 - 60, TEXTLPOINTY1 + 336, TEXTLPOINTX3, TEXTLPOINTY1 + 366);
+//		setbkcolor(BLUE);
+//		setcolor(BLACK);
+//		outtextxy(TEXTLPOINTX3 - 45, TEXTLPOINTY1 + 341, "LUU");
+	}
+	else{
+		//tao duong ke doc
+		setcolor(LIGHTGRAY);
+		line(X + 50, TEXTLPOINTY1 - 30, X + 50, TEXTLPOINTY1);
+		line(X + 200, TEXTLPOINTY1 - 30, X + 200, TEXTLPOINTY1);
+		line(X + 450, TEXTLPOINTY1 - 30, X + 450, TEXTLPOINTY1);
+		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1);
+		line(X + 700, TEXTLPOINTY1 - 30, X + 700, TEXTLPOINTY1);
+		
+		setbkcolor(WHITE);
+		setcolor(LIGHTGRAY);
+		outtextxy(X + 330, TEXTLPOINTY1 + 5, "Chua co du lieu...");
+	}
+	
+	setDefault(); 
+
+}
+
+void drawPrintRegisteredStudentListV4(ptrClassForSubject cfs){ // vex bang in diem thi 
+	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 331); // xoa ta ca thong tin truoc do
+	
+	setcolor(LIGHTGRAY);
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330); // tao khung to ben ngoai
+
+	// tao header
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	int X = TEXTSPOINTX1;
+	outtextxy(X + 10, TEXTLPOINTY1 - 25, "STT");
+	outtextxy(X + 90, TEXTLPOINTY1 - 25, "MSSV");
+	outtextxy(X + 270, TEXTLPOINTY1 - 25, "HO");
+	outtextxy(X + 520, TEXTLPOINTY1 - 25, "TEN");
+	outtextxy(X + 750, TEXTLPOINTY1 - 25, "DIEM");
+//	outtextxy(X + 710, TEXTLPOINTY1 - 25, "GHI CHU");
+	
+	// tao duong ke ngnang
+	if(cfs != NULL){
+		int Y = TEXTLPOINTY1 + 30;
+		setcolor(LIGHTGRAY);
+		for(int i = 0; i < 11; i++){
+			line(TEXTSPOINTX1, Y, TEXTLPOINTX3, Y);
+			Y += 30;
+		}
+		 
+		// tao duong ke doc
+		line(X + 70, TEXTLPOINTY1 - 30, X + 70, TEXTLPOINTY1 + 330);
+		line(X + 250, TEXTLPOINTY1 - 30, X + 250, TEXTLPOINTY1 + 330);
+		line(X + 490, TEXTLPOINTY1 - 30, X + 490, TEXTLPOINTY1 + 330);
+//		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1 + 330);
+		line(X + 710, TEXTLPOINTY1 - 30, X + 710, TEXTLPOINTY1 + 330);
+		
+//		setfillstyle(SOLID_FILL, BLUE);
+//		bar(TEXTLPOINTX3 - 60, TEXTLPOINTY1 + 336, TEXTLPOINTX3, TEXTLPOINTY1 + 366);
+//		setbkcolor(BLUE);
+//		setcolor(BLACK);
+//		outtextxy(TEXTLPOINTX3 - 45, TEXTLPOINTY1 + 341, "LUU");
+	}
+	else{
+		//tao duong ke doc
+		setcolor(LIGHTGRAY);
+		line(X + 70, TEXTLPOINTY1 - 30, X + 70, TEXTLPOINTY1);
+		line(X + 250, TEXTLPOINTY1 - 30, X + 250, TEXTLPOINTY1);
+		line(X + 490, TEXTLPOINTY1 - 30, X + 490, TEXTLPOINTY1);
+//		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1);
+		line(X + 710, TEXTLPOINTY1 - 30, X + 710, TEXTLPOINTY1);
+		
+		setbkcolor(WHITE);
+		setcolor(LIGHTGRAY);
+		outtextxy(X + 330, TEXTLPOINTY1 + 5, "Chua co du lieu...");
+	}
+	
+	setDefault(); 
+
+}
+
+void drawPrintRegisteredStudentListV5(){ // ve bang in diem trung binh (gpa)
+	
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 331); // xoa ta ca thong tin truoc do
+	
+	setcolor(LIGHTGRAY);
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330); // tao khung to ben ngoai
+
+	// tao header
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	
+	setbkcolor(LIGHTBLUE);
+	setcolor(WHITE);
+	int X = TEXTSPOINTX1;
+	outtextxy(X + 10, TEXTLPOINTY1 - 25, "STT");
+	outtextxy(X + 60, TEXTLPOINTY1 - 25, "MSSV");
+	outtextxy(X + 210, TEXTLPOINTY1 - 25, "HO");
+	outtextxy(X + 460, TEXTLPOINTY1 - 25, "TEN");
+	outtextxy(X + 610, TEXTLPOINTY1 - 25, "SO TC");
+	outtextxy(X + 710, TEXTLPOINTY1 - 25, "DIEM TB");
+	
+	// tao duong ke ngnang
+		int Y = TEXTLPOINTY1 + 30;
+		setcolor(LIGHTGRAY);
+		for(int i = 0; i < 11; i++){
+			line(TEXTSPOINTX1, Y, TEXTLPOINTX3, Y);
+			Y += 30;
+		}
+		 
+		// tao duong ke doc
+		line(X + 50, TEXTLPOINTY1 - 30, X + 50, TEXTLPOINTY1 + 330);
+		line(X + 200, TEXTLPOINTY1 - 30, X + 200, TEXTLPOINTY1 + 330);
+		line(X + 450, TEXTLPOINTY1 - 30, X + 450, TEXTLPOINTY1 + 330);
+		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1 + 330);
+		line(X + 700, TEXTLPOINTY1 - 30, X + 700, TEXTLPOINTY1 + 330);
+		
+	
+	setDefault(); 
+
 }
 
 void drawDisplayRegisteredStudentList(listStudent &ls, ptrListRegister &lr, int &currentStudent){
@@ -2815,6 +2996,8 @@ void drawClassForSubjectManagement(int selected){
 	
 }
 
+// cap nhat diem 
+
 void drawInputExamScores(){
 	setfillstyle(SOLID_FILL, WHITE);
 	bar(LISTSPOINTX, LISTSPOINTY - 10, LISTLPOINTX, LISTLPOINTY - 5); // xoa toan bo noi dung trong muc nhap diem
@@ -2936,8 +3119,60 @@ void drawStudentGradeManagement(int selected){
 	
 }
 
-//------------------------------------------------------------------------------------------------------
-// class for subject muc 2 phan 3.
+void drawInputExamScoresV2(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(LISTSPOINTX, LISTSPOINTY - 10, LISTLPOINTX, LISTLPOINTY - 5); // xoa toan bo noi dung trong muc nhap diem
+	
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	setbkcolor(WHITE);
+	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 40);
+	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 10, "Bang Mon Hoc");
+	setcolor(LIGHTGRAY);
+	line(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY);
+	line(LISTSPOINTX, LISTSPOINTY, LISTSPOINTX, LISTLPOINTY); // tao header cho muc nhap diem
+	
+	rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40); // ten ma mon hoc
+	rectangle(TEXTSPOINTX2 - 50, TEXTSPOINTY2 - 40, TEXTLPOINTX2 - 100, TEXTLPOINTY2 - 40); // hoc ki 
+	rectangle(TEXTSPOINTX3 - 100, TEXTSPOINTY3 - 40, TEXTLPOINTX3 - 150, TEXTLPOINTY3 - 40); // nien khoa
+	rectangle(TEXTLPOINTX3 - 140 , TEXTSPOINTY3 - 40, TEXTLPOINTX3, TEXTLPOINTY3 - 40); // nhom
+	
+	setbkcolor(WHITE);
+	setcolor(BLACK);
+	outtextxy(TEXTSPOINTX1 + 10, TEXTSPOINTY1 - 65, "Ten mon hoc - Ma");
+	outtextxy(TEXTSPOINTX2 - 40, TEXTSPOINTY2 - 65, "Nien khoa");
+	outtextxy(TEXTSPOINTX3 - 90, TEXTSPOINTY3 - 65, "Hoc ky");
+	outtextxy(TEXTLPOINTX3 - 130, TEXTSPOINTY3 - 65, "Nhom");
+
+	setDefault();
+} 
+
+void drawTableIdClass(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(LISTSPOINTX, LISTSPOINTY - 10, LISTLPOINTX, LISTLPOINTY - 5); // xoa toan bo noi dung trong muc nhap diem
+	
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	setbkcolor(WHITE);
+	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 40);
+	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 10, "Diem GPA 1 Lop");
+	setcolor(LIGHTGRAY);
+	line(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY);
+	line(LISTSPOINTX, LISTSPOINTY, LISTSPOINTX, LISTLPOINTY); // tao header cho muc nhap diem
+	
+	rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40); // ten ma mon hoc
+//	rectangle(TEXTSPOINTX2 - 50, TEXTSPOINTY2 - 40, TEXTLPOINTX2 - 100, TEXTLPOINTY2 - 40); // hoc ki 
+//	rectangle(TEXTSPOINTX3 - 100, TEXTSPOINTY3 - 40, TEXTLPOINTX3 - 150, TEXTLPOINTY3 - 40); // nien khoa
+//	rectangle(TEXTLPOINTX3 - 140 , TEXTSPOINTY3 - 40, TEXTLPOINTX3, TEXTLPOINTY3 - 40); // nhom
+	
+	setbkcolor(WHITE);
+	setcolor(BLACK);
+	outtextxy(TEXTSPOINTX1 + 10, TEXTSPOINTY1 - 65, "Lop");
+//	outtextxy(TEXTSPOINTX2 - 40, TEXTSPOINTY2 - 65, "Nien khoa");
+//	outtextxy(TEXTSPOINTX3 - 90, TEXTSPOINTY3 - 65, "Hoc ky");
+//	outtextxy(TEXTLPOINTX3 - 130, TEXTSPOINTY3 - 65, "Nhom");
+
+	setDefault();
+} 
+
 void createTable_Register(){ // tao khung lon ben ngoai
 	
 	setfillstyle(SOLID_FILL, WHITE);
@@ -2988,6 +3223,7 @@ void createList_Rigister(){ // tao khung nho ben trong
 	
 	setDefault();
 }
+
 void drawTableAcademicYear(){
 	setcolor(RED);
 	outtextxy(LISTSPOINTX+10, LISTSPOINTY+410, "Nhap Thong Tin Tim Lop Dang Mo"); 
@@ -3002,6 +3238,7 @@ void drawTableAcademicYear(){
 	outtextxy(LISTSPOINTX + 40, LISTSPOINTY + 480, "Hoc Ky:");
 	rectangle(LISTSPOINTX + 150, LISTSPOINTY + 480, LISTSPOINTX + 340, LISTSPOINTY + 510);
 } 
+
 void drawTableInfor(){
 	setfillstyle(SOLID_FILL, WHITE); // xoa sach thong tin the hien tren bang
 	bar(350,80, 1350, 190);
@@ -3032,7 +3269,6 @@ void drawTableInfor(){
 	setDefault();
 }
 
-
 void drawTableRegister(){
 	createTable_Register();
 	createList_Rigister();
@@ -3040,10 +3276,19 @@ void drawTableRegister(){
 	drawTableInfor();	
 }
 
-
-
-
-
+int getSizeRegisteredStudent(ptrListRegister &lr){
+	ptrRegister current=lr->head;
+	int cnt=0;
+	if(current != NULL){
+		while(current!=NULL){
+			if(current->data.unSub=false){
+				++cnt;
+			}
+			current=current->next;
+		}	
+	}
+	return cnt;
+}
 
 void drawListClassAcadecmicYear(ptrClassForSubject listClassAcademicYear[], int &sizeList, int &currentClass, listSubject &lsj, bool mark[], string idStudent){
 	
@@ -3104,5 +3349,7 @@ void checkStudentInClass(ptrClassForSubject oneClass[],int currentClass,int size
 
 } 
 
-#endif
 
+
+
+#endif

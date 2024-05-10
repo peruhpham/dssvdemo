@@ -36,7 +36,8 @@ int main(){
 	readListClassForSubject(lcfs, nameFileListClassForSubject);
 	readListSubject(lsj, nameFileListSubject);
 	 
-	testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day 
+	// testReadListRegister(lcfs, ls); // gia su them thong tin sinh vien dang ky o day 
+	testReadListRegister(lcfs); // gia su them thong tin sinh vien dang ky o day 
 	   
 //  getch();
 	int selected = 1; 
@@ -51,15 +52,15 @@ int main(){
             ascii = static_cast<int >(key);                     
             ascii += 255;                                          
     	}                          
-                   
-		switch(ascii){                                                        
+                     
+		switch(ascii){                                                              
 			case ET:    	                                                                        
 				switch(selected){                      
 					case 1:  
 						studentManagement(ls, lc);                  
 						createMenu(selected);	
 						
-						recordFileStudent(ls);          
+						// recordFileStudent(ls);          
 					break;    
 					case 2:
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 
