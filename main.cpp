@@ -52,12 +52,14 @@ int main(){
             ascii += 255;                                          
     	}                          
                    
-		switch(ascii){                                                       
-			case ET:    	                                                                       
+		switch(ascii){                                                        
+			case ET:    	                                                                        
 				switch(selected){                      
 					case 1:  
 						studentManagement(ls, lc);                  
-						createMenu(selected);	          
+						createMenu(selected);	
+						
+						recordFileStudent(ls);          
 					break;    
 					case 2:
 						classForSubjectManagement(lcfs, lsj, ls); // quan li lop theo mon hoc (lop tin chi) 

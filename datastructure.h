@@ -200,6 +200,18 @@ ptrStudent findPtrStudent(listStudent &ls, string id){
 	return NULL;
 }
 
+// ghi lai file list student 
+void recordFileStudent(listStudent ls){
+	ofstream outPut;
+	outPut.open("data\\studentlist.txt", ios::out);
+	ptrStudent cur = ls.head;
+	while(cur != NULL){
+		outPut <<  cur->value.id<<"#"<<cur->value.firstName<<"#"<<cur->value.lastName<<"#"<<cur->value.gender<<"#"<<cur->value.phone<<"#"<<cur->value.idClass<<"#"<<cur->value.year<<endl; 
+		cur=cur->next; 
+	} 
+	outPut.close(); 
+}
+
 
 
 // danh sach lop hoc 

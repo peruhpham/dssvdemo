@@ -105,10 +105,10 @@ void drawTableListSubject (){
 	//-------
 	setlinestyle(SOLID_LINE, 0, 1);
 	setcolor(LIGHTGRAY);
-	line(TABLE_SX + 50, TABLE_SY, TABLE_SX + 50, TABLE_LY);
-	line(TABLE_SX + 50 + 120, TABLE_SY, TABLE_SX + 50 + 120, TABLE_LY);
-	line(TABLE_SX + 50 + 120 + 340, TABLE_SY, TABLE_SX + 50 + 120 +340, TABLE_LY);
-	line(TABLE_SX + 50 + 120 + 340 + 60, TABLE_SY, TABLE_SX + 50 + 120 + 340 + 60, TABLE_LY);
+	line(TABLE_SX + 50					, TABLE_SY, TABLE_SX + 50					, TABLE_LY);
+	line(TABLE_SX + 50 + 120			, TABLE_SY, TABLE_SX + 50 + 120				, TABLE_LY);
+	line(TABLE_SX + 50 + 120 + 340		, TABLE_SY, TABLE_SX + 50 + 120 +340		, TABLE_LY);
+	line(TABLE_SX + 50 + 120 + 340 + 60	, TABLE_SY, TABLE_SX + 50 + 120 + 340 + 60	, TABLE_LY);
 	
     setfillstyle(SOLID_FILL, LIGHTBLUE);// Thiet lap mau fill la mau xanh lam
     bar(TABLE_SX, TABLE_SY, TABLE_LX, TABLE_SY + 40);// Ve hinh chu nhat
@@ -120,10 +120,10 @@ void drawTableListSubject (){
 	line(TABLE_LX-20, TABLE_SY+40, TABLE_LX-20, TABLE_LY);// ve dupng thang phia sau
     setbkcolor(LIGHTBLUE);// Thiet lap mau nen chu
     setcolor(BLACK);
-    outtextxy(TABLE_SX + 5, TABLE_SY + 10, "STT");
-    outtextxy(TABLE_SX + 2 + 50, TABLE_SY + 10, "MA MON HOC");
-    outtextxy(TABLE_SX + 110 + 50 + 120, TABLE_SY + 10, "TEN MON HOC");
-    outtextxy(TABLE_SX + 2 + 50 + 120 + 340, TABLE_SY + 10, "STCLT");
+    outtextxy(TABLE_SX + 5						, TABLE_SY + 10, "STT");
+    outtextxy(TABLE_SX + 2 + 50					, TABLE_SY + 10, "MA MON HOC");
+    outtextxy(TABLE_SX + 110 + 50 + 120			, TABLE_SY + 10, "TEN MON HOC");
+    outtextxy(TABLE_SX + 2 + 50 + 120 + 340		, TABLE_SY + 10, "STCLT");
     outtextxy(TABLE_SX + 2 + 50 + 120 + 340 + 60, TABLE_SY + 10, "STCTH");
 
 	setDefault();
@@ -138,10 +138,10 @@ void displaySubjectList(ptrSubject root) {
         
         setbkcolor(WHITE);
         setcolor(GREEN); 
-        outtextxy(20 + x, y, const_cast<char*>(root->data.idSubject.c_str())); 
-        outtextxy(20 + x + 120, y, const_cast<char*>(root->data.nameSubject.c_str())); 
-        outtextxy(20 + x + 120 + 340, y, const_cast<char*>(to_string(root->data.STCLT).c_str())); 
-        outtextxy(20 + x + 120 + 340 + 60, y, const_cast<char*>(to_string(root->data.STCTH).c_str())); 
+        outtextxy(20 + x					, y, const_cast<char*>(root->data.idSubject.c_str())); 
+        outtextxy(20 + x + 120				, y, const_cast<char*>(root->data.nameSubject.c_str())); 
+        outtextxy(20 + x + 120 + 340		, y, const_cast<char*>(to_string(root->data.STCLT).c_str())); 
+        outtextxy(20 + x + 120 + 340 + 60	, y, const_cast<char*>(to_string(root->data.STCTH).c_str())); 
         y += D_ROW;
         if (root->right != nullptr) 
             displaySubjectList(root->right); 
@@ -179,7 +179,7 @@ void drawMenuSubject(){
 
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
 	setcolor(BLACK);
-	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY, ">>Danh sach mon theo ID");
+	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY		, ">>Danh sach mon theo ID");
 	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + 40, ">>Danh sach mon theo Ten");
 	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + 80, ">>Nhap mon hoc");
 
@@ -206,8 +206,8 @@ void resetMenuSubject(int &selectedItem){
 	int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
 
     // In ra menu
-    outtextxy(MENU_SUB_SX, 10 + y, ">>Danh sach mon theo ID");
-    outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">>Danh sach mon theo Ten");
+    outtextxy(MENU_SUB_SX, 10 + y						, ">>Danh sach mon theo ID");
+    outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT	, ">>Danh sach mon theo Ten");
     outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">>Nhap mon hoc");
 
     char key;
@@ -227,8 +227,8 @@ void resetMenuSubject(int &selectedItem){
             // In lại menu với lựa chọn mới được tô sáng
             y = MENU_SUB_SY;
 			setcolor(BLACK);
-            outtextxy(MENU_SUB_SX, 10 + y, ">>Danh sach mon theo ID");
-            outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT, ">>Danh sach mon theo Ten");
+            outtextxy(MENU_SUB_SX, 10 + y						, ">>Danh sach mon theo ID");
+            outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT	, ">>Danh sach mon theo Ten");
             outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">>Nhap mon hoc");
             // Tô sáng lựa chọn hiện tại
 			if(selectedItem == 0){
@@ -297,9 +297,9 @@ void printListSubjectByName(subject *sub, int &x, int &y){
 	for(int i=0; i<5; i++){
 		std::cout << sub->nameSubject << endl;
 		setcolor(GREEN);
-		outtextxy(TABLE_SX + 50, y, tochar(sub[i].idSubject));
-		outtextxy(TABLE_SX + 50 + 120, y, tochar(sub[i].nameSubject));
-		outtextxy(TABLE_SX + 50 + 120 + 340, y, tochar(to_string(sub[i].STCLT)));
+		outtextxy(TABLE_SX + 50					, y, tochar(sub[i].idSubject));
+		outtextxy(TABLE_SX + 50 + 120			, y, tochar(sub[i].nameSubject));
+		outtextxy(TABLE_SX + 50 + 120 + 340		, y, tochar(to_string(sub[i].STCLT)));
 		outtextxy(TABLE_SX + 50 + 120 + 340 + 60, y, tochar(to_string(sub[i].STCTH)));
 	}
 	y += D_ROW;
@@ -326,42 +326,42 @@ void drawTableControlSubject(){ //draw bang do hoa xu ly them sua xoa mon hoc.
 	settextstyle(SMALL_FONT, HORIZ_DIR, 5);// dieu chinh kich thuoc chu
 
 
-	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60-20 , "Ma mon hoc:");
-	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 30 + 30, TABLE_CONTROL_SX + 120, TABLE_CONTROL_SY + 60 + 30);// o de nhap thong tin id mon hoc
-	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 120-20 , "Ten mon hoc:");
-	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 60 + 30 + 30, TABLE_CONTROL_SX + 330, TABLE_CONTROL_SY + 90 + 30 + 30);// o de nhap thong tin id mon hoc
-	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 158, "So tin chi");
-	outtextxy(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175, "Ly thuyet:");
-	rectangle(TABLE_CONTROL_SX + 5, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 100, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
-	outtextxy(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175, "Thuc hanh:");
-	rectangle(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
+	outtextxy(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 60-20 			, "Ma mon hoc:");
+	rectangle(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 30 + 30		, TABLE_CONTROL_SX + 120			, TABLE_CONTROL_SY + 60 + 30);// o de nhap thong tin id mon hoc
+	outtextxy(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 120-20 		, "Ten mon hoc:");
+	rectangle(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 60 + 30 + 30	, TABLE_CONTROL_SX + 330			, TABLE_CONTROL_SY + 90 + 30 + 30);// o de nhap thong tin id mon hoc
+	outtextxy(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 158			, "So tin chi");
+	outtextxy(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 175			, "Ly thuyet:");
+	rectangle(TABLE_CONTROL_SX + 5		, TABLE_CONTROL_SY + 175 + 20		, TABLE_CONTROL_SX + 100			, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
+	outtextxy(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175			, "Thuc hanh:");
+	rectangle(TABLE_CONTROL_SX + 5 + 150, TABLE_CONTROL_SY + 175 + 20		, TABLE_CONTROL_SX + 5 + 150 + 100	, TABLE_CONTROL_SY + 195 + 30);// o de nhap thong tin id mon hoc
 	
 	// set mau nen backgrough cho khung dien thong tin
 	setbkcolor(WHITE);
-	bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 30 + 30 + 1, TABLE_CONTROL_SX + 120 - 1, TABLE_CONTROL_SY + 60 + 30 - 1);
-	bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 60 + 30 + 30, TABLE_CONTROL_SX + 330 - 1, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);// o de nhap thong tin id mon hoc
-	bar(TABLE_CONTROL_SX + 1 + 5, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);// o de nhap thong tin id mon hoc
-	bar(TABLE_CONTROL_SX + 1 + 5 + 150, TABLE_CONTROL_SY + 1 + 175 + 20, TABLE_CONTROL_SX + 5 + 150 + 100 - 1, TABLE_CONTROL_SY + 195 + 30 - 1);// o de nhap thong tin id mon hoc
+	bar(TABLE_CONTROL_SX + 1 + 5		, TABLE_CONTROL_SY + 1 + 30 + 30 + 1	, TABLE_CONTROL_SX + 120 - 1			, TABLE_CONTROL_SY + 60 + 30 - 1);
+	bar(TABLE_CONTROL_SX + 1 + 5		, TABLE_CONTROL_SY + 1 + 60 + 30 + 30	, TABLE_CONTROL_SX + 330 - 1			, TABLE_CONTROL_SY + 90 + 30 + 30 - 1);// o de nhap thong tin id mon hoc
+	bar(TABLE_CONTROL_SX + 1 + 5		, TABLE_CONTROL_SY + 1 + 175 + 20		, TABLE_CONTROL_SX + 100 - 1			, TABLE_CONTROL_SY + 195 + 30 - 1);// o de nhap thong tin id mon hoc
+	bar(TABLE_CONTROL_SX + 1 + 5 + 150	, TABLE_CONTROL_SY + 1 + 175 + 20		, TABLE_CONTROL_SX + 5 + 150 + 100 - 1	, TABLE_CONTROL_SY + 195 + 30 - 1);// o de nhap thong tin id mon hoc
 	setDefault();
 
 	// phan hien thi cho cap nhat them/ sua / xoa .... 340px den 680px = 340px -> moi o 100px -> kc 10px
 	setcolor(BLUE);
-	rectangle(TABLE_CONTROL_SX + 10, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
-	rectangle(TABLE_CONTROL_SX + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
-	rectangle(TABLE_CONTROL_SX + 10 + 110*2, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
+	rectangle(TABLE_CONTROL_SX + 10				, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100			, TABLE_CONTROL_SY + 50 + 250 + 30);
+	rectangle(TABLE_CONTROL_SX + 10 + 100 + 10	, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110	, TABLE_CONTROL_SY + 50 + 250 + 30);
+	rectangle(TABLE_CONTROL_SX + 10 + 110*2		, TABLE_CONTROL_SY + 50 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2	, TABLE_CONTROL_SY + 50 + 250 + 30);
 	setDefault();
 
 	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	bar(TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100, TABLE_CONTROL_SY + 50 + 250 + 30);
-	bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110, TABLE_CONTROL_SY + 50 + 250 + 30);
-	bar(TABLE_CONTROL_SX + 1 + 10 + 110*2, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2, TABLE_CONTROL_SY + 50 + 250 + 30);
+	bar(TABLE_CONTROL_SX + 1 + 10			, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100			, TABLE_CONTROL_SY + 50 + 250 + 30);
+	bar(TABLE_CONTROL_SX + 1 + 10 + 100 + 10, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110	, TABLE_CONTROL_SY + 50 + 250 + 30);
+	bar(TABLE_CONTROL_SX + 1 + 10 + 110*2	, TABLE_CONTROL_SY + 50 + 1 + 250, TABLE_CONTROL_SX + 10 + 100 + 110*2	, TABLE_CONTROL_SY + 50 + 250 + 30);
 	setDefault();
 	
 	setbkcolor(LIGHTBLUE);
 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
 	setcolor(BLACK);
-	outtextxy(TABLE_CONTROL_SX + 10 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
-	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10, TABLE_CONTROL_SY + 50 + 250 + 5,"DELETE");
+	outtextxy(TABLE_CONTROL_SX + 10 + 10		, TABLE_CONTROL_SY + 50 + 250 + 5, "INSERT");
+	outtextxy(TABLE_CONTROL_SX + 10 + 110 + 10	, TABLE_CONTROL_SY + 50 + 250 + 5, "DELETE");
 	outtextxy(TABLE_CONTROL_SX + 10 + 110*2 + 10, TABLE_CONTROL_SY + 50 + 250 + 5, "UPDATE");
 	setDefault(); 
 
@@ -419,10 +419,10 @@ void reloadingDataSubjectDSA(listSubject &lsb, subject subjectListArray[], int s
 
 			setbkcolor(WHITE);
 			setcolor(GREEN);
-			outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
-			outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
-			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
-			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+			outtextxy(TABLE_SX + 20 + 50					, y, tochar(subjectListArray[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120				, y, tochar(subjectListArray[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340		, y, tochar(to_string(subjectListArray[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60	, y, tochar(to_string(subjectListArray[i].STCTH)));
 			y += D_ROW;
 		}
 	}
@@ -445,10 +445,11 @@ void reloadingDataSubjectDSA(listSubject &lsb, subject subjectListArray[], int s
 
 			setbkcolor(WHITE);
 			setcolor(GREEN);
-			outtextxy(TABLE_SX + 20 + 50, y, tochar(subjectListArray[i].idSubject));
-			outtextxy(TABLE_SX + 20 + 50 + 120, y, tochar(subjectListArray[i].nameSubject));
-			outtextxy(TABLE_SX + 20 + 50 + 120 + 340, y, tochar(to_string(subjectListArray[i].STCLT)));
-			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60, y, tochar(to_string(subjectListArray[i].STCTH)));
+			outtextxy(TABLE_SX + 20 + 50					, y, tochar(subjectListArray[i].idSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120				, y, tochar(subjectListArray[i].nameSubject));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340		, y, tochar(to_string(subjectListArray[i].STCLT)));
+			outtextxy(TABLE_SX + 20 + 50 + 120 + 340 + 60	, y, tochar(to_string(subjectListArray[i].STCTH)));
+
 			y += D_ROW;
 		}
 	}
@@ -456,9 +457,9 @@ void reloadingDataSubjectDSA(listSubject &lsb, subject subjectListArray[], int s
 
 // Ve thanh cuon cho table subject.
 void drawScrollBarSubject(){
-	int x1 = TABLE_LX - 20, y1 = TABLE_SY + 40 + 14;
-	int x2 = TABLE_LX - 20 + 8, y2 = TABLE_SY + 40;
-	int x3 = TABLE_LX - 20 + 16, y3 = TABLE_SY + 40 + 14;
+	int x1 = TABLE_LX - 20		, y1 = TABLE_SY + 40 + 14;
+	int x2 = TABLE_LX - 20 + 8	, y2 = TABLE_SY + 40;
+	int x3 = TABLE_LX - 20 + 16	, y3 = TABLE_SY + 40 + 14;
 	
 	line(x1, y1, x2, y2);
 	line(x2, y2, x3, y3);
@@ -467,9 +468,9 @@ void drawScrollBarSubject(){
 	setfillstyle(SOLID_FILL, LIGHTBLUE);
 	fillpoly(4, points1);
 
-	int u1 = TABLE_LX - 20 + 1, v1 = TABLE_LY - 14;
-	int u2 = TABLE_LX - 20 + 1 + 8, v2 = TABLE_LY;
-	int u3 = TABLE_LX - 20 + 1 + 16, v3 = TABLE_LY - 14;
+	int u1 = TABLE_LX - 20 + 1		, v1 = TABLE_LY - 14;
+	int u2 = TABLE_LX - 20 + 1 + 8	, v2 = TABLE_LY;
+	int u3 = TABLE_LX - 20 + 1 + 16	, v3 = TABLE_LY - 14;
 	line(u1, y1, u2, v2);
 	line(u2, y2, u3, v3);
 	line(u3, y3, u1, v1);
@@ -560,9 +561,9 @@ void drawMenuStartSubject(){
 	bar(MENU_SUB_SX, MENU_SUB_SY, MENU_SUB_LX + 2, MENU_SUB_LY);// ve lai bang chua cac muc dieu khien.
 
 	setcolor(BLACK);
-	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY, ">>Danh sach mon theo ID");
-	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + MENU_ITEM_HEIGHT, ">>Danh sach mon theo Ten");
-	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + 2 * MENU_ITEM_HEIGHT, ">>Nhap mon hoc");
+	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY							, ">>Danh sach mon theo ID");
+	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + MENU_ITEM_HEIGHT		, ">>Danh sach mon theo Ten");
+	outtextxy(MENU_SUB_SX, 10 + MENU_SUB_SY + 2 * MENU_ITEM_HEIGHT	, ">>Nhap mon hoc");
 
 	setDefault();
 }
@@ -2869,9 +2870,3 @@ void subjectManagement1(listSubject &lsb, listClassForSubject &lcfs){
 
 #endif 
 
-
-/* Trường hợp xóa môn học
-	kiểm tra trong danh sách lớp tín chỉ
-		- 
-		check - lọc lớp đang mở hoặc mở nếu trùng mã môn đang xét thì đánh dấu tồn tại
-*/

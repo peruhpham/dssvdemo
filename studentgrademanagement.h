@@ -1357,6 +1357,79 @@ void outputScores(ptrClassForSubject &cfs, listStudent &ls){
 
 
 
+
+
+
+// //----------------------------------------------------------------
+int checkNumberTC(listSubject &lsj, string idSubject){
+	ptrSubject find = findSubject(idSubject,lsj.root);
+	if(find == NULL) return 0; 
+	return find->data.STCLT + find->data.STCTH; 
+}
+
+// float checkScore(ptrClassForSubject cs){
+// 	if(cs->lr->head->data.scores >=0 && cs->lr->head->data.scores <=10){
+// 		return cs->lr->head->data.scores;
+// 	}
+// 	return 0;
+// }
+
+
+
+
+void searchNumberTC(listSubject &lsj,listClassForSubject &lcfs,listStudent &ls,listStudent &keep,string idClass, int &order,int currentClass,int listSTC[],float listCPA[]){
+	
+	ptrStudent p=ls.head;
+
+	ptrRegister r=NULL;
+	ptrListRegister tmpLr=NULL; 
+	
+	while(p != NULL && p->value.idClass <= idClass){
+		if(p->value.idClass == idClass){
+			addStudent(keep,p->value);	
+		} 
+		p=p->next; 
+	} 
+	keep.size = getSizeClass(keep,idClass); 
+
+	ptrStudent tmp = keep.head;
+	int STC;
+	float CPA;
+
+	int num=0; 
+	while(tmp != NULL && num < keep.size){
+		STC=0;
+		CPA=0;
+		for(int i=0; i<lcfs.size ;i++){
+			r=lcfs.list[i]->lr->head;
+			while( r!= NULL && r->data.idStudent != tmp->value.id){
+				r=r->next;
+			}
+			if(r!=NULL){
+				if(r->data.scores >= 0 && r->data.scores <=10){
+					STC += checkNumberTC(lsj,lcfs.list[i]->idSubject);
+					CPA += (r->data.scores) * checkNumberTC(lsj,lcfs.list[i]->idSubject);
+				}
+
+			}
+		}
+		if(CPA != 0 && STC != 0){
+			listCPA[num]=CPA/STC;
+			listSTC[num]=STC;
+			++num;
+		} 
+		else{ 
+			listCPA[num]=0;
+			listSTC[num]=0;
+			++num;
+		} 
+		
+		tmp=tmp->next;
+	}
+
+	
+}
+
 void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls){
 	drawInputExamScoresV2();
 	
@@ -1385,7 +1458,9 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 	            ascii = static_cast<int>(key);
 	            ascii += 255;
 	    	}
-	    	if(ascii == ESC) return;
+	    	if(ascii == ESC){
+	    		return;
+			}
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){
 			getmouseclick(WM_LBUTTONDOWN, x, y);
@@ -1409,40 +1484,40 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
-							if(firstSubject != NULL){
-								setfillstyle(SOLID_FILL, WHITE);
-								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-								idSubject = firstSubject->data.idSubject; // du lieu duoc chon luu vao idSubject;
-								
-								outtextwithlineV2(0, firstSubject->data, BLACK);
-								
-								setcolor(LIGHTGRAY);
+					    		if(firstSubject != NULL){
+					    			setfillstyle(SOLID_FILL, WHITE);
+									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+									idSubject = firstSubject->data.idSubject; // du lieu duoc chon luu vao idSubject;
+									
+									outtextwithlineV2(0, firstSubject->data, BLACK);
+									
+									setcolor(LIGHTGRAY);
+									rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+									// neu da du thong tin thi cho phep nhap diem
+									cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
+									drawPrintRegisteredStudentListV4(cfs); // ve khung
+									if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+										outputScores(cfs, ls);
+										idSubject = groupTemp = emptyStr;
+										academic = semes = 0;
+										group = 0;
+									} 
+								}
+								else{
+									setfillstyle(SOLID_FILL, WHITE);
+									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+									idSubject = emptyStr;	
+								}
+					    		
+					    		nameSubject = emptyStr;
+					    		lineCurrent = 1;
+					    		setcolor(LIGHTGRAY);
 								rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-								// neu da du thong tin thi cho phep nhap diem
-								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
-								drawPrintRegisteredStudentListV4(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
-									inputScores(cfs, ls);
-									idSubject = groupTemp = emptyStr;
-									academic = semes = 0;
-									group = 0;
-								} 
+								setDefault();
+								break;
 							}
-							else{
-								setfillstyle(SOLID_FILL, WHITE);
-								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-								idSubject = emptyStr;	
-							}
-							
-							nameSubject = emptyStr;
-							lineCurrent = 1;
-							setcolor(LIGHTGRAY);
-							rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-							setDefault();
-							break;
-						}
 						else if(ascii == UP && firstSubject != NULL){
 							if(lineCurrent > 1){
 								ptrSubject prevSubject = findPrevSubjectV2(lsj.root,firstSubject, nameSubject);
@@ -1590,7 +1665,7 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV4(cfs); // ve khung
 								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
-									inputScores(cfs, ls);
+									outputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
 									group = 0;
@@ -1714,7 +1789,7 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV4(cfs); // ve khung
 								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
-									inputScores(cfs, ls);
+									outputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
 									group = 0;
@@ -1760,6 +1835,7 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				}
 			}
 			else if(clickInRange(x, y, TEXTLPOINTX3 - 140 , TEXTSPOINTY3 - 40, TEXTLPOINTX3, TEXTLPOINTY3 - 40)){ // nhom
+				
 				highlightInputExamScores(selected, BLUE);
 				while(true){
 					if(kbhit()){
@@ -1778,7 +1854,7 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 								group = stringtoint(groupTemp);
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);// loc ra 
 								drawPrintRegisteredStudentListV4(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+								if(cfs != NULL){ // co thong tin thi in danh sach
 								
 									outputScores(cfs, ls);
 									
@@ -1815,13 +1891,15 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 							} 
 						}
 						else if(ascii == ESC){
-							drawPrintRegisteredStudentListV4(cfs);
+							
 							setcolor(LIGHTGRAY);
 							rectangle(TEXTLPOINTX3 - 140 , TEXTSPOINTY3 - 40, TEXTLPOINTX3, TEXTLPOINTY3 - 40);
 							groupTemp = emptyStr;
 							group = 0;
 							setfillstyle(SOLID_FILL, WHITE);
 							bar(TEXTLPOINTX3 - 140 + 1, TEXTSPOINTY3 - 40 + 1, TEXTLPOINTX3, TEXTLPOINTY3 - 40);
+						 
+							drawPrintRegisteredStudentListV4(cfs);
 							setDefault();
 							break;
 						}
@@ -1830,77 +1908,6 @@ void displayExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 			}
 		}
 	}
-}
-
-
-//----------------------------------------------------------------
-int checkNumberTC(listSubject &lsj, string idSubject){
-	ptrSubject find = findSubject(idSubject,lsj.root);
-	if(find == NULL) return 0; 
-	return find->data.STCLT + find->data.STCTH; 
-}
-
-float checkScore(ptrClassForSubject cs){
-	if(cs->lr->head->data.scores >=0 && cs->lr->head->data.scores <=10){
-		return cs->lr->head->data.scores;
-	}
-	return 0;
-}
-
-
-
-
-void searchNumberTC(listSubject &lsj,listClassForSubject &lcfs,listStudent &ls,listStudent &keep,string idClass, int &order,int currentClass,int listSTC[],float listCPA[]){
-	
-	ptrStudent p=ls.head;
-
-	ptrRegister r=NULL;
-	ptrListRegister tmpLr=NULL; 
-	
-	while(p != NULL && p->value.idClass <= idClass){
-		if(p->value.idClass == idClass){
-			addStudent(keep,p->value);	
-		} 
-		p=p->next; 
-	} 
-	keep.size = getSizeClass(keep,idClass); 
-
-	ptrStudent tmp = keep.head;
-	int STC;
-	float CPA;
-
-	int num=0; 
-	while(tmp != NULL && num < keep.size){
-		STC=0;
-		CPA=0;
-		for(int i=0; i<lcfs.size ;i++){
-			r=lcfs.list[i]->lr->head;
-			while( r!= NULL && r->data.idStudent != tmp->value.id){
-				r=r->next;
-			}
-			if(r!=NULL){
-				if(r->data.scores >= 0 && r->data.scores <=10){
-					STC+=checkNumberTC(lsj,lcfs.list[i]->idSubject);
-					CPA+=(r->data.scores)*checkNumberTC(lsj,lcfs.list[i]->idSubject);
-				}
-
-			}
-		}
-		if(CPA != 0 && STC != 0){
-			listCPA[num]=CPA/STC;
-			listSTC[num]=STC;
-			++num;
-		} 
-		else{ 
-			listCPA[num]=0;
-			listSTC[num]=0;
-			++num;
-		} 
-		
-		tmp=tmp->next;
-	}
-
-	
 }
 
 
@@ -1954,241 +1961,6 @@ void displayStudentHaveScore(listStudent &ls,listStudent keep,int currentClass,i
 	}
 }
 
-
-
-
-// void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls,listClass &lc){
-// 	drawTableIdClass();
-	
-// 	int ascii, x, y, selected = 0, on = 0, cntline = 1, lineCurrent = 1; 
-// 	int currentClass = 0; 
-	
-// 	string idClass = emptyStr;
-// 	string nameClass = emptyStr;
-// 	char key;
-
-// 	int order=0;
-	 
-// 		listStudent keepMain;
-// 		keepMain.size = getSizeClass(keepMain,idClass);
-// 		float listCPA[1000]; 
-// 		int listSTC[1000];
-		
-	
-// 	drawPrintRegisteredStudentListV5();
-// 	while(true){
-// 		if(kbhit()){
-// 			key = getch();
-// 			ascii = static_cast<int>(key);
-// 	        if (ascii == 0) { 
-// 	            key = getch();
-// 	            ascii = static_cast<int>(key);
-// 	            ascii += 255;
-// 	    	}
-// 			switch(ascii){
-// 				case DOWN:
-// 	    			if(currentClass + 11 < keepMain.size){
-// 	    				currentClass += 11;
-// 	    				drawPrintRegisteredStudentListV5();
-// 	    				displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
-// 					}
-// 					break;
-// 				case UP:// sai cai in so thu tu
-// 					if(currentClass - 11 >= 0 && currentClass < keepMain.size){
-// 	    				currentClass -= 11;
-// 	    				if(order % 11 == 0) order -= 22;
-// 	    				else order = order - (order % 11) - 11;
-// 	    				drawPrintRegisteredStudentListV5();
-// 	    				displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
-// 					}
-// 			}
-			
-// 	    	if(ascii == ESC) return;
-// 		}
-// 		if(ismouseclick(WM_LBUTTONDOWN)){
-// 			getmouseclick(WM_LBUTTONDOWN, x, y);
-// 			clearmouseclick(WM_LBUTTONDOWN);
-// 			if(clickInRange(x, y, TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40)){ // ten lop
-// 				highlightInputExamScoresV2(selected, BLUE);
-				
-// 				setfillstyle(SOLID_FILL, WHITE);
-// 				bar(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-// 				setcolor(BLACK);
-// 				rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-				
-// 				lineCurrent = 1;
-// 				cntline = 1;
-// 				idClass=""; 
-				
-// 				createListIdSubjectV2(); // tao khung chua danh sach
-// 				highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 				findListIdClass(lc,idClass,cntline,nameClass); // loc theo ma lop va in thong tin ra man hinh
-// 				while(true){
-// 					if(kbhit()){
-// 						key = getch();
-// 						ascii = static_cast<int>(key);
-// 				        if (ascii == 0) { 
-// 				            key = getch();
-// 				            ascii = static_cast<int>(key);
-// 				            ascii += 255;
-// 				    	}
-				    	
-// 				    	if(ascii == ET && idClass !=""){
-// 					    		if(idClass != ""){
-// 					    			setfillstyle(SOLID_FILL, WHITE);
-// 									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-// 									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-// 									nameClass = idClass; // du lieu duoc chon luu vao nameClass;
-									
-// 									outtextwithlineV3(0, nameClass, BLACK);
-									
-// 									setcolor(LIGHTGRAY);
-// 									rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-									
-									
-// 									drawPrintRegisteredStudentListV5();
-// 									// show
-// 									searchNumberTC(lsj,lcfs,ls,keepMain,idClass,order,currentClass,listSTC,listCPA);// loc sinh vien trong lop,stc,cpa
-// 									keepMain.size = getSizeClass(keepMain,idClass); 
-// 									displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
-									
-// 								}
-// 								else{
-// 									setfillstyle(SOLID_FILL, WHITE);
-// 									bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
-// 									bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
-// 									nameClass = emptyStr;	
-// 								}
-					    		
-// 					    		nameClass = emptyStr;
-// 					    		lineCurrent = 1;
-// 					    		setcolor(LIGHTGRAY);
-// 								rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-// 								setDefault();
-// 								break;
-// 							}
-// 						else if(ascii == UP && idClass != ""){
-// 							if(lineCurrent > 1){
-								
-// 								string prevClass = findPrevClassV2(lc,idClass);
-// 								if(prevClass != ""){
-// 									highlightInputLineCurrent(lineCurrent, WHITE);
-// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-									
-// 									idClass = prevClass;
-									
-// 									lineCurrent -= 1;
-// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 									setbkcolor(LIGHTGRAY);
-// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-// 								}
-// 							}
-// 							else if(lineCurrent == 1){
-// 								string prevClass = findPrevClassV2(lc,idClass);
-// 								if(prevClass != ""){
-// 									idClass = prevClass;
-									
-// 									createListIdSubjectV2();
-// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 									setbkcolor(LIGHTGRAY);
-// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-									
-// 									lineCurrent += 1;
-									
-// 									while(findNextClassV2(lc,prevClass) != "" && lineCurrent <= 8){
-// 										prevClass = findNextClassV2(lc, prevClass);
-// 										outtextwithlineV3(lineCurrent, prevClass, BLACK);
-// 										lineCurrent += 1;
-// 									}
-// 									lineCurrent = 1;
-// 								}
-// 							}
-// 						}	
-// 						else if(ascii == DOWN && idClass != ""){
-// //							cout<<2<<endl;
-// 							if(lineCurrent < 8 && lineCurrent != 0){
-// 								string nextClass = findNextClassV2(lc, idClass);
-// //								cout<<"id can tim la: "<<idClass<<" "<<"id tim dc ke tiep: "<<nextClass<<endl;
-// 								if(nextClass != ""){
-// //									cout<<1<<endl;
-									
-// 									highlightInputLineCurrent(lineCurrent, WHITE);
-// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-									
-// 									idClass = nextClass;
-// 									lineCurrent += 1;
-// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 									setbkcolor(LIGHTGRAY);
-// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-// 								}
-// 							}
-// 							else if(lineCurrent == 8){
-// 								string nextClass = findNextClassV2(lc, idClass);// tim tk ke tiep 
-// 								if(nextClass != ""){
-// 									idClass = nextClass;// hien tai = ke tiep 
-// 									createListIdSubjectV2();
-// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 									setbkcolor(LIGHTGRAY);
-// 									outtextwithlineV3(lineCurrent,nextClass, BLACK); //hien ra ke tiep 
-// 									lineCurrent -= 1;
-									
-// 									while(findPrevClassV2(lc,nextClass) != "" && lineCurrent >= 1){
-// 										nextClass = findPrevClassV2(lc,nextClass);
-// 										outtextwithlineV3(lineCurrent, nextClass, BLACK);
-// 										lineCurrent -= 1;
-// 									}
-// 									lineCurrent = 8;
-// 								}
-// 							}
-// 						}
-// 						else if(ascii == ESC){
-// 							setfillstyle(SOLID_FILL, WHITE);
-// 							bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201);
-// 							bar(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);					
-// 							setcolor(LIGHTGRAY);
-// 							rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
-							
-// 							nameClass = emptyStr; idClass="";
-// 							drawPrintRegisteredStudentListV5();
-// 							setDefault();
-// 							break;
-// 						}
-						
-// 						if(ascii == BP && (int)nameClass.size() > 0){ 
-// 							nameClass.pop_back();
-// 							setfillstyle(SOLID_FILL, WHITE);
-// 							bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41);
-// 							setcolor(BLACK);
-// 							outtextxy(TEXTSPOINTX1 + 5, TEXTSPOINTY1 - 30, tochar(nameClass));
-							
-// 							lineCurrent = 1; cntline = 1;
-// 							createListIdSubjectV2(); // tao khung chua danh sach
-// 							highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 							findListIdClass(lc,idClass,lineCurrent,nameClass);
-							
-// 						}
-						
-// 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9')  || ascii == SPACE){  
-// 							if((int)nameClass.size() < 9){
-// 								setfillstyle(SOLID_FILL, WHITE);
-// 								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41);
-// 								formatKey(key);
-// 								nameClass += key;
-// 								setcolor(BLACK);
-// 								outtextxy(TEXTSPOINTX1 + 5, TEXTSPOINTY1 - 30, tochar(nameClass));
-// 							}
-							
-// 							lineCurrent = 1; idClass = "", cntline = 1;
-// 							createListIdSubjectV2(); // tao khung chua danh sach
-// 							highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
-// 							findListIdClass(lc,idClass,lineCurrent,nameClass);
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// }
 
 
 void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls,listClass &lc){
@@ -2425,7 +2197,7 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 }
 
 
-
+//=======================================================================================================================================
 /*Hien thi bang diem tong hop cua lop sinh vien: 
 	- Moi sinh vien se c diem cua nhung mon cua lop tin chi da dang ki truoc do.
 	-

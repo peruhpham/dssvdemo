@@ -185,7 +185,6 @@ int findIndexClass(listClassForSubject &lcfs, int idClass){
 	}
 	return -1;
 }
-
 void findListSemester(int *semester, int sizeSemester){
 	for(int i = 0; i < sizeSemester; i++){
 		if(i == 0){
@@ -1907,9 +1906,7 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 				while(sizeList != 0){
 					mouseHighlightCancelClass(on, cancel);
 					if(kbhit()){
-
 					}
-
 					if(ismouseclick(WM_LBUTTONDOWN)){
 						getmouseclick(WM_LBUTTONDOWN, x, y);
 						clearmouseclick(WM_LBUTTONDOWN);
@@ -2110,6 +2107,7 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
+				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 480, LISTSPOINTX + 340, LISTSPOINTY + 510); // to muc nhap thanh mau den
 							
@@ -2143,6 +2141,7 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 							outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 445, tochar(academicTemp));
 							outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 485, tochar(semesterTemp));
 							break;
+							
 						}
 						else if(ascii == BP){
 							if(semesterTemp != emptyStr){
@@ -2169,8 +2168,8 @@ void cancelClass(listClassForSubject &lcfs, listSubject &lsj){
 		}
 	}
 }
-
 void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
+	
 	drawOpenClassForSubject();
 	// khai bao, tien xu ly;
 	int sizeYear = 0, sizeSemester = MAXSEMESTER;
@@ -2245,6 +2244,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									drawListClassForSubject(lcfs, lsj, currentClass, row);
 									highlightOpenClass(selected, LIGHTBLUE);
 								}
+								
 								else{
 									text = "Sinh vien da co diem, Khong the sua!"; 
 									setbkcolor(WHITE);
@@ -2255,10 +2255,12 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					    			bar(OPENSPOINTX - 301, OPENSPOINTY - 60, OPENLPOINTX + 50, OPENLPOINTY - 59);
 					    			setDefault();
 								}
-							break;
+								
+								break;
 							case 3: // chuc nang xoa lop
 								if(lcfs.size != 0 && !existStudentHaveGrade(lcfs.list[currentClass]->lr)){ // lop hien tai khong co sinh vien dang ky
 									deleteClass(lcfs, currentClass);
+									
 									
 									setfillstyle(SOLID_FILL, WHITE);
 									bar(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // 
@@ -2303,7 +2305,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					    			bar(OPENSPOINTX - 301, OPENSPOINTY - 60, OPENLPOINTX + 50, OPENLPOINTY - 59);
 					    			setDefault();
 								}
-							break;
+								break;
 							case 4: // chuc nang huy lop 
 								if(lcfs.size != 0){ // so luong sinh vien dang ky > min
 									cancelClass(lcfs, lsj);
@@ -2313,7 +2315,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									highlightOpenClass(selected, LIGHTBLUE);
 									setDefault();
 								}
-							break;
+								break;
 						}
 					}
 					break;
@@ -2371,6 +2373,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 					}
 					else if(finded == 0){
 						return;
+						
 					}
 					break;
 				
@@ -2570,6 +2573,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 									break;
 								}
 								else{
+									
 									setfillstyle(SOLID_FILL, WHITE);
 									bar(LISTSPOINTX + 41, LISTSPOINTY + 81, LISTLPOINTX, LISTSPOINTY + 389); // xoa du lieu trong bang
 									
@@ -2606,6 +2610,7 @@ void openClassForSubject(listClassForSubject &lcfs, listSubject &lsj){
 							}							
 						}
 						else if(ascii == ESC){
+							
 							setfillstyle(SOLID_FILL, WHITE);
 							bar(LISTSPOINTX + 151, LISTSPOINTY + 401, LISTSPOINTX + 340, LISTSPOINTY + 430); // xoa du lieu trong hop nhap
 							setcolor(BLACK);
@@ -2673,7 +2678,6 @@ void printRegisteredStudentList(ptrClassForSubject listOpeningClass[], int &curr
 	}
 	
 }
-
 void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls){
 	
 	ptrClassForSubject ListOpeningClass[MAXCLASS]; // mang chua danh sach cac lop dang mo
@@ -2753,6 +2757,7 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
+				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 400, LISTSPOINTX + 340, LISTSPOINTY + 430); // to muc nhap thanh mau den
 							
@@ -2813,6 +2818,7 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 				            ascii += 255;
 				    	}
 				    	if(ascii == ET){
+				    		
 				    		setcolor(BLACK);
 							rectangle(LISTSPOINTX + 150, LISTSPOINTY + 440, LISTSPOINTX + 340, LISTSPOINTY + 470); // to muc nhap thanh mau den
 							
@@ -2927,7 +2933,8 @@ void listRegisterClass(listClassForSubject &lcfs, listSubject &lsj, listStudent 
 }
 
 
-//----------
+// ================================================xu ly dk lop  
+
 void outtextstudentRegister(student s, int COLOR){
 	
 	setDefault();
@@ -2945,6 +2952,7 @@ void outtextstudentRegister(student s, int COLOR){
 	
 }
 
+
 void searchSemesterAcademicYear(ptrClassForSubject listClassAcademicYear[], listClassForSubject &lcfs, int &sizeList, int academic, int semester){
 	
 	for(int i = 0; i < sizeList; i++){
@@ -2960,200 +2968,6 @@ void searchSemesterAcademicYear(ptrClassForSubject listClassAcademicYear[], list
 		}
 	}
 }
-
-// void createTable_Register(){ // tao khung lon ben ngoai
-	
-// 	setfillstyle(SOLID_FILL, WHITE);
-// 	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 60); 
-	
-// 	setlinestyle(0, 0, 1);
-// 	setcolor(LIGHTGRAY);
-// 	line(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY);
-// 	line(LISTSPOINTX, LISTSPOINTY, LISTSPOINTX, LISTLPOINTY); // can le
-	
-// 	setDefault();
-// }
-// void createList_Rigister(){ // tao khung nho ben trong
-
-// 	setfillstyle(SOLID_FILL, WHITE); // xoa sach thong tin the hien tren bang 
-// 	bar(TABLSPOINTX, TABLSPOINTY, TABLLPOINTX, TABLSPOINTY+240);
-	
-// 	setfillstyle(SOLID_FILL, LIGHTBLUE);
-// 	setlinestyle(0, 0, 1);
-// 	setcolor(LIGHTGRAY);
-
-// 	bar(TABLSPOINTX, TABLSPOINTY, TABLLPOINTX, TABLSPOINTY+40); // tao table hinh chu nhat
-	
-// 	rectangle(TABLSPOINTX, TABLSPOINTY, TABLLPOINTX, TABLLPOINTY); 
-// 	line(TABLSPOINTX, TABLSPOINTY +40, TABLLPOINTX, TABLSPOINTY + 40); // tao duong ke ngang
-// 	line(TABLSPOINTX, TABLSPOINTY + 90, TABLLPOINTX, TABLSPOINTY + 90);
-// 	line(TABLSPOINTX, TABLSPOINTY + 140, TABLLPOINTX, TABLSPOINTY + 140);
-// 	line(TABLSPOINTX, TABLSPOINTY + 190, TABLLPOINTX, TABLSPOINTY + 190);
-
-// 	line(TABLSPOINTX + 145, TABLSPOINTY, TABLSPOINTX + 145, TABLLPOINTY); // tao duong ke doc
-// 	line(TABLSPOINTX + 420, TABLSPOINTY, TABLSPOINTX + 420, TABLLPOINTY);	
-// 	line(TABLSPOINTX + 580, TABLSPOINTY, TABLSPOINTX + 580, TABLLPOINTY);	
-// 	line(TABLSPOINTX + 780, TABLSPOINTY, TABLSPOINTX + 780, TABLLPOINTY);			
-// 	line(TABLSPOINTX + 880, TABLSPOINTY, TABLSPOINTX + 880, TABLLPOINTY);
-		
-// //	line(TABLSPOINTX + 900, TABLSPOINTY, TABLSPOINTX + 900, TABLLPOINTY);	
-	
-// 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1); // tieu de tren bang danh sach
-// 	setbkcolor(LIGHTBLUE);
-// 	setcolor(WHITE);
-// 	outtextxy(TABLSPOINTX + 10, TABLSPOINTY + 10, "MA MH");
-// 	outtextxy(TABLSPOINTX + 155, TABLSPOINTY + 10, "TEN MH");
-// 	outtextxy(TABLSPOINTX + 425, TABLSPOINTY + 10, "NHOM");
-// 	outtextxy(TABLSPOINTX + 585, TABLSPOINTY + 10, "DA DK");
-// 	outtextxy(TABLSPOINTX + 785, TABLSPOINTY + 10,"C.LAI");
-// 	outtextxy(TABLSPOINTX + 885, TABLSPOINTY + 10,"D.KY"); 
-	
-// 	setDefault();
-// }
-// void drawTableAcademicYear(){
-// 	setcolor(RED);
-// 	outtextxy(LISTSPOINTX+10, LISTSPOINTY+410, "Nhap Thong Tin Tim Lop Dang Mo"); 
-// 	setfillstyle(SOLID_FILL,WHITE);
-// 	setcolor(BLACK);
-// 	outtextxy(LISTSPOINTX + 40, LISTSPOINTY + 450, "Nhap MSSV:"); 
-// 	rectangle(LISTSPOINTX + 150, LISTSPOINTY + 440, LISTSPOINTX + 340, LISTSPOINTY + 470);
-	
-// 	outtextxy(LISTSPOINTX + 400, LISTSPOINTY + 450, "Nien Khoa:");
-// 	rectangle(LISTSPOINTX + 520, LISTSPOINTY + 440, LISTSPOINTX + 700, LISTSPOINTY + 470);
-	
-// 	outtextxy(LISTSPOINTX + 40, LISTSPOINTY + 480, "Hoc Ky:");
-// 	rectangle(LISTSPOINTX + 150, LISTSPOINTY + 480, LISTSPOINTX + 340, LISTSPOINTY + 510);
-// } 
-// void drawTableInfor(){
-// 	setfillstyle(SOLID_FILL, WHITE); // xoa sach thong tin the hien tren bang
-// 	bar(350,80, 1350, 190);
-	
-// 	setfillstyle(SOLID_FILL, LIGHTBLUE);//LIGHTBLUE
-// 	setlinestyle(0, 0, 1);
-// 	setcolor(LIGHTGRAY);
-	
-// 	bar(350,80, 1350, 120); // tao table hinh chu nhat
-// 	rectangle(350,80, 1350, 160);  
-// 	setlinestyle(0, 0, 1);
-// 	line(350, 120, 1350,120); // tao duong ke ngang
-	
-// 	line(540+10, 80, 540+10, 160); // tao duong ke doc
-// 	line(550+180, 80, 550+180, 160);	
-// 	line(750+200, 80,750+200, 160);	
-// 	line(970+200,80,970+200,160);
-	
-// 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1); // tieu de tren bang danh sach
-// 	setbkcolor(LIGHTBLUE);
-// 	setcolor(WHITE);
-// 	outtextxy(360,85,"MSSV");
-// 	outtextxy(560,85,"MALOP");
-// 	outtextxy(740,85,"HO");
-// 	outtextxy(960,85,"TEN");
-// 	outtextxy(1180,85,"PHAI"); 
-	
-// 	setDefault();
-// }
-// void drawTableRegister(){
-// 	createTable_Register();
-// 	createList_Rigister();
-// 	drawTableAcademicYear();
-// 	drawTableInfor();	
-// }
-
-// void checkStudentInClass(ptrClassForSubject oneClass[],int currentClass,int sizeList,string idStudent,bool mark[],listSubject &lsj){
-// 	int cnt=0;
-// 	int i=currentClass;
-// 	while(cnt < 4 && i < sizeList){
-// 		if(oneClass[i]->lr->head != NULL && 
-// 		existStudentRegistingV2(oneClass[i]->lr,idStudent)){
-// 			mark[i] = true;
-// 			drawListClassAcadecmicYear(oneClass,sizeList,currentClass,lsj,mark,idStudent);
-// 		}
-// 		else{
-// 			mark[i]=false;
-// 			drawListClassAcadecmicYear(oneClass,sizeList,currentClass,lsj,mark,idStudent);
-// 		}
-// 		++cnt;++i;
-// 	}
-
-// } 
-
-// void outtextstudentRegister(student s, int COLOR){
-	
-// 	setDefault();
-// 	setcolor(COLOR);
-	
-// 	int Y = 85;
-	
-// 	outtextxy(360 + 5, Y+50, tochar(s.id));
-// 	outtextxy(560 + 5, Y+50, tochar(s.idClass));
-// 	outtextxy(740 + 5, Y+50, tochar(s.firstName));
-// 	outtextxy(960 + 5, Y+50, tochar(s.lastName));
-// 	outtextxy(1180 + 5, Y+50, tochar(s.gender));
-	
-// 	setDefault();
-// }
-
-// void searchSemesterAcademicYear(ptrClassForSubject listClassAcademicYear[], listClassForSubject &lcfs, int &sizeList, int academic, int semester){
-	
-// 	for(int i = 0; i < sizeList; i++){
-// 		listClassAcademicYear[i] = NULL;
-// 	}
-// 	sizeList = 0;
-	
-// 	for(int i = 0; i < lcfs.size; i++){
-		
-// 		if(lcfs.list[i]->unClass==false&&(academic == 0 || academic==lcfs.list[i]->academicYear) && (semester == 0 || semester == lcfs.list[i]->semester)){
-// 			listClassAcademicYear[sizeList] = lcfs.list[i]; // tro truc tiep vao lop
-// 			sizeList += 1;
-// 		}
-// 	}
-// }
-
-// void drawListClassAcadecmicYear(ptrClassForSubject listClassAcademicYear[], int &sizeList, int &currentClass, listSubject &lsj, bool mark[], string idStudent){
-	
-// 	createList_Rigister();
-// 	int i = currentClass;
-// 	int cnt = 0;
-// 	int CLASSPOINTY = TABLSPOINTY + 60;   //LISTSPOINTY + 85;
-// 	while(cnt < 4 && i < sizeList){ // in ra 4 thong tin trong danh sach lop co the huy
-		
-// 		setcolor(BLACK);
-// 		outtextxy(TABLSPOINTX + 10, CLASSPOINTY, tochar(listClassAcademicYear[i]->idSubject));
-// 		outtextxy(TABLSPOINTX + 155, CLASSPOINTY, tochar(findNameSubject(listClassAcademicYear[i]->idSubject, lsj.root)));
-// 		outtextxy(TABLSPOINTX + 425, CLASSPOINTY, tochar(to_string(listClassAcademicYear[i]->group)));//
-		
-// 		if(listClassAcademicYear[i]->studentMax >= listClassAcademicYear[i]->lr->size){
-// 			outtextxy(TABLSPOINTX + 585, CLASSPOINTY, tochar(to_string(listClassAcademicYear[i]->lr->size) + "/" + to_string(listClassAcademicYear[i]->studentMax)));
-// 			outtextxy(TABLSPOINTX + 785, CLASSPOINTY, tochar(to_string(listClassAcademicYear[i]->studentMax - listClassAcademicYear[i]->lr->size)));
-// 		}
-// 		else{
-// 			outtextxy(TABLSPOINTX + 585, CLASSPOINTY, tochar(to_string(listClassAcademicYear[i]->studentMax) + "/" + to_string(listClassAcademicYear[i]->studentMax)));
-// 			outtextxy(TABLSPOINTX + 785, CLASSPOINTY, tochar(to_string(0)));
-// 		}
-		
-// 		if(mark[i] == false){ // chi muc trong danh sach chua duoc danh dau 
-// 			setcolor(BLACK);
-// 			setlinestyle(SOLID_LINE, 0, 2);
-// 			rectangle(TABLSPOINTX + 890, CLASSPOINTY, TABLSPOINTX + 890 + 20, CLASSPOINTY + 20);
-// 		}
-// 		else{ // neu da duoc danh dau roi to mau xanh 
-// 			setcolor(BLACK);
-// 			setlinestyle(SOLID_LINE, 0, 2);
-// 			rectangle(TABLSPOINTX + 890, CLASSPOINTY, TABLSPOINTX + 890 + 20, CLASSPOINTY + 20);
-			
-// 			setfillstyle(SOLID_FILL, BLUE);
-// 			bar(TABLSPOINTX + 890, CLASSPOINTY, TABLSPOINTX + 890 + 20, CLASSPOINTY + 20);
-// 		}
-// 		setDefault();
-// 		cnt++; i++;
-// 		CLASSPOINTY += 50;
-// 	}
-// }
-
-
-
-
 
 void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs){
 	drawTableRegister();
@@ -3217,6 +3031,7 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 //						outtextxy(LISTSPOINTX + 530, LISTSPOINTY + 445, tochar(academicYear));
 //						outtextxy(LISTSPOINTX + 160, LISTSPOINTY + 485, tochar(semesterTemp));
 //					}
+					drawTableRegister();
 					return;
 					break;
 			}
@@ -3382,7 +3197,7 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 								setDefault();
 							}
 							else if(ascii == ESC){
-								checkmsv=false;
+//								checkmsv=false;
 								academicYear = "";
 								setfillstyle(SOLID_FILL, WHITE);
 								bar(LISTSPOINTX + 520, LISTSPOINTY + 440, LISTSPOINTX + 700, LISTSPOINTY + 470);
@@ -3482,15 +3297,11 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 					markClass[temp] = true;
 					// ktra dsdk co sv(listClassAcademicYear[temp] nay chua neu co r va trang thai unsub = T cap nhat unsub = F) do chua 
 					// neu khong tim thay thi add vao dsdk 
-					if(listClassAcademicYear[temp]->lr->size <= listClassAcademicYear[temp]->studentMax){
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
 						addRegister(listClassAcademicYear[temp]->lr,r);
 						listClassAcademicYear[temp]->lr->size+=1;
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
-					}
-					else{
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
-					}
-					
+					} 
+					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
 				else if(temp < sizeList){
@@ -3511,14 +3322,11 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 				if(temp < sizeList && markClass[temp] == false){
 					markClass[temp] = true;
 					//
-					if(listClassAcademicYear[temp]->lr->size <= listClassAcademicYear[temp]->studentMax){
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
 						addRegister(listClassAcademicYear[temp]->lr,r);
 						listClassAcademicYear[temp]->lr->size+=1;
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					}
-					else{
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
-					}
+					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
 				else if(temp < sizeList){
@@ -3537,14 +3345,12 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 				if(temp < sizeList && markClass[temp] == false){
 					markClass[temp] = true;
 					//
-					if(listClassAcademicYear[temp]->lr->size <= listClassAcademicYear[temp]->studentMax){
+					
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
 						addRegister(listClassAcademicYear[temp]->lr,r);
 						listClassAcademicYear[temp]->lr->size+=1;
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					}
-					else{
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
-					}
+				    drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
 				else if(temp < sizeList){
@@ -3564,17 +3370,11 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 				if(temp < sizeList && markClass[temp] == false){
 					markClass[temp] = true;
 					//
-					if(listClassAcademicYear[temp]->lr->size <= listClassAcademicYear[temp]->studentMax){
+					if(listClassAcademicYear[temp]->studentMax > listClassAcademicYear[temp]->lr->size){
 						addRegister(listClassAcademicYear[temp]->lr,r);
 						listClassAcademicYear[temp]->lr->size+=1;
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					}
-					else{
-						drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
-					}
-//					addRegister(listClassAcademicYear[temp]->lr,r);
-//					listClassAcademicYear[temp]->lr->size+=1;
-//					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
+					drawListClassAcadecmicYear(listClassAcademicYear,sizeList,lineCurrent,lsj,markClass,idStudent);
 					cntSelected+=1;
 				}
 				else if(temp < sizeList){
@@ -3589,10 +3389,10 @@ void registerClass(listStudent &ls, listSubject &lsj, listClassForSubject &lcfs)
 } 
 
 
-
 void classForSubjectManagement(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls){
 	int selected = 1;
 	drawClassForSubjectManagement(selected);
+	int line=0;
 	
 	int run1 = 1;
 	char key;
