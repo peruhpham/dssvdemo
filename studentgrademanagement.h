@@ -121,8 +121,6 @@ void outtextwithlineV3(int lineCurrent,string idClass, int COLOR){
 	setDefault();
 }
 
-
-
 void findListIdSubjectV2(ptrSubject root, ptrSubject &firstSubject, int &lineCurrent, string nameSubject){
 	if (root == NULL || lineCurrent > 8) return;
 
@@ -2587,6 +2585,8 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 // 	}
 // }
 
+
+
 //==============================================================================================
 //PHAN 4 MUC 4 IN DIEM TONG KET
 
@@ -2802,7 +2802,7 @@ bool checkScoreStudentInClassSubject(ptrListRegister ptrlr){
 	return false;
 }
 
-// 
+// Thanh cuon chi muc cho du lieu.
 void drawScrollBarScore(){
 	int x1 = 1300, y1 = 130;
 	int x2 = 1304, y2 = 126;
@@ -2984,13 +2984,17 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					currentPage++;
 					cout << "currentPage --- DOWN : " << currentPage << endl;
 
+					std::cout << "tmpSTT" << tmpSTT << std::endl;
+					if((tmpSTT-1)%PAGE_SIZE != 0 && tmpSTT != 1)
+						break;
+
 					isDataReal = false;
 					std::cout << "DOWN........." << std::endl;
 					printTableEmpty();		
 					hang = 22;
 					tmpSTT = 1;
 					for(; curStu != nullptr; curStu = curStu->next) {
-						if (idClass == curStu->value.idClass) {
+						if (idClass == curStu->value.idClass){
 							std::cout << "stt: " << sttStudentForClass << "\n";
 							if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
 								break;
@@ -3034,7 +3038,8 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 				break;
 				case 72:
 					isDataReal = false;
-					currentPage--;
+					if(currentPage >= 0)
+						currentPage--;
 					cout << "currentPage --- UP : " << currentPage << endl;
 
 					std::cout << "UP ... \n";
@@ -3052,7 +3057,6 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					printTableEmpty();	
 					hang = 22;
 					tmpSTT = 1;
-					cout << 1 << endl;
 					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
 						if (idClass == curStu->value.idClass){
 							std::cout << "stt: " << sttStudentForClass << "\n";
@@ -3273,10 +3277,7 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
 									setbkcolor(LIGHTGRAY);
 									outtextwithlineV3(lineCurrent, idClass, BLACK);
-
-
 									//print danh sach
-
 
 
 								}
