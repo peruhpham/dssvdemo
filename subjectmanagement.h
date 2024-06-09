@@ -1018,11 +1018,15 @@ void printRootLeftRight(nodeSubject *root){
 }
 
 void printUserManual (){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(200, 605, 1350, 780);
+
+	// createBottom();
 	setcolor(BLUE);
 	outtextxy(200, 610, "ESC             : Thoat.");
 	outtextxy(200, 630, "ENTER           : Nhan data."); 
-	outtextxy(200, 650, "Delete | Update : Click chuot trai.");
-	outtextxy(200, 670, "Search          : Nhap ten.");
+	outtextxy(200, 650, "Delete | Update : Click data.");
+	// outtextxy(200, 670, "Search          : Nhap ten.");
 	setDefault();
 }
 
@@ -1030,7 +1034,7 @@ void printUserManual (){
 void selectionSort(subject *listSubject, int sizeListSubject){
 	for(int i = 0; i < sizeListSubject - 1; i++){
 		int indexMin = i;
-		for(int j = i+ 1; j < sizeListSubject; j++){
+		for(int j = i + 1; j < sizeListSubject; j++){
 			if(listSubject[j].nameSubject < listSubject[indexMin].nameSubject)
 				indexMin = j;
 		}
@@ -1125,15 +1129,12 @@ int controlAddDeleteSubject(listClassForSubject &lcfs, listSubject &lsb, subject
 
 			++click;
 			highlightClickMouse(x, y, lsb, arraySubject, sizeArraySubject, checkPageListTable);
-			// keo ra khoi highlightClickMouse
+			// Keo ra khoi highlightClickMouse
 			dong = TABLE_FILTER_SY + 30;
-			// Neu click mouse gap thi hightlight thanh sang cho thanh search 
-			int checkOutList = (lsb.size - 1)/15;// check list nay se chạy tu 0 den checkOutList
-			// luc nay check out list = 1
+			int checkOutList = (lsb.size - 1)/15;// check list nay se chạy tu 0 den checkOutList // Luc nay check out list = 1
 
-			if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){
-				// Neu click mouse gap thi hightlight thanh sang cho thanh search
-				highlightFrame (TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 320, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
+			if(TABLE_CONTROL_SX + 1 + 10 <= x && TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30 <= y && x <= TABLE_CONTROL_SX - 1 + 10 + 300 && y <= TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60){// Neu click mouse gap thi hightlight thanh sang cho thanh search 
+				highlightFrame (TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 320, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);// Neu click mouse gap thi hightlight thanh sang cho thanh search
 				// highlightFrameDefault (TABLE_CONTROL_SX + 1 + 10, TABLE_CONTROL_SY + 50 + 1 + 250 + 30 + 30, TABLE_CONTROL_SX - 1 + 10 + 300, TABLE_CONTROL_SY + 50 - 1 + 250 + 30 + 60);
 				//Xu li nhâp du lieu vao khung search 
 				const int sizeText = 29;
@@ -1143,7 +1144,7 @@ int controlAddDeleteSubject(listClassForSubject &lcfs, listSubject &lsb, subject
 
 				std::cout << "Nhap vao mot chuoi search (nhap Enter de ket thuc):\n";
 				while (true) { 
-					if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
+					if (kbhit()) { 
 						char text = getch(); 
 
 						if(text == ESC){
@@ -1286,7 +1287,7 @@ int controlAddDeleteSubject(listClassForSubject &lcfs, listSubject &lsb, subject
 					std::cout << "Nhap vao mot chuoi id (nhap Enter de ket thuc):\n";
 
 					while (true) { 
-						if (kbhit()) { // Kiểm tra xem có ký tự được nhấn từ bàn phím không
+						if (kbhit()) { 
 							char textId = getch(); 
 							if(textId == ESC){
 								setfillstyle(SOLID_FILL, WHITE);

@@ -1487,6 +1487,55 @@ int existStudentRegistingV2(ptrListRegister &lr,string idStudent){
 	
 } 
 
+int checkStudentHaveGrade(student st, listClassForSubject &lcfs) {
+	for (int i = 0; i < lcfs.size; i++) {
+		ptrListRegister lr = lcfs.list[i]->lr; // con tro danh sach dang ky sap xep theo id
+		ptrRegister current= lr->head;
+		if (lcfs.list[i]->academicYear != st.year) continue; // kiem tra nien khoa
+		if (current != NULL) {
+			while(current != NULL) {
+				if (current->data.idStudent == st.id && current->data.scores != 11){ // da co diem
+					cout << "sinh vien : " << st.firstName << " " << st.lastName << " da co diem " << endl; 
+					return 1;
+				}
+				else if (current->data.idStudent > st.id) {
+					cout << "sinh vien : " << st.firstName << " " << st.lastName << " chua co diem " << endl; 
+					return 0;
+				}
+				current = current->next;
+			}
+		}
+	}
+	cout << "sinh vien : " << st.firstName << " " << st.lastName << " chua co diem " << endl; 
+	return 0;
+}
+
+void removeStudentInRegisterList(listClassForSubject &lcfs, student st) {
+	for (int i = 0; i < lcfs.size; i++) {
+		ptrListRegister lr = lcfs.list[i]->lr; // con tro danh sach dang ky sap xep theo id
+		ptrRegister cur= lr->head;
+		ptrRegister prev = NULL;
+		
+		if (cur == NULL) continue;
+		
+		if (cur->data.idStudent == st.id) {
+			lr->head = cur->next;
+			delete cur;
+			continue;
+		}
+		
+		while(cur != NULL && cur->data.idStudent != st.id) {
+			prev = cur;
+			cur = cur->next;
+		}
+		
+		if (cur == NULL) continue;
+		
+		prev->next = cur->next;
+		delete cur;
+	}
+}
+
 
 // // ghi lai File list class for subject  
 // void recordFileClass(listClassForSubject lcfs){

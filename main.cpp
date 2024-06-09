@@ -13,7 +13,7 @@
 #include "studentgrademanagement.h"
 #include "subjectmanagement.h" 
 
-     
+      
 using namespace std;                      
  
 int main(){   
@@ -41,7 +41,7 @@ int main(){
 	   
 //  getch();
 	int selected = 1; 
-	createMenu(selected);
+	createMenu(selected);   
  
 	while(1){   
 		char key = getch();  
@@ -56,8 +56,8 @@ int main(){
 		switch(ascii){                                                              
 			case ET:    	                                                                        
 				switch(selected){                      
-					case 1:      
-						studentManagement(ls, lc);                  
+					case 1:       
+						studentManagement(ls, lc, lcfs);                  
 						createMenu(selected);	
 						
 						// recordFileStudent(ls);          
@@ -83,9 +83,9 @@ int main(){
 				}                     
 				break;                            
 			case DOWN:              
-				if(selected < 4){        
+				if(selected < 4){                  
 					selected++;     
-					createMenu(selected);     
+					createMenu(selected);       
 				}  
 				break;       
 			case ESC:  

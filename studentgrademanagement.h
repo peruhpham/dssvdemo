@@ -834,7 +834,7 @@ void inputExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &l
 								// neu da du thong tin thi cho phep nhap diem
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV2(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+								if(cfs != NULL && cfs->studentMin <= cfs->lr->size){ // co thong tin thi in danh sach va bat dau nhap diem
 									inputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
@@ -1001,7 +1001,7 @@ void inputExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &l
 								// neu da du thong tin thi cho phep nhap diem
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV2(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+								if(cfs != NULL && cfs->studentMin <= cfs->lr->size){ // co thong tin thi in danh sach va bat dau nhap diem
 									inputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
@@ -1127,7 +1127,7 @@ void inputExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &l
 								// neu da du thong tin thi cho phep nhap diem
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV2(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+								if(cfs != NULL && cfs->studentMin <= cfs->lr->size){ // co thong tin thi in danh sach va bat dau nhap diem
 									inputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
@@ -1195,7 +1195,7 @@ void inputExamScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &l
 								group = stringtoint(groupTemp);
 								cfs = findClassForSubject(lcfs, idSubject, academic, semes, group);
 								drawPrintRegisteredStudentListV2(cfs); // ve khung
-								if(cfs != NULL){ // co thong tin thi in danh sach va bat dau nhap diem
+								if(cfs != NULL && cfs->studentMin <= cfs->lr->size){ // co thong tin thi in danh sach va bat dau nhap diem
 									inputScores(cfs, ls);
 									idSubject = groupTemp = emptyStr;
 									academic = semes = 0;
@@ -2072,6 +2072,521 @@ void displayClassEverageScores(listClassForSubject &lcfs, listSubject &lsj, list
 
 
 
+// //==============================================================================================
+// //PHAN 4 MUC 4 IN DIEM TONG KET
+
+// /*Hien thi bang diem tong hop cua lop sinh vien: 
+// 	- Moi sinh vien se c diem cua nhung mon cua lop tin chi da dang ki truoc do.
+// 	-
+// */
+// // #define hang 22
+// #define D_COT_SCORE 85
+
+
+
+// void drawTableControlClassScores(){
+// 	//Tieu de bang tong ket cac mon hoc cua lop sinh vien
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(TABLE_CLASS_SX, TABLE_CLASS_SY, TABLE_CLASS_LX, TABLE_CLASS_LY);
+// 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10, "BANG DIEM TONG KET");
+// 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10 + 20, "Lop:  Chua chon lop ...");
+
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(LISTSPOINTX, LISTSPOINTY - 10, LISTLPOINTX, LISTLPOINTY - 5); // xoa toan bo noi dung trong muc nhap diem
+	
+// 	setfillstyle(SOLID_FILL, LIGHTBLUE);
+// 	bar(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY + 40);
+
+// 	setbkcolor(LIGHTBLUE);
+// 	setcolor(WHITE);
+// 	outtextxy(LISTSPOINTX + 10, LISTSPOINTY + 10, "DANH SACH DIEM CUA LOP SINH VIEN");
+
+// 	setcolor(LIGHTGRAY);
+// 	line(LISTSPOINTX, LISTSPOINTY, LISTLPOINTX, LISTSPOINTY);
+// 	line(LISTSPOINTX, LISTSPOINTY, LISTSPOINTX, LISTLPOINTY); // tao header cho muc nhap diem
+	
+// 	rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40); // ten ma mon hoc
+	
+// 	setbkcolor(WHITE);
+// 	setcolor(BLACK);
+// 	outtextxy(TEXTSPOINTX1 + 10, TEXTSPOINTY1 - 65, "Ten lop sinh vien - ID");
+
+// 	setDefault();
+// }
+
+// //Ve bang du lieu rong khi chua chon lop sinh vien
+// void drawTableDataClassScoresEmpty(){
+// 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+
+// 	//Tieu de bang tong ket cac mon hoc cua lop sinh vien
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(TABLE_CLASS_SX, TABLE_CLASS_SY, TABLE_CLASS_LX, TABLE_CLASS_LY);
+
+// 	setcolor(BLACK);
+// 	setbkcolor(WHITE);
+// 	outtextxy(TABLE_CLASS_SX + 200, TABLE_CLASS_SY + 10, "BANG DIEM TONG KET");
+// 	outtextxy(TABLE_CLASS_SX + 220, TABLE_CLASS_SY + 10 + 20, "Lop: ...  ");
+
+// 	//-----------------
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 331);//KHUNG CHI CHUA DATA
+
+// 	setfillstyle(SOLID_FILL, LIGHTBLUE);// tao header
+// 	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+// 	setcolor(BLUE);
+// 	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+
+// 	setcolor(LIGHTGRAY);
+// 	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330);// KHUNG
+
+// 	setcolor(LIGHTMAGENTA);
+// 	outtextxy(TEXTSPOINTX1 + 200, TEXTLPOINTY1 + 30, "VUI LONG CHON LOP SINH VIEN DE HIEN THI DIEM ...");
+
+// 	setcolor(LIGHTGRAY);// NGAN CACH TIEU DE
+// 	line(TEXTSPOINTX1, TEXTLPOINTY1 - 30													, TEXTSPOINTX1														, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 40, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 40 												, TEXTLPOINTY1 ); 
+// 	line(TEXTSPOINTX1 + 40 + 120, TEXTLPOINTY1 - 30											, TEXTSPOINTX1 + 40 + 120											, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 );
+	
+// 	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 );
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 );
+
+
+
+// 	setbkcolor(LIGHTBLUE);
+// 	setcolor(BLACK);
+// 	// settextstyle(SMALL_FONT, HORIZ_DIR, 5);	
+// 	outtextxy(TEXTSPOINTX1 + 3      												, TEXTLPOINTY1 - 22, "STT" );
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 												, TEXTLPOINTY1 - 22, "Ma SV" );
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 22, "Ho lot");
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 22, "Ten");
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 22, "Mon 1" );
+// 	outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 - 22, "Mon 7");
+	
+// 	// setbkcolor(WHITE);
+// 	// setcolor(BLACK);
+// 	// outtextxy(TEXTSPOINTX1 + 3      												, TEXTLPOINTY1 - 21 + 22, "001" );
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 												, TEXTLPOINTY1 - 21 + 22, "N22DCCN193");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 21 + 22, "NGUYEN THI TU");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 21 + 22, "QUYNH");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+// 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 21 + 22, "BAS1122");
+
+
+	
+// 	setDefault(); 
+// }
+
+// // Bang du lieu de chua danh sach diem sinh vien cua lop sinh vien
+// void drawTableDataClassScores(){ 
+// 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330); // xoa ta ca thong tin truoc do
+	
+// 	setcolor(LIGHTGRAY);
+// 	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1 + 330); // tao khung to ben ngoai
+
+// 	setfillstyle(SOLID_FILL, LIGHTBLUE);// tao header
+// 	bar(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+// 	rectangle(TEXTSPOINTX1, TEXTLPOINTY1 - 30, TEXTLPOINTX3, TEXTLPOINTY1); 
+	
+// 	setbkcolor(LIGHTBLUE);
+// 	setcolor(WHITE);
+// 	outtextxy(TEXTSPOINTX1 + 3      												, TEXTLPOINTY1 - 22, "STT" );
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 												, TEXTLPOINTY1 - 22, "MSSV" );
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 22, "Ho lot");
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 22, "Ten");
+// 	outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 22, "Mon 1" );
+// 	outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 - 22, "Mon 2");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 - 22, "Mon 3");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 - 22, "Mon 4");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 22, "Mon 5");
+// 	outtextxy(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 22, "Mon 6");
+	
+
+// 	setbkcolor(WHITE);
+// 	setcolor(LIGHTGRAY);
+// 	line(TEXTSPOINTX1, TEXTLPOINTY1 - 30													, TEXTSPOINTX1														, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 40 												, TEXTLPOINTY1 + 330); 
+// 	line(TEXTSPOINTX1 + 40 + 120, TEXTLPOINTY1 - 30											, TEXTSPOINTX1 + 40 + 120											, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 + 330);
+	
+// 	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
+
+// 	setDefault(); 
+// }
+
+// // chuyen double sang string voi 2 chu so thap phan
+// std::string doubleToString(double value) {
+//     std::ostringstream stream;
+//     stream << std::fixed << std::setprecision(2) << value;
+//     return stream.str();
+// }
+
+// // kiem tra xenm sinh vien dang duyet co nam trong danh sach mon dang duyet khong
+// bool checkIdStudentForListRegister (ptrListRegister lr, string &idStudent){
+// 	for(ptrRegister current = lr->head; current != nullptr; current = current->next){
+// 		if(idStudent == current->data.idStudent){
+// 			return true;
+// 		}
+// 	}
+// 	return false;
+// }
+
+// // draw lai khung hien thi duoi tieu de bang danh sach diem tong ket
+// void drawNewListScoreByClass (){
+// 	setfillstyle(SOLID_FILL, WHITE);
+// 	bar(TEXTSPOINTX1, TEXTLPOINTY1, TEXTLPOINTX3, TEXTLPOINTY1 + 330); 
+
+// 	setcolor(LIGHTGRAY);
+// 	line(TEXTSPOINTX1, TEXTLPOINTY1 - 30													, TEXTSPOINTX1														, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 40 												, TEXTLPOINTY1 + 330); 
+// 	line(TEXTSPOINTX1 + 40 + 120, TEXTLPOINTY1 - 30											, TEXTSPOINTX1 + 40 + 120											, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 40 + 120 + 200										, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30								, TEXTSPOINTX1 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 + 330);
+	
+// 	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80							, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80						, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80					, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 + 330);
+// 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, TEXTLPOINTY1 + 330);
+	
+// 	//dong cuoi
+// 	line(TEXTSPOINTX1, TEXTLPOINTY1 + 330, TEXTSPOINTX1 + 980, TEXTLPOINTY1 + 330);
+
+// 	setDefault();
+// }
+
+// // tim kiem trong danh sach lop tin chi co ton tai sinh vien nào có điểm không
+// bool checkScoreStudentInClassSubject(ptrListRegister ptrlr){
+// 	for(ptrRegister i = ptrlr->head; i != nullptr; i = i->next){
+// 		if(i->data.scores != 11 || (i->data.scores >= 0 && i->data.scores <= 10)){
+// 			return true;
+// 		}
+// 	}
+// 	return false;
+// }
+
+
+// // print danh sach diem theo mon cua lop
+// void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idClass) {
+// 	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+
+//     bool checkDataInClass = false;
+// 	bool hasScore = false;
+//     int sttStudentForClass = 0;// so thu tu sinh vien tỏng lop tin chi
+//     int cot = 0;
+// 	int hang = 22;
+
+// 	for (ptrStudent curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
+//         if (idClass == curStu->value.idClass) {
+// 			sttStudentForClass++;
+// 			std::cout << "sinh vien " << setw(3) << sttStudentForClass << std::endl; 
+// 			for (int i = 0; i < lcfs.size; i++) {
+// 				if(!checkScoreStudentInClassSubject(lcfs.list[i]->lr)) // neu lop khong co sinh vien co diem thi bỏ qua
+// 					continue;
+// 				std::cout << " i = " << setw(10) << i << std::endl;
+// 				checkDataInClass = true;
+// 				delay(10);
+// 				if(sttStudentForClass % 15 - 1 == 0){
+// 					delay(200);
+// 					hang = 22;
+// 					drawNewListScoreByClass();
+// 				}
+// 				setcolor(GREEN);
+// 				setbkcolor(WHITE);
+// 				outtextxy(TEXTSPOINTX1 + 3      			, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)) );
+// 				outtextxy(TEXTSPOINTX1 + 3 + 40 			, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id) );
+// 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120		, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+// 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200	, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+// 				delay(10);
+// 				setcolor(WHITE);
+// 				setbkcolor(LIGHTBLUE);
+// 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));// mon 1 den het
+// 				ptrRegister curReg = lcfs.list[i]->lr->head; // Con trỏ tạm thời
+// 				while (curReg != nullptr) {
+// 					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+// 						delay(10);
+// 						setcolor(RED);
+// 						setbkcolor(WHITE);
+// 						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+// 						cot += D_COT_SCORE;
+// 						break; // thay roi thi thoat, tranh lap den cuoi
+// 					}
+// 					curReg = curReg->next; 
+// 				}
+// 				if (curReg == nullptr) {// sinh vien khong co diem
+// 					delay(10);
+// 					setcolor(BLACK);
+// 					setbkcolor(WHITE);
+// 					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+// 					cot += D_COT_SCORE;
+// 				}
+// 			}
+// 			hang += 21;
+// 			cot = 0;
+// 		}
+// 	}
+//     if (!checkDataInClass) {
+// 		setfillstyle(SOLID_FILL, WHITE);
+// 		bar(TEXTSPOINTX1 + 2 , TEXTLPOINTY1 , TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 330); // an bang du lieu truoc danh sach diem truoc do
+//         settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+//         setcolor(BLACK);
+//         setbkcolor(YELLOW);
+//         outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DIEM ... ");
+//     }
+// }
+
+
+// //Xu ly dieu khien bang diem tong ket (muc 4) phan 4
+// void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls,listClass &lc){
+// 	drawTableControlClassScores();// Bang dieu khien 
+	
+// 	int ascii, x, y, selected = 0, on = 0, cntline = 1, lineCurrent = 1;
+	
+// 	string idClass = emptyStr;
+// 	string nameClass = emptyStr;
+// 	char key;
+// 	int TSTC;
+// 	float gpa; 
+// 	int order=0; 
+	
+// 	drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
+
+// 	while(true){
+// 		if(kbhit()){
+// 			key = getch();
+// 			ascii = static_cast<int>(key);
+// 	        if (ascii == 0) { 
+// 	            key = getch();
+// 	            ascii = static_cast<int>(key);
+// 	            ascii += 255;
+// 	    	}
+// 		}
+// 		if(ascii == ESC) 
+// 			return;
+
+// 		if(ismouseclick(WM_LBUTTONDOWN)){
+// 			getmouseclick(WM_LBUTTONDOWN, x, y);
+// 			clearmouseclick(WM_LBUTTONDOWN);
+// 			if(clickInRange(x, y, TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40)){ // ten ma mon hoc
+// 				// highlightInputExamScoresV2(selected, BLUE);
+				
+// 				lineCurrent = 1; cntline = 1;
+// 				idClass=""; 
+				
+// 				createListIdSubjectV2(); // khung danh sach lop can lua chon
+// 				highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 				findListIdClass(lc,idClass,cntline,nameClass); // loc theo ten va in thong tin ra man hinh
+// 				while(true){
+// 					if(kbhit()){
+// 						key = getch();
+// 						ascii = static_cast<int>(key);
+// 				        if (ascii == 0) { 
+// 				            key = getch();
+// 				            ascii = static_cast<int>(key);
+// 				            ascii += 255;
+// 				    	}
+				    	
+// 				    	if(ascii == ET && idClass !=""){
+// 							if(idClass != ""){
+// 								setfillstyle(SOLID_FILL, WHITE);
+// 								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+// 								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+// 								nameClass = idClass; // du lieu duoc chon luu vao nameClass;
+								
+// 								outtextwithlineV3(0, idClass, BLACK);
+								
+// 								setcolor(LIGHTGRAY);
+// 								rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+								
+// 								setfillstyle(SOLID_FILL, WHITE);
+// 								bar(TABLE_CLASS_SX + 200 + 70, TABLE_CLASS_SY + 10 + 20, TABLE_CLASS_SX + 200 + 150, TABLE_CLASS_SY + 10 + 20 + 20);
+// 								setcolor(RED);
+// 								outtextxy(TABLE_CLASS_SX + 200 + 70, TABLE_CLASS_SY + 10 + 20, tochar(idClass));// cap nhat lop dang hien thi
+// 								drawTableDataClassScores();
+
+// 								printListScoreByClass(lcfs, ls, idClass);
+// 							}
+// 							else{
+// 								setfillstyle(SOLID_FILL, WHITE);
+// 								bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201); // xoa danh sach
+// 								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41); // xoa noi dung da nhap
+// 								nameClass = emptyStr;	
+// 							}
+							
+// 							nameClass = emptyStr;
+// 							lineCurrent = 1;
+// 							setcolor(LIGHTGRAY);
+// 							rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+// 							setDefault();
+// 							break;
+// 						}
+						
+						
+						
+// 						else if(ascii == UP && idClass != ""){
+// 							if(lineCurrent > 1){
+								
+// 								string prevClass = findPrevClassV2(lc,idClass);
+
+// 								std::cout << "id class line > 0: " << idClass << std::endl;
+
+// 								if(prevClass != ""){
+// 									highlightInputLineCurrent(lineCurrent, WHITE);
+// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
+									
+// 									idClass = prevClass;
+									
+// 									lineCurrent -= 1;
+// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 									setbkcolor(LIGHTGRAY);
+// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
+// 									// print danh sach
+// 								}
+// 							}
+// 							else if(lineCurrent == 1){
+// 								string prevClass = findPrevClassV2(lc,idClass);
+
+// 								std::cout << "id class line == 1: " << idClass << std::endl;
+
+// 								if(prevClass != ""){
+// 									idClass = prevClass;
+									
+// 									createListIdSubjectV2();
+// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 									setbkcolor(LIGHTGRAY);
+// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
+									
+// 									lineCurrent += 1;
+									
+// 									while(findNextClassV2(lc,prevClass) != "" && lineCurrent <= 8){
+// 										prevClass = findNextClassV2(lc, prevClass);
+// 										outtextwithlineV3(lineCurrent, prevClass, BLACK);
+// 										lineCurrent += 1;
+// 									}
+// 									lineCurrent = 1;
+// 								}
+// 							}
+// 						}
+						
+						
+						
+							
+// 						else if(ascii == DOWN && idClass != ""){
+// 							if(lineCurrent < 8 && lineCurrent != 0){
+// 								string nextClass = findNextClassV2(lc, idClass);
+
+// 								std::cout << "id class line < 8 and != 0: " << idClass << std::endl;
+
+// 								if(nextClass != ""){
+									
+// 									highlightInputLineCurrent(lineCurrent, WHITE);
+// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
+									
+// 									idClass = nextClass;
+// 									lineCurrent += 1;
+// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 									setbkcolor(LIGHTGRAY);
+// 									outtextwithlineV3(lineCurrent, idClass, BLACK);
+
+
+// 									//print danh sach
+// 								}
+// 							}
+// 							else if(lineCurrent == 8){
+// 								string nextClass = findNextClassV2(lc, idClass);// tim tk ke tiep 
+
+// 								std::cout << "id class line == 8: " << idClass << std::endl;
+
+// 								if(nextClass != ""){
+// 									idClass = nextClass;// hien tai = ke tiep 
+// 									createListIdSubjectV2();
+// 									highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 									setbkcolor(LIGHTGRAY);
+// 									outtextwithlineV3(lineCurrent,nextClass, BLACK); //hien ra ke tiep 
+// 									lineCurrent -= 1;
+									
+// 									while(findPrevClassV2(lc,nextClass) != "" && lineCurrent >= 1){
+// 										nextClass = findPrevClassV2(lc,nextClass);
+// 										outtextwithlineV3(lineCurrent, nextClass, BLACK);
+// 										lineCurrent -= 1;
+// 									}
+// 									lineCurrent = 8;
+// 								}
+// 							}
+// 						}
+// 						else if(ascii == ESC){
+// 							setfillstyle(SOLID_FILL, WHITE);
+// 							bar(TEXTSPOINTX1, TEXTLPOINTY1 - 39, TEXTLPOINTX1 - 49, TEXTLPOINTY1 + 201);
+// 							bar(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);					
+// 							setcolor(LIGHTGRAY);
+// 							rectangle(TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40);
+							
+// 							nameClass = emptyStr;//idClass="";
+// 							drawPrintRegisteredStudentListV5();
+// 							setDefault();
+// 							break;
+// 						}
+						
+// 						if(ascii == BP && (int)nameClass.size() > 0){
+// 							nameClass.pop_back();
+// 							setfillstyle(SOLID_FILL, WHITE);
+// 							bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41);
+// 							setcolor(BLACK);
+// 							outtextxy(TEXTSPOINTX1 + 5, TEXTSPOINTY1 - 30, tochar(nameClass));
+							
+// 							lineCurrent = 1; nameClass = ""; cntline = 1;
+// 							createListIdSubjectV2(); // tao khung chua danh sach
+// 							highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 							findListIdClass(lc,idClass,lineCurrent,nameClass);
+// 						}
+// 						else if(('a' <= ascii && ascii <= 'z') || ('A' <= ascii && ascii <= 'Z') || ('0' <= ascii && ascii <= '9')  || ascii == SPACE){
+// 							if((int)nameClass.size() < 9){
+// 								setfillstyle(SOLID_FILL, WHITE);
+// 								bar(TEXTSPOINTX1 + 1, TEXTSPOINTY1 - 39, TEXTLPOINTX1 - 51, TEXTLPOINTY1 - 41);
+// 								formatKey(key);
+// 								nameClass += key;
+// 								setcolor(BLACK);
+// 								outtextxy(TEXTSPOINTX1 + 5, TEXTSPOINTY1 - 30, tochar(nameClass));
+// 							}
+							
+// 							lineCurrent = 1; idClass = "", cntline = 1;
+// 							createListIdSubjectV2(); // tao khung chua danh sach
+// 							highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
+// 							findListIdClass(lc,idClass,lineCurrent,nameClass);
+// 						}
+
+						
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
 //==============================================================================================
 //PHAN 4 MUC 4 IN DIEM TONG KET
 
@@ -2176,7 +2691,7 @@ void drawTableDataClassScoresEmpty(){
 	// setbkcolor(WHITE);
 	// setcolor(BLACK);
 	// outtextxy(TEXTSPOINTX1 + 3      												, TEXTLPOINTY1 - 21 + 22, "001" );
-	// outtextxy(TEXTSPOINTX1 + 3 + 40 												, TEXTLPOINTY1 - 21 + 22, "N22DCCN193");
+	// outtextxy(TEXTSPOINTX1 + 3 + 40 												, TEXTLPOINTY1 - 21 + 22, "220123193");
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120											, TEXTLPOINTY1 - 21 + 22, "NGUYEN THI TU");
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200										, TEXTLPOINTY1 - 21 + 22, "QUYNH");
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80								, TEXTLPOINTY1 - 21 + 22, "BAS1122");
@@ -2186,8 +2701,6 @@ void drawTableDataClassScoresEmpty(){
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80			, TEXTLPOINTY1 - 21 + 22, "BAS1122");
 	// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80		, TEXTLPOINTY1 - 21 + 22, "BAS1122");
 
-
-	
 	setDefault(); 
 }
 
@@ -2289,102 +2802,313 @@ bool checkScoreStudentInClassSubject(ptrListRegister ptrlr){
 	return false;
 }
 
-
-// print danh sach diem theo mon cua lop
-void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idClass) {
-	settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
-
-    bool checkDataInClass = false;
-	bool hasScore = false;
-    int sttStudentForClass = 0;// so thu tu sinh vien tỏng lop tin chi
-    int cot = 0;
-	int hang = 22;
-
-	for (ptrStudent curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
-        if (idClass == curStu->value.idClass) {
-			sttStudentForClass++;
-			std::cout << "sinh vien " << setw(3) << sttStudentForClass << std::endl; 
-			for (int i = 0; i < lcfs.size; i++) {
-				// if(lcfs.list[i]->lr->head->data.unSub || lcfs.list[i]->lr->head->data.scores > 10 || lcfs.list[i]->lr->head->data.scores < 0) // chỉ can in ra danh sach mon da co diem
-				if(!checkScoreStudentInClassSubject(lcfs.list[i]->lr)) // neu lop khong co sinh vien co diem thi bỏ qua
-					continue;
-
-				std::cout << " i = " << setw(10) << i << std::endl;
-				checkDataInClass = true;
-				delay(100);
-
-				if(sttStudentForClass % 15 - 1 == 0){
-					delay(200);
-					hang = 22;
-					drawNewListScoreByClass();
-				}
-
-				setcolor(GREEN);
-				setbkcolor(WHITE);
-				outtextxy(TEXTSPOINTX1 + 3      			, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)) );
-				outtextxy(TEXTSPOINTX1 + 3 + 40 			, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id) );
-				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120		, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
-				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200	, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
-
-				// In ra header mon hoc da co diem
-				delay(100);
-				setcolor(WHITE);
-				setbkcolor(LIGHTBLUE);
-				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));// mon 1 den het
-
-				ptrRegister curReg = lcfs.list[i]->lr->head; // Con trỏ tạm thời
-				while (curReg != nullptr) {
-					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
-						delay(100);
-						
-						setcolor(RED);
-						// setbkcolor(WHITE);
-						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
-						
-						cot += D_COT_SCORE;
-						break; // thay roi thi thoat, tranh lap den cuoi
-					}
-					curReg = curReg->next; 
-				}
-				if (curReg == nullptr) {// sinh vien khong co diem
-					delay(100);
-
-					setcolor(BLACK);
-					// setbkcolor(WHITE);
-					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
-					cot += D_COT_SCORE;
-				}
-			}
-			hang += 21;
-			cot = 0;
-		}
-	}
-		
-
-    if (!checkDataInClass) {
-		setfillstyle(SOLID_FILL, WHITE);
-		bar(TEXTSPOINTX1 + 2 , TEXTLPOINTY1 , TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 330); // an bang du lieu truoc danh sach diem truoc do
-
-        settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
-        setcolor(BLACK);
-        setbkcolor(YELLOW);
-        outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DIEM ... ");
-    }
-
-	int x, y;
-	// while (true){
-	// 	if(ismouseclick(WM_LBUTTONDOWN)){
-	// 		getmouseclick(WM_LBUTTONDOWN, x, y);
-	// 		clearmouseclick(WM_LBUTTONDOWN);
-
-
-	// 	}
-	// 	/* code */
-	// 	// if()
-	// }
+// 
+void drawScrollBarScore(){
+	int x1 = 1300, y1 = 130;
+	int x2 = 1304, y2 = 126;
+	int x3 = 1308, y3 = 130;
 	
+	line(x1, y1, x2, y2);
+	line(x2, y2, x3, y3);
+	line(x3, y3, x1, y1);
+	int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	
+	fillpoly(4, points1);
+
+	int u1 = 1300, v1 = 560;
+	int u2 = 1304, v2 = 556;
+	int u3 = 1308, v3 = 560;
+	line(u1, y1, u2, v2);
+	line(u2, y2, u3, v3);
+	line(u3, y3, u1, v1);
+	int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	fillpoly(4, points2);
+
+	//ve thanh sang theo du lieu
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(1300, 126, 1308, 560);
+
+	setDefault();
 }
 
+// danh sach luu thong tin hien thi
+struct nameScore {
+    int sizeListName;
+    int sizeListSubject;
+    string idStudent;
+    string firstNameStudent;
+    string lastNameStudent;
+    string *listScore; // Thay vì sử dụng mảng tĩnh, sử dụng con trỏ để cấp phát động
+    nameScore() {
+        sizeListName = 0;
+        sizeListSubject = 0;
+        idStudent = "";
+        firstNameStudent = "";
+        lastNameStudent = "";
+        listScore = nullptr; // Khởi tạo con trỏ trỏ đến null trước khi cấp phát bộ nhớ động
+    }
+    // Destructor để giải phóng bộ nhớ động
+    ~nameScore() {
+        delete[] listScore;
+    }
+    // Hàm để cấp phát bộ nhớ động cho listScore với kích thước sizeListSubject
+    void allocateListScore() {
+        listScore = new string[sizeListSubject];
+    }
+};
+
+
+void displayListScoreByClass(nameScore ns[]){
+
+}
+
+// Hàm tìm nút trước một nút cho trước
+ptrStudent findPrevious(ptrStudent head, ptrStudent nodeStudent) {
+    ptrStudent temp = head;
+    while (temp != nullptr && temp->next != nodeStudent) {
+        temp = temp->next;
+    }
+    return temp;
+}
+
+
+void printTableEmpty(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TEXTSPOINTX1 + 1, TEXTLPOINTY1 + 1, TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 335); // xoa ta ca thong tin truoc do
+
+	setcolor(LIGHTGRAY);// NGAN CACH TIEU DE
+	line(TEXTSPOINTX1 + 40, TEXTLPOINTY1 - 30																		, TEXTSPOINTX1 + 40																			, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120, TEXTLPOINTY1 - 30																	, TEXTSPOINTX1 + 40 + 120																	, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30															, TEXTSPOINTX1 + 40 + 120 + 200																, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30														, TEXTSPOINTX1 + 40 + 120 + 200 + 80														, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80												, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80										, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80								, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80					, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80			, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, 335 + TEXTLPOINTY1 );
+	
+	line(TEXTSPOINTX1, TEXTLPOINTY1 + 335, TEXTSPOINTX1 + 960, TEXTLPOINTY1 + 335);
+	setDefault();
+}
+
+
+void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idClass) {
+    settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+
+    bool checkDataInClass = false;
+    int sttStudentForClass = 0;
+    int currentPage = 0; 
+    const int PAGE_SIZE = 15; 
+	int PAGE = 0;
+	int tmpSTT = 0;
+
+	int cot = 0;
+	int hang = 22;
+	char key;
+	char ascii;
+
+	bool isListEnding = false;
+	int sizeClass = 0;
+
+	bool isDataReal = false;
+	int count = 0;
+
+	ptrStudent curStu;
+	for (curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
+		if (idClass == curStu->value.idClass) {
+			sttStudentForClass++;
+			if(sttStudentForClass > 15)
+				break;
+
+			setcolor(GREEN);
+			setbkcolor(WHITE);
+			outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
+			outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+			outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+			outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+			sizeClass++;
+			int cot = 0;
+			for (int i = 0; i < lcfs.size; i++) {
+				if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+					continue; 
+				setbkcolor(LIGHTBLUE);
+				setcolor(WHITE);
+				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+				ptrRegister curReg = lcfs.list[i]->lr->head;// T�m di?m c?a sinh vi�n trong m�n h?c hi?n t?i
+				while (curReg != nullptr) {
+					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+						setcolor(RED);
+						setbkcolor(WHITE);
+						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+						break;	
+					}
+					curReg = curReg->next;
+				}
+				if (curReg == nullptr){
+					setcolor(BLACK);
+					setbkcolor(WHITE);
+					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+				}
+				cot += D_COT_SCORE; // Di chuy?n d?n c?t ti?p theo
+			}
+			hang += 22; // Di chuy?n d?n h�ng ti?p theo
+			checkDataInClass = true; // ��nh d?u c� d? li?u trong l?p
+		}
+	}
+	if (!checkDataInClass){
+		setfillstyle(SOLID_FILL, WHITE);
+		bar(TEXTSPOINTX1 + 2, TEXTLPOINTY1, TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 330);
+		settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
+		setcolor(BLACK);
+		setbkcolor(YELLOW);
+		outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DIEM ...");
+	}
+	
+	if(sttStudentForClass > 15){
+		std::cout << "stt up down: " << sttStudentForClass << std::endl;
+		do {
+			key = getch();	
+			if (kbhit()) {
+				ascii = static_cast<int>(key);
+				if (ascii == 0) {
+					key = getch();
+					ascii = static_cast<int>(key);
+					ascii += 255;
+				}
+			}
+			switch ((int)key){
+				case 80:
+					currentPage++;
+					cout << "currentPage --- DOWN : " << currentPage << endl;
+
+					isDataReal = false;
+					std::cout << "DOWN........." << std::endl;
+					printTableEmpty();		
+					hang = 22;
+					tmpSTT = 1;
+					for(; curStu != nullptr; curStu = curStu->next) {
+						if (idClass == curStu->value.idClass) {
+							std::cout << "stt: " << sttStudentForClass << "\n";
+							if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
+								break;
+							}
+							tmpSTT++;
+							setcolor(GREEN);
+							setbkcolor(WHITE);
+							outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
+							outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+							int cot = 0;
+							for (int i = 0; i < lcfs.size; i++){
+								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+									continue; 
+								setbkcolor(LIGHTBLUE);
+								setcolor(WHITE);
+								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+								ptrRegister curReg = lcfs.list[i]->lr->head;
+								while (curReg != nullptr){
+									if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+										setcolor(RED);
+										setbkcolor(WHITE);
+										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+										break;	
+									}
+									curReg = curReg->next;
+								}
+								if (curReg == nullptr){
+									setcolor(BLACK);
+									setbkcolor(WHITE);
+									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+								}
+								cot += D_COT_SCORE; 
+							}
+							hang += 22; 
+							checkDataInClass = true; // danh dau co data trong lop tin chi
+							sttStudentForClass++;
+						}
+					}
+				break;
+				case 72:
+					isDataReal = false;
+					currentPage--;
+					cout << "currentPage --- UP : " << currentPage << endl;
+
+					std::cout << "UP ... \n";
+					if(sttStudentForClass <= 16)
+						break;
+					cout << "sttStuforClass = " << sttStudentForClass << endl;
+					if((sttStudentForClass-1)%15 == 0)
+						sttStudentForClass -= 30;
+					else{
+						while((sttStudentForClass - 1)%15){
+							sttStudentForClass++;
+						}
+						sttStudentForClass -= 30;
+					}
+					printTableEmpty();	
+					hang = 22;
+					tmpSTT = 1;
+					cout << 1 << endl;
+					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
+						if (idClass == curStu->value.idClass){
+							std::cout << "stt: " << sttStudentForClass << "\n";
+							if(tmpSTT < sttStudentForClass && isDataReal == false && sttStudentForClass != 1){
+								cout << "tmpSTT continue : " << tmpSTT << endl;
+								tmpSTT++;
+								continue;
+							}
+							isDataReal = true;
+							if(count++ == 15){
+								count = 0;
+								break;
+							}
+							setcolor(BLUE);
+							setbkcolor(WHITE);
+							outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
+							outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+							int cot = 0;
+							for (int i = 0; i < lcfs.size; i++){
+								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+									continue; 
+								setbkcolor(LIGHTBLUE);
+								setcolor(WHITE);
+								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+								ptrRegister curReg = lcfs.list[i]->lr->head;
+								while (curReg != nullptr){
+									if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+										setcolor(BLUE);
+										setbkcolor(WHITE);
+										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+										break;	
+									}
+									curReg = curReg->next;
+								}
+								if (curReg == nullptr){
+									setcolor(BLACK);
+									setbkcolor(WHITE);
+									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+								}
+								cot += D_COT_SCORE; 
+							}
+							hang += 22; 
+							checkDataInClass = true; 
+							sttStudentForClass++;
+						}
+					}
+				break;
+
+				case ESC:
+					return;
+			}
+		} while (true);
+	}
+}
 
 //Xu ly dieu khien bang diem tong ket (muc 4) phan 4
 void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, listStudent &ls,listClass &lc){
@@ -2395,9 +3119,9 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 	string idClass = emptyStr;
 	string nameClass = emptyStr;
 	char key;
-	int TSTC;
-	float gpa; 
-	int order=0; 
+	// int TSTC;
+	// float gpa; 
+	// int order=0; 
 	
 	drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
 
@@ -2410,10 +3134,29 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 	            ascii = static_cast<int>(key);
 	            ascii += 255;
 	    	}
-		}
-		if(ascii == ESC) 
-			return;
 
+			if(ascii == ESC) 
+				return;
+
+			// switch(ascii){
+			// 	case DOWN:
+	    	// 		if(currentClass + 15 < keepMain.size){
+	    	// 			currentClass += 15;
+	    	// 			drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
+	    	// 			displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
+			// 		}
+			// 		break;
+			// 	case UP:// sai cai in so thu tu
+			// 		if(currentClass - 15 >= 0 && currentClass < keepMain.size){
+	    	// 			currentClass -= 15;
+	    	// 			if(order % 15 == 0) order -= 21;
+	    	// 			else order = order - (order % 15) - 15;
+	    	// 			drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
+	    	// 			displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
+			// 		}
+			// 		break;
+			// }
+		}
 		if(ismouseclick(WM_LBUTTONDOWN)){
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
@@ -2601,8 +3344,6 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 							highlightInputLineCurrent(lineCurrent, LIGHTGRAY);
 							findListIdClass(lc,idClass,lineCurrent,nameClass);
 						}
-
-						
 					}
 				}
 			}
