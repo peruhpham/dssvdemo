@@ -1,36 +1,38 @@
-BAS1122#Tu tuong Ho Chi Minh#2#0	
-BSA1221#Phap luat dai cuong#2#0	
-ELE1319#Ly thuyet thong tin#3#1		
-INT1314#Kien truc may tinh#3#1
-INT1359#Toan roi rac 2#3#0
-INT1306#Cau truc DL va GT#3#2
-SKD1102#Ky nang lam viec nhom#1#1
-BAS1159#Tieng anh (C3)#4#0
-BAS1204#Giai tich 2#3#0
-BAS1224#Vat li 1 va thi nghiem#4#1
-ELE1433#Ky thuat so#3#1
-INT1358#Toan roi rac 1#3#0
-SKD1101#Ky nang thuyet trinh#1#0
+AAA1121#Them moi#1#1
+ABA1212#Mon thu 2#1#1
+BAS1122#Tu tuong Ho Chi Minh#2#0
+BAS1152#Chu nghia xa hoi khoa hoc#2#0
 BAS1153#Lich su DCS Viet Nam#2#0
-INT1313#Co so du lieu#3#0
-INT1316#Lap trinh python#3#1
-INT1332#Lap trinh huong doi tuong#3#2
+BAS1158#Tieng Anh (Course 2)#4#0
+BAS1159#Tieng anh (C3)#4#0
 BAS1201#Dai so tuyen tinh#3#0
 BAS1203#Giai tich 1#3#0
-INT1154#Tin hoc co so 1#2#1
+BAS1204#Giai tich 2#3#0
+BAS1224#Vat li 1 va thi nghiem#4#1
 BAS1226#Xac suat thong ke#2#0
-INT1155#Tin hoc co so 2#2#1
-BAS1152#Chu nghia xa hoi khoa hoc#2#0
-BAS1158#Tieng Anh (Course 2)#4#0
 BAS1227#Vat ly 3 va thi nghiem#4#1
+BSA1221#Phap luat dai cuong#2#0
+ELE1319#Ly thuyet thong tin#3#1
 ELE1330#Xu ly tin hieu so#2#0
-INT1339#Ngon ngu lap trinh C++#3#2
-INT1319#He dieu hanh#3#1
-INT1336#Mang may tinh#3#1
+ELE1433#Ky thuat so#3#1
+INT1154#Tin hoc co so 1#2#1
+INT1155#Tin hoc co so 2#2#1
 INT1303#An toan va bao mat httt#3#0
+INT1306#Cau truc DL va GT#3#2
+INT1313#Co so du lieu#3#0
+INT1314#Kien truc may tinh#3#1
+INT1316#Lap trinh python#3#1
 INT1317#Thuc tap co so#3#0
+INT1319#He dieu hanh#3#1
+INT1332#Lap trinh huong doi tuong#3#2
+INT1336#Mang may tinh#3#1
+INT1339#Ngon ngu lap trinh C++#3#2
 INT1340#Nhap mon cong nghe phan mem#3#3
 INT1341#Nhap mon tri tue nhan tao#3#2
+INT1358#Toan roi rac 1#3#0
+INT1359#Toan roi rac 2#3#0
 INT1414#Co so du lieu phan tan#3#1
 INT1434#Lap trinh web#3#1
-SKD1103#Ky nang tao lap van ban#1#0			
+SKD1101#Ky nang thuyet trinh#1#0
+SKD1102#Ky nang lam viec nhom#1#1
+SKD1103#Ky nang tao lap van ban#1#0

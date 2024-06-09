@@ -91,7 +91,9 @@ int main(){
 			case ESC:  
 				if(!createNotice("Ban chac chan muon thoat!", "")){
 					closegraph();
-					return 0;  
+					saveDataSubject(lsj);
+					std::cout << "Complete save data subject." << std::endl;
+					return 0; 	 
 				}
 				createMenu(selected);
 				break;
