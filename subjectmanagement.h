@@ -1072,6 +1072,7 @@ int controlAddDeleteSubject(listClassForSubject &lcfs, listSubject &lsb, subject
 	bar(TABLE_LX - 18, TABLE_SY + 60, TABLE_LX - 2, TABLE_LY - 16);
 	setfillstyle ( SOLID_FILL, LIGHTBLUE);
 	bar(TABLE_LX - 16, TABLE_SY + 60, TABLE_LX - 6, TABLE_SY + 120);
+	
 	char key;
 	int ascii;
 	int x, y;
