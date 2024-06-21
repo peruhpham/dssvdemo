@@ -924,7 +924,11 @@ int checkNumberTC(listSubject &lsj, string idSubject){
 
 
 //-------------------------------------
-// ghi lai File list class for subject  
+/*
+	- Ghi file class
+	- Ghi file diem
+	-  Ghi lai File list class for subject  
+*/ 
 void recordFileClass(listClassForSubject lcfs){
 	ofstream outPut;
 	outPut.open("data\\classforsubjectlist.txt",ios::out);
