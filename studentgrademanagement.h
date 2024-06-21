@@ -3079,7 +3079,6 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					tmpSTT = 1;
 					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
 						if (idClass == curStu->value.idClass){
-							// std::cout << "stt: " << sttStudentForClass << "\n";
 							if(tmpSTT < sttStudentForClass && isDataReal == false && sttStudentForClass != 1){
 								cout << "tmpSTT continue : " << tmpSTT << endl;
 								tmpSTT++;
@@ -3209,9 +3208,6 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 	string idClass = emptyStr;
 	string nameClass = emptyStr;
 	char key;
-	// int TSTC;
-	// float gpa; 
-	// int order=0; 
 	
 	drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
 
@@ -3227,31 +3223,11 @@ void displayClassCumulativeScores(listClassForSubject &lcfs, listSubject &lsj, l
 
 			if(ascii == ESC) 
 				return;
-
-			// switch(ascii){
-			// 	case DOWN:
-	    	// 		if(currentClass + 15 < keepMain.size){
-	    	// 			currentClass += 15;
-	    	// 			drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
-	    	// 			displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
-			// 		}
-			// 		break;
-			// 	case UP:// sai cai in so thu tu
-			// 		if(currentClass - 15 >= 0 && currentClass < keepMain.size){
-	    	// 			currentClass -= 15;
-	    	// 			if(order % 15 == 0) order -= 21;
-	    	// 			else order = order - (order % 15) - 15;
-	    	// 			drawTableDataClassScoresEmpty();// bang chua danh sach diem sinh vien
-	    	// 			displayStudentHaveScore(ls,keepMain,currentClass,order,listSTC,listCPA);
-			// 		}
-			// 		break;
-			// }
 		}
 		if(ismouseclick(WM_LBUTTONDOWN)){
 			getmouseclick(WM_LBUTTONDOWN, x, y);
 			clearmouseclick(WM_LBUTTONDOWN);
 			if(clickInRange(x, y, TEXTSPOINTX1, TEXTSPOINTY1 - 40, TEXTLPOINTX1 - 50, TEXTLPOINTY1 - 40)){ // ten ma mon hoc
-				// highlightInputExamScoresV2(selected, BLUE);
 				
 				lineCurrent = 1; cntline = 1;
 				idClass=""; 
