@@ -2803,68 +2803,72 @@ bool checkScoreStudentInClassSubject(ptrListRegister ptrlr){
 }
 
 // Thanh cuon chi muc cho du lieu.
-void drawScrollBarScore(){
-	int x1 = 1300, y1 = 130;
-	int x2 = 1304, y2 = 126;
-	int x3 = 1308, y3 = 130;
+void drawScrollBarScore(int &currnetPage, int sumPage){
+	// setcolor(RED);
+	// int x1 = 1300 + 12, y1 = 130 + 50;
+	// int x2 = 1304 + 12, y2 = 126 + 50;
+	// int x3 = 1308 + 12, y3 = 130 + 50;
 	
-	line(x1, y1, x2, y2);
-	line(x2, y2, x3, y3);
-	line(x3, y3, x1, y1);
-	int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
-	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	
-	fillpoly(4, points1);
+	// line(x1, y1, x2, y2);
+	// line(x2, y2, x3, y3);
+	// line(x3, y3, x1, y1);
+	// int points1[] = {x1, y1, x2, y2, x3, y3, x1, y1};
+	// setfillstyle(SOLID_FILL, LIGHTBLUE);
+	// fillpoly(4, points1);
 
-	int u1 = 1300, v1 = 560;
-	int u2 = 1304, v2 = 556;
-	int u3 = 1308, v3 = 560;
-	line(u1, y1, u2, v2);
-	line(u2, y2, u3, v3);
-	line(u3, y3, u1, v1);
-	int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
-	setfillstyle(SOLID_FILL, LIGHTBLUE);
-	fillpoly(4, points2);
+	// int u1 = 1300 + 12, v1 = 560;
+	// int u2 = 1304 + 12, v2 = 556;
+	// int u3 = 1308 + 12, v3 = 560;
+	// line(u1, y1, u2, v2);
+	// line(u2, y2, u3, v3);
+	// line(u3, y3, u1, v1);
+	// int points2[] = {u1, v1, u2, v2, u3, v3, u1, v1};
+	// setfillstyle(SOLID_FILL, LIGHTBLUE);
+	// fillpoly(4, points2);
 
-	//ve thanh sang theo du lieu
 	setfillstyle(SOLID_FILL, WHITE);
-	bar(1300, 126, 1308, 560);
+	bar(1310, 250, 1318, 560);
+
+	setfillstyle(SOLID_FILL, LIGHTGREEN);
+	if(currnetPage == 0)
+		bar(1311, 230, 1319, 230 + 80);
+	else if(currnetPage == sumPage - 1)
+		bar(1311, 500, 1319, 500 + 80);
+	else
+		bar(1311, 300, 1319, 300 + 80);
 
 	setDefault();
 }
 
-// danh sach luu thong tin hien thi
-struct nameScore {
-    int sizeListName;
-    int sizeListSubject;
-    string idStudent;
-    string firstNameStudent;
-    string lastNameStudent;
-    string *listScore; // Thay vì sử dụng mảng tĩnh, sử dụng con trỏ để cấp phát động
-    nameScore() {
-        sizeListName = 0;
-        sizeListSubject = 0;
-        idStudent = "";
-        firstNameStudent = "";
-        lastNameStudent = "";
-        listScore = nullptr; // Khởi tạo con trỏ trỏ đến null trước khi cấp phát bộ nhớ động
-    }
-    // Destructor để giải phóng bộ nhớ động
-    ~nameScore() {
-        delete[] listScore;
-    }
-    // Hàm để cấp phát bộ nhớ động cho listScore với kích thước sizeListSubject
-    void allocateListScore() {
-        listScore = new string[sizeListSubject];
-    }
-};
+// // danh sach luu thong tin hien thi
+// struct nameScore {
+//     int sizeListName;
+//     int sizeListSubject;
+//     string idStudent;
+//     string firstNameStudent;
+//     string lastNameStudent;
+//     string *listScore; // Thay vì sử dụng mảng tĩnh, sử dụng con trỏ để cấp phát động
+//     nameScore() {
+//         sizeListName = 0;
+//         sizeListSubject = 0;
+//         idStudent = "";
+//         firstNameStudent = "";
+//         lastNameStudent = "";
+//         listScore = nullptr; // Khởi tạo con trỏ trỏ đến null trước khi cấp phát bộ nhớ động
+//     }
+//     // Destructor để giải phóng bộ nhớ động
+//     ~nameScore() {
+//         delete[] listScore;
+//     }
+//     // Hàm để cấp phát bộ nhớ động cho listScore với kích thước sizeListSubject
+//     void allocateListScore() {
+//         listScore = new string[sizeListSubject];
+//     }
+// };
+// void displayListScoreByClass(nameScore ns[]){
+// }
 
-
-void displayListScoreByClass(nameScore ns[]){
-
-}
-
-// Hàm tìm nút trước một nút cho trước
+//Tim node truoc mot node cho truoc
 ptrStudent findPrevious(ptrStudent head, ptrStudent nodeStudent) {
     ptrStudent temp = head;
     while (temp != nullptr && temp->next != nodeStudent) {
@@ -2872,7 +2876,6 @@ ptrStudent findPrevious(ptrStudent head, ptrStudent nodeStudent) {
     }
     return temp;
 }
-
 
 void printTableEmpty(){
 	setfillstyle(SOLID_FILL, WHITE);
@@ -2894,7 +2897,6 @@ void printTableEmpty(){
 	setDefault();
 }
 
-
 void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idClass) {
     settextstyle(COMPLEX_FONT, HORIZ_DIR, 1);
 
@@ -2910,11 +2912,13 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 	char key;
 	char ascii;
 
-	bool isListEnding = false;
 	int sizeClass = 0;
 
 	bool isDataReal = false;
 	int count = 0;
+
+	int currentPageRow = 0;
+	int countSubject = 0;
 
 	ptrStudent curStu;
 	for (curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
@@ -2922,6 +2926,8 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 			sttStudentForClass++;
 			if(sttStudentForClass > 15)
 				break;
+
+			drawScrollBarScore(currentPage, 4);
 
 			setcolor(GREEN);
 			setbkcolor(WHITE);
@@ -2934,9 +2940,17 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 			for (int i = 0; i < lcfs.size; i++) {
 				if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
 					continue; 
+
+				// if(countSubject > 6){
+				// 	break;
+				// }
+					std::cout << "CountSubject : " << countSubject << std::endl;
+
 				setbkcolor(LIGHTBLUE);
 				setcolor(WHITE);
 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+				countSubject++;
+
 				ptrRegister curReg = lcfs.list[i]->lr->head;// T�m di?m c?a sinh vi�n trong m�n h?c hi?n t?i
 				while (curReg != nullptr) {
 					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
@@ -2971,21 +2985,24 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 		std::cout << "stt up down: " << sttStudentForClass << std::endl;
 		do {
 			key = getch();	
-			if (kbhit()) {
-				ascii = static_cast<int>(key);
-				if (ascii == 0) {
-					key = getch();
-					ascii = static_cast<int>(key);
-					ascii += 255;
-				}
-			}
+			// if (kbhit()) {
+			// 	ascii = static_cast<int>(key);
+			// 	if (ascii == 0) {
+			// 		key = getch();
+			// 		ascii = static_cast<int>(key);
+			// 		ascii += 255;
+			// 	}
+			// }
 			switch ((int)key){
 				case 80:
 					currentPage++;
+					// if(currentPage == sumPage)
+					// 	currentPage--;
 					cout << "currentPage --- DOWN : " << currentPage << endl;
+					// drawScrollBarScore(currentPage, 4);
 
-					std::cout << "tmpSTT" << tmpSTT << std::endl;
-					if((tmpSTT-1)%PAGE_SIZE != 0 && tmpSTT != 1)
+					std::cout << "tmpSTT : " << tmpSTT << std::endl;
+					if((tmpSTT-1)%PAGE_SIZE != 0 && tmpSTT != 1 && tmpSTT != 0)
 						break;
 
 					isDataReal = false;
@@ -2995,11 +3012,84 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					tmpSTT = 1;
 					for(; curStu != nullptr; curStu = curStu->next) {
 						if (idClass == curStu->value.idClass){
-							std::cout << "stt: " << sttStudentForClass << "\n";
+							// std::cout << "stt: " << sttStudentForClass << "\n";
 							if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
 								break;
 							}
 							tmpSTT++;
+							setcolor(GREEN);
+							setbkcolor(WHITE);
+							outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
+							outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+							int cot = 0;
+							for (int i = 0; i < lcfs.size; i++){
+								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+									continue; 
+								setbkcolor(LIGHTBLUE);
+								setcolor(WHITE);
+								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+								
+								ptrRegister curReg = lcfs.list[i]->lr->head;
+								while (curReg != nullptr){
+									if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+										setcolor(RED);
+										setbkcolor(WHITE);
+										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+										break;	
+									}
+									curReg = curReg->next;
+								}
+								if (curReg == nullptr){
+									setcolor(BLACK);
+									setbkcolor(WHITE);
+									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+								}
+								cot += D_COT_SCORE; 
+							}
+							hang += 22; 
+							checkDataInClass = true; // danh dau co data trong lop tin chi
+							sttStudentForClass++;
+						}
+					}
+				break;
+				case 72:
+					currentPage--;
+					if(currentPage < 0)
+						currentPage = 0;
+					isDataReal = false;
+					cout << "currentPage --- UP : " << currentPage << endl;
+					drawScrollBarScore(currentPage, 4);
+
+					std::cout << "UP ... \n";
+					if(sttStudentForClass <= 16)
+						break;
+					cout << "sttStuforClass = " << sttStudentForClass << endl;
+					if((sttStudentForClass-1)%15 == 0)
+						sttStudentForClass -= 30;
+					else{
+						while((sttStudentForClass - 1)%15){
+							sttStudentForClass++;
+						}
+						sttStudentForClass -= 30;
+					}
+					printTableEmpty();	
+					hang = 22;
+					tmpSTT = 1;
+					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
+						if (idClass == curStu->value.idClass){
+							// std::cout << "stt: " << sttStudentForClass << "\n";
+							if(tmpSTT < sttStudentForClass && isDataReal == false && sttStudentForClass != 1){
+								cout << "tmpSTT continue : " << tmpSTT << endl;
+								tmpSTT++;
+								continue;
+							}
+							isDataReal = true;
+							if(count++ == 15){
+								count = 0;
+								break;
+							}
 							setcolor(GREEN);
 							setbkcolor(WHITE);
 							outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
@@ -3031,81 +3121,77 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 								cot += D_COT_SCORE; 
 							}
 							hang += 22; 
-							checkDataInClass = true; // danh dau co data trong lop tin chi
-							sttStudentForClass++;
-						}
-					}
-				break;
-				case 72:
-					isDataReal = false;
-					if(currentPage >= 0)
-						currentPage--;
-					cout << "currentPage --- UP : " << currentPage << endl;
-
-					std::cout << "UP ... \n";
-					if(sttStudentForClass <= 16)
-						break;
-					cout << "sttStuforClass = " << sttStudentForClass << endl;
-					if((sttStudentForClass-1)%15 == 0)
-						sttStudentForClass -= 30;
-					else{
-						while((sttStudentForClass - 1)%15){
-							sttStudentForClass++;
-						}
-						sttStudentForClass -= 30;
-					}
-					printTableEmpty();	
-					hang = 22;
-					tmpSTT = 1;
-					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
-						if (idClass == curStu->value.idClass){
-							std::cout << "stt: " << sttStudentForClass << "\n";
-							if(tmpSTT < sttStudentForClass && isDataReal == false && sttStudentForClass != 1){
-								cout << "tmpSTT continue : " << tmpSTT << endl;
-								tmpSTT++;
-								continue;
-							}
-							isDataReal = true;
-							if(count++ == 15){
-								count = 0;
-								break;
-							}
-							setcolor(BLUE);
-							setbkcolor(WHITE);
-							outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
-							outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
-							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
-							outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
-							int cot = 0;
-							for (int i = 0; i < lcfs.size; i++){
-								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
-									continue; 
-								setbkcolor(LIGHTBLUE);
-								setcolor(WHITE);
-								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
-								ptrRegister curReg = lcfs.list[i]->lr->head;
-								while (curReg != nullptr){
-									if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
-										setcolor(BLUE);
-										setbkcolor(WHITE);
-										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
-										break;	
-									}
-									curReg = curReg->next;
-								}
-								if (curReg == nullptr){
-									setcolor(BLACK);
-									setbkcolor(WHITE);
-									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
-								}
-								cot += D_COT_SCORE; 
-							}
-							hang += 22; 
 							checkDataInClass = true; 
 							sttStudentForClass++;
 						}
 					}
 				break;
+
+				// case LEFT - 255:
+				// 	std::cout << "LEFT of data...........\n";
+				// break;
+				
+				// case RIGHT - 255:
+				// 	if(countSubject <= 6)
+				// 		break;
+
+				// 	countSubject = 0;
+
+				// 	sttStudentForClass -= 15;
+				// 	std::cout << "Right of data...........\n";
+				// 	printTableEmpty();		
+				// 	hang = 22;
+				// 	tmpSTT = 1;
+				// 	for(; curStu != nullptr; curStu = curStu->next) {
+				// 		if (idClass == curStu->value.idClass){
+				// 			// std::cout << "stt: " << sttStudentForClass << "\n";
+				// 			if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
+				// 				break;
+				// 			}
+				// 			tmpSTT++;
+				// 			// setcolor(GREEN);
+				// 			// setbkcolor(WHITE);
+				// 			// outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
+				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
+				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
+				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
+				// 			int cot = 0;
+				// 			for (int i = 0; i < lcfs.size; i++){
+				// 				if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+				// 					continue; 
+
+				// 				if(countSubject > 6)
+				// 					break;
+
+				// 				setbkcolor(LIGHTBLUE);
+				// 				setcolor(WHITE);
+				// 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+								
+				// 				countSubject++;
+
+				// 				ptrRegister curReg = lcfs.list[i]->lr->head;
+				// 				while (curReg != nullptr){
+				// 					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+				// 						setcolor(RED);
+				// 						setbkcolor(WHITE);
+				// 						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+				// 						break;	
+				// 					}
+				// 					curReg = curReg->next;
+				// 				}
+				// 				if (curReg == nullptr){
+				// 					setcolor(BLACK);
+				// 					setbkcolor(WHITE);
+				// 					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+				// 				}
+				// 				cot += D_COT_SCORE; 
+				// 			}
+				// 			hang += 22; 
+				// 			checkDataInClass = true; // danh dau co data trong lop tin chi
+				// 			sttStudentForClass++;
+				// 		}
+				// 	}
+				// break;
 
 				case ESC:
 					return;
@@ -3415,6 +3501,5 @@ void studentGradeManagement(listClassForSubject &lcfs, listSubject &lsj, listStu
 		}
 	}
 }
-
 
 #endif

@@ -3,7 +3,7 @@
 
 // khai bao tat ca cau truct du lieu, cac ham thao tac voi cau truc du lieu : nhap, xoa
 
-using namespace std;
+// using namespace std;
 
 #define MAXLISTCLASS 50
 #define MAXCLASS 10000

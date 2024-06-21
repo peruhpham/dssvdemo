@@ -17,7 +17,6 @@
 using namespace std;                      
  
 int main(){   
-	
 	initwindow(LPOINTX, LPOINTY); 
 	
 	// tao tien xu ly, khai bao 
