@@ -2842,13 +2842,12 @@ void drawScrollBarScore(int &currnetPage, int sumPage){
 
 
 
-//Tim node truoc mot node cho truoc
-ptrStudent findPrevious(ptrStudent head, ptrStudent nodeStudent) {
-    ptrStudent temp = head;
-    while (temp != nullptr && temp->next != nodeStudent) {
-        temp = temp->next;
-    }
-    return temp;
+void tableEmptyAfterName(){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(TEXTSPOINTX1 + 440 + 1, TEXTLPOINTY1 + 1, TEXTLPOINTX3 - 1, TEXTLPOINTY1 + 335); // xoa ta ca thong tin sau ten sinh vien
+	// delay(1000);
+	setDefault();
+	cout << "bang xoa\n";
 }
 
 void printTableEmpty(){
@@ -2868,6 +2867,37 @@ void printTableEmpty(){
 	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, 335 + TEXTLPOINTY1 );
 	
 	line(TEXTSPOINTX1, TEXTLPOINTY1 + 335, TEXTSPOINTX1 + 960, TEXTLPOINTY1 + 335);
+	setDefault();
+}
+
+void remove (){
+	setfillstyle(SOLID_FILL, WHITE);
+	bar(1320, 200, 1330 + 100, 570);
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(1310, 200, 1310 + 10, 230);
+
+	setcolor(LIGHTGRAY);// NGAN CACH TIEU DE
+	line(TEXTSPOINTX1 + 40, TEXTLPOINTY1 - 30																		, TEXTSPOINTX1 + 40																			, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120, TEXTLPOINTY1 - 30																	, TEXTSPOINTX1 + 40 + 120																	, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120 + 200, TEXTLPOINTY1 - 30															, TEXTSPOINTX1 + 40 + 120 + 200																, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 40 + 120 + 200 + 80, TEXTLPOINTY1 - 30														, TEXTSPOINTX1 + 40 + 120 + 200 + 80														, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80, TEXTLPOINTY1 - 30												, TEXTSPOINTX1 + 5 + 40 + 120 + 200 + 80 + 80												, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80, TEXTLPOINTY1 - 30									, TEXTSPOINTX1 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80										, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30							, TEXTSPOINTX1 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80								, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30					, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80					, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30			, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80			, 335 + TEXTLPOINTY1 );
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	, 335 + TEXTLPOINTY1 );
+	
+	line(TEXTSPOINTX1, TEXTLPOINTY1 + 335, TEXTSPOINTX1 + 960, TEXTLPOINTY1 + 335);
+
+	line(TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80 + 10, TEXTLPOINTY1 - 30, TEXTSPOINTX1 + 5 + 5 + 5 + 5 + 5 + 5 + 40 + 120 + 200 + 80 + 80 + 80 + 80 + 80 + 80 + 80	+ 10, 335 + TEXTLPOINTY1 );
+
+	setDefault();
+}
+
+void removeHeaderSubject (){
+	setfillstyle(SOLID_FILL, LIGHTBLUE);
+	bar(720 + 100, 200, 1320, 230);
 	setDefault();
 }
 
@@ -2894,12 +2924,20 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 	int currentPageRow = 0;
 	int countSubject = 0;
 
+
+	bool exitRight = false;
+	int countRow = 0;
+	int countColumn = 0;
+
 	ptrStudent curStu;
 	for (curStu = ls.head; curStu != nullptr; curStu = curStu->next) {
 		if (idClass == curStu->value.idClass) {
 			sttStudentForClass++;
 			if(sttStudentForClass > 15)
 				break;
+
+			// if(exitRight)
+			// 	break;
 
 			drawScrollBarScore(currentPage, 4);
 
@@ -2915,10 +2953,11 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 				if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
 					continue; 
 
-				// if(countSubject > 6){
+				// if((countSubject+1)/15 > 6){
+				// 	std::cout << "CountSubject : " << countSubject << std::endl;
+				// 	// exitRight = true;
 				// 	break;
 				// }
-					std::cout << "CountSubject : " << countSubject << std::endl;
 
 				setbkcolor(LIGHTBLUE);
 				setcolor(WHITE);
@@ -2940,10 +2979,14 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					setbkcolor(WHITE);
 					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
 				}
-				cot += D_COT_SCORE; // Di chuy?n d?n c?t ti?p theo
+				cot += D_COT_SCORE; 
 			}
-			hang += 22; // Di chuy?n d?n h�ng ti?p theo
-			checkDataInClass = true; // ��nh d?u c� d? li?u trong l?p
+
+			// if(exitRight)
+			// 	break;
+
+			hang += 22; 
+			checkDataInClass = true;
 		}
 	}
 	if (!checkDataInClass){
@@ -2954,39 +2997,31 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 		setbkcolor(YELLOW);
 		outtextxy(TEXTSPOINTX1 + 400 + 3, TEXTLPOINTY1 - 20 + 50, "LOP SINH VIEN CHUA CO DIEM ...");
 	}
-	
+
+	countSubject = (countSubject + 1)/15;
+	remove();
+
 	if(sttStudentForClass > 15){
 		std::cout << "stt up down: " << sttStudentForClass << std::endl;
 		do {
 			key = getch();	
-			// if (kbhit()) {
-			// 	ascii = static_cast<int>(key);
-			// 	if (ascii == 0) {
-			// 		key = getch();
-			// 		ascii = static_cast<int>(key);
-			// 		ascii += 255;
-			// 	}
-			// }
+
 			switch ((int)key){
 				case 80:
+					// removeHeaderSubject();
 					currentPage++;
-					// if(currentPage == sumPage)
-					// 	currentPage--;
 					cout << "currentPage --- DOWN : " << currentPage << endl;
-					// drawScrollBarScore(currentPage, 4);
 
 					std::cout << "tmpSTT : " << tmpSTT << std::endl;
 					if((tmpSTT-1)%PAGE_SIZE != 0 && tmpSTT != 1 && tmpSTT != 0)
 						break;
 
 					isDataReal = false;
-					std::cout << "DOWN........." << std::endl;
 					printTableEmpty();		
 					hang = 22;
 					tmpSTT = 1;
 					for(; curStu != nullptr; curStu = curStu->next) {
 						if (idClass == curStu->value.idClass){
-							// std::cout << "stt: " << sttStudentForClass << "\n";
 							if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
 								break;
 							}
@@ -3027,8 +3062,10 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 							sttStudentForClass++;
 						}
 					}
+					remove();
 				break;
 				case 72:
+					// removeHeaderSubject();
 					currentPage--;
 					if(currentPage < 0)
 						currentPage = 0;
@@ -3039,7 +3076,6 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					std::cout << "UP ... \n";
 					if(sttStudentForClass <= 16)
 						break;
-					cout << "sttStuforClass = " << sttStudentForClass << endl;
 					if((sttStudentForClass-1)%15 == 0)
 						sttStudentForClass -= 30;
 					else{
@@ -3054,7 +3090,6 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 					for(curStu = ls.head; curStu != nullptr; curStu = curStu->next){
 						if (idClass == curStu->value.idClass){
 							if(tmpSTT < sttStudentForClass && isDataReal == false && sttStudentForClass != 1){
-								cout << "tmpSTT continue : " << tmpSTT << endl;
 								tmpSTT++;
 								continue;
 							}
@@ -3073,6 +3108,7 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 							for (int i = 0; i < lcfs.size; i++){
 								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
 									continue; 
+
 								setbkcolor(LIGHTBLUE);
 								setcolor(WHITE);
 								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
@@ -3098,73 +3134,163 @@ void printListScoreByClass(listClassForSubject lcfs, listStudent ls, string &idC
 							sttStudentForClass++;
 						}
 					}
+					remove();
 				break;
 
-				// case LEFT - 255:
-				// 	std::cout << "LEFT of data...........\n";
-				// break;
+				case LEFT - 255:
+					std::cout << "LEFT...........\n";
+					/*
+					*/
+					if(countSubject <= 6 || currentPageRow == 0)
+						break;
+					removeHeaderSubject();
+					cot = 0;
+					hang = 22;
+					countColumn = 0;
+					countRow = 1;
+					tableEmptyAfterName();
+					hang = 22;
+					tmpSTT = 1;
+					ptrStudent curStudentLeft;
+					for(curStudentLeft = ls.head; curStudentLeft != nullptr; curStudentLeft = curStudentLeft->next){
+						if(idClass == curStudentLeft->value.idClass){
+							if(tmpSTT < sttStudentForClass - 15 && !isDataReal && sttStudentForClass != 1){
+								tmpSTT++;
+								continue;
+							}
+							int cot = 0;
+							// Test hien thi ten sinh vien
+
+							if(countRow < 16)
+								countRow++;
+							else{
+								// exitRight = true;
+								break;
+							}
+
+							for (int i = 0; i < lcfs.size; i++){
+								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+									continue; 
+								// if(countColumn < 6){
+								// 	countColumn++;
+								// }
+								// else{
+
+								// 	break;
+								// }
+
+								setbkcolor(LIGHTBLUE);
+								setcolor(WHITE);
+								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
+
+								ptrRegister curReg = lcfs.list[i]->lr->head;
+								while (curReg != nullptr){
+									if (idClass == curStudentLeft->value.idClass && curStudentLeft->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+										setcolor(RED);
+										setbkcolor(WHITE);
+										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
+
+										//Test diem
+
+										break;	
+									}
+									curReg = curReg->next;
+								}
+								if (curReg == nullptr){
+									setcolor(BLACK);
+									setbkcolor(WHITE);
+									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+								}
+								cot += D_COT_SCORE; 
+							}
+							if(exitRight){
+								exitRight = false;
+								break;
+							}
+							hang += 22; 
+							checkDataInClass = true; // danh dau co data trong lop tin chi
+							// countColumn = 6;
+						}
+					}
+					currentPageRow = 0;
+					remove();
+				break;
 				
-				// case RIGHT - 255:
-				// 	if(countSubject <= 6)
-				// 		break;
+				case RIGHT - 255:
+					removeHeaderSubject();
+					cout << "RIGHT..." << endl;
+					if(countSubject <= 6)
+						break;
+					cot = 0;
+					hang = 22;
+					countColumn = 6;
+					countRow = 1;
+					tableEmptyAfterName();
+					// sttStudentForClass -= 15;
+					hang = 22;
+					tmpSTT = 1;
+					ptrStudent curStudentRight;
+					for(curStudentRight = ls.head; curStudentRight != nullptr; curStudentRight = curStudentRight->next){
+						if(idClass == curStudentRight->value.idClass){
+							if(tmpSTT < sttStudentForClass - 15 && !isDataReal && sttStudentForClass != 1){
+								tmpSTT++;
+								continue;
+							}
+							int cot = 0;
+							// Test hien thi ten sinh vien
 
-				// 	countSubject = 0;
+							if(countRow < 16)
+								countRow++;
+							else{
+								// exitRight = true;
+								break;
+							}
 
-				// 	sttStudentForClass -= 15;
-				// 	std::cout << "Right of data...........\n";
-				// 	printTableEmpty();		
-				// 	hang = 22;
-				// 	tmpSTT = 1;
-				// 	for(; curStu != nullptr; curStu = curStu->next) {
-				// 		if (idClass == curStu->value.idClass){
-				// 			// std::cout << "stt: " << sttStudentForClass << "\n";
-				// 			if((tmpSTT - 1) % 15 == 0 && tmpSTT != 1){
-				// 				break;
-				// 			}
-				// 			tmpSTT++;
-				// 			// setcolor(GREEN);
-				// 			// setbkcolor(WHITE);
-				// 			// outtextxy(TEXTSPOINTX1 + 3, TEXTLPOINTY1 - 20 + hang, tochar(to_string(sttStudentForClass)));
-				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.id));
-				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.firstName));
-				// 			// outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200, TEXTLPOINTY1 - 20 + hang, tochar(curStu->value.lastName));
-				// 			int cot = 0;
-				// 			for (int i = 0; i < lcfs.size; i++){
-				// 				if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
-				// 					continue; 
+							for (int i = 0; i < lcfs.size; i++){
+								if (!checkScoreStudentInClassSubject(lcfs.list[i]->lr))
+									continue; 
+								if(countColumn > 0){
+									countColumn--;
+									if(countSubject <= 0)
+										countSubject = 0;
+									continue;
+								}
+								setbkcolor(LIGHTBLUE);
+								setcolor(WHITE);
+								outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
 
-				// 				if(countSubject > 6)
-				// 					break;
+								ptrRegister curReg = lcfs.list[i]->lr->head;
+								while (curReg != nullptr){
+									if (idClass == curStudentRight->value.idClass && curStudentRight->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
+										setcolor(RED);
+										setbkcolor(WHITE);
+										outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
 
-				// 				setbkcolor(LIGHTBLUE);
-				// 				setcolor(WHITE);
-				// 				outtextxy(TEXTSPOINTX1 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 22, tochar(lcfs.list[i]->idSubject));
-								
-				// 				countSubject++;
+										//Test diem
 
-				// 				ptrRegister curReg = lcfs.list[i]->lr->head;
-				// 				while (curReg != nullptr){
-				// 					if (idClass == curStu->value.idClass && curStu->value.id == curReg->data.idStudent && !curReg->data.unSub && 0 <= curReg->data.scores && curReg->data.scores <= 10) {
-				// 						setcolor(RED);
-				// 						setbkcolor(WHITE);
-				// 						outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, tochar(doubleToString(curReg->data.scores)));
-				// 						break;	
-				// 					}
-				// 					curReg = curReg->next;
-				// 				}
-				// 				if (curReg == nullptr){
-				// 					setcolor(BLACK);
-				// 					setbkcolor(WHITE);
-				// 					outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
-				// 				}
-				// 				cot += D_COT_SCORE; 
-				// 			}
-				// 			hang += 22; 
-				// 			checkDataInClass = true; // danh dau co data trong lop tin chi
-				// 			sttStudentForClass++;
-				// 		}
-				// 	}
-				// break;
+										break;	
+									}
+									curReg = curReg->next;
+								}
+								if (curReg == nullptr){
+									setcolor(BLACK);
+									setbkcolor(WHITE);
+									outtextxy(TEXTSPOINTX1 + 5 + 3 + 40 + 120 + 200 + 80 + cot, TEXTLPOINTY1 - 20 + hang, "#");
+								}
+								cot += D_COT_SCORE; 
+							}
+							if(exitRight){
+								exitRight = false;
+								break;
+							}
+							hang += 22; 
+							checkDataInClass = true; // danh dau co data trong lop tin chi
+							countColumn = 6;
+						}
+					}
+					currentPageRow = 1;
+					remove();
+				break;
 
 				case ESC:
 					return;

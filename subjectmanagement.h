@@ -203,34 +203,27 @@ void printSTT (listSubject &lsb){
 
 // reset lại menu dieu kien subject.
 void resetMenuSubject(int &selectedItem){
-	int y = MENU_SUB_SY; // Vị trí y của menu đầu tiên
-
-    // In ra menu
+	int y = MENU_SUB_SY; 
     outtextxy(MENU_SUB_SX, 10 + y						, ">>Danh sach mon theo ID");
     outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT	, ">>Danh sach mon theo Ten");
     outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">>Nhap mon hoc");
-
     char key;
     while (true) {
 		if(selectedItem == 0){
 			setcolor(BLUE);
             outtextxy(MENU_SUB_SX, 10 + y, ">>Danh sach mon theo ID");
 		}
-
         if (kbhit()){
             key = getch();
-            // cleardevice(); // Xóa màn hình để vẽ lại menu
             if (key == 72) // Xử lý phím lên
                 selectedItem = (selectedItem - 1 + 3) % 3;
             else if (key == 80) // Xử lý phím xuống
                 selectedItem = (selectedItem + 1) % 3;
-            // In lại menu với lựa chọn mới được tô sáng
             y = MENU_SUB_SY;
 			setcolor(BLACK);
             outtextxy(MENU_SUB_SX, 10 + y						, ">>Danh sach mon theo ID");
             outtextxy(MENU_SUB_SX, 10 + y + MENU_ITEM_HEIGHT	, ">>Danh sach mon theo Ten");
             outtextxy(MENU_SUB_SX, 10 + y + 2 * MENU_ITEM_HEIGHT, ">>Nhap mon hoc");
-            // Tô sáng lựa chọn hiện tại
 			if(selectedItem == 0){
 				setcolor(BLUE);
             	outtextxy(MENU_SUB_SX, 10 + y, ">>Danh sach mon theo ID");
@@ -830,7 +823,6 @@ void searchStartWithArray(subject *arraySubject, int sizeArraySubject, string &k
 				std::cout << endl;
 				if(stt >= 3)
 					continue; // tranh viec tran man hinh hien thi.
-
 				setcolor(LIGHTRED);
 				outtextxy(TABLE_FILTER_SX + 5, hang + 5, tochar(to_string(stt+1)));
 				outtextxy(TABLE_FILTER_SX + 5 + 50 , hang + 5, tochar(arraySubject[i].idSubject));
@@ -883,118 +875,60 @@ void noticeError(){
 return the node with minimum key value 
 found in that tree. Note that the entire 
 tree does not need to be searched. */
-nodeSubject * minValueNode(nodeSubject* node) 
-{ 
+nodeSubject * minValueNode(nodeSubject* node) { 
     nodeSubject* current = node; 
  
-    /* loop down to find the leftmost leaf */
     while (current->left != NULL) 
         current = current->left; 
  
     return current; 
 } 
  
-// Recursive function to delete a node 
-// with given key from subtree with 
-// given root. It returns root of the 
-// modified subtree. 
-nodeSubject* deleteSubject(nodeSubject* root, string & key) 
-{ 
-     
-    // STEP 1: PERFORM STANDARD BST DELETE 
+nodeSubject* deleteSubject(nodeSubject* root, string & key) { 
     if (root == NULL) 
         return root; 
  
-    // If the key to be deleted is smaller 
-    // than the root's key, then it lies
-    // in left subtree 
     if ( key < root->data.idSubject ) 
         root->left = deleteSubject(root->left, key); 
- 
-    // If the key to be deleted is greater 
-    // than the root's key, then it lies 
-    // in right subtree 
     else if( key > root->data.idSubject ) 
         root->right = deleteSubject(root->right, key); 
- 
-    // if key is same as root's key, then 
-    // This is the node to be deleted 
-    else
-    { 
-        // node with only one child or no child 
-        if( (root->left == NULL) ||
-            (root->right == NULL) ) 
-        { 
-            nodeSubject *temp = root->left ? 
-                         root->left : 
-                         root->right; 
- 
-            // No child case 
-            if (temp == NULL) 
-            { 
+    else{ 
+        if( (root->left == NULL) || (root->right == NULL) ) { 
+            nodeSubject *temp = root->left ? root->left : root->right; 
+            if (temp == NULL) { 
                 temp = root; 
                 root = NULL; 
             } 
-            else // One child case 
+            else // One child case
             *root = *temp; // Copy the contents of 
                            // the non-empty child 
             free(temp); 
         } 
-        else
-        { 
-            // node with two children: Get the inorder 
-            // successor (smallest in the right subtree) 
+        else{ 
             nodeSubject* temp = minValueNode(root->right); 
- 
-            // Copy the inorder successor's 
-            // data to this node 
             root->data = temp->data; 
- 
-            // Delete the inorder successor 
-            root->right = deleteSubject(root->right, 
-                                     temp->data.idSubject); 
+            root->right = deleteSubject(root->right, temp->data.idSubject); 
         } 
     } 
- 
-    // If the tree had only one node
-    // then return 
     if (root == NULL) 
     return root; 
  
-    // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE 
-    root->height = 1 + max(height(root->left), 
-                           height(root->right)); 
+    root->height = 1 + max(height(root->left), height(root->right)); 
  
-    // STEP 3: GET THE BALANCE FACTOR OF 
-    // THIS NODE (to check whether this 
-    // node became unbalanced) 
     int balance = getBalance(root); 
  
-    // If this node becomes unbalanced, 
-    // then there are 4 cases 
- 
-    // Left Left Case 
-    if (balance > 1 && 
-        getBalance(root->left) >= 0) 
+    if (balance > 1 && getBalance(root->left) >= 0) 
         return rightRotate(root); 
  
-    // Left Right Case 
-    if (balance > 1 && 
-        getBalance(root->left) < 0) 
-    { 
+    if (balance > 1 && getBalance(root->left) < 0) { 
         root->left = leftRotate(root->left); 
         return rightRotate(root); 
     } 
  
-    // Right Right Case 
-    if (balance < -1 && 
-        getBalance(root->right) <= 0) 
+    if (balance < -1 && getBalance(root->right) <= 0) 
         return leftRotate(root); 
  
-    // Right Left Case 
-    if (balance < -1 && 
-        getBalance(root->right) > 0) 
-    { 
+    if (balance < -1 && getBalance(root->right) > 0) { 
         root->right = rightRotate(root->right); 
         return leftRotate(root); 
     } 
@@ -1146,7 +1080,10 @@ int controlAddDeleteSubject(listClassForSubject &lcfs, listSubject &lsb, subject
 				std::cout << "Nhap vao mot chuoi search (nhap Enter de ket thuc):\n";
 				while (true) { 
 					if (kbhit()) { 
-						char text = getch(); 
+						char text = getch();
+
+						if(text == UP - 255 || text == DOWN - 255)
+							continue; 
 
 						if(text == ESC){
 							setfillstyle(SOLID_FILL, WHITE);
