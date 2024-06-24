@@ -13,11 +13,10 @@
 #include "studentgrademanagement.h"
 #include "subjectmanagement.h" 
 
-     
+      
 using namespace std;                      
  
-int main(){   
-	
+int main(){                  
 	initwindow(LPOINTX, LPOINTY); 
 	
 	// tao tien xu ly, khai bao 
@@ -41,7 +40,7 @@ int main(){
 	   
 //  getch();
 	int selected = 1; 
-	createMenu(selected);
+	createMenu(selected);   
  
 	while(1){   
 		char key = getch();  
@@ -56,8 +55,8 @@ int main(){
 		switch(ascii){                                                              
 			case ET:    	                                                                        
 				switch(selected){                      
-					case 1:      
-						studentManagement(ls, lc);                  
+					case 1:       
+						studentManagement(ls, lc, lcfs);                  
 						createMenu(selected);	
 						
 						// recordFileStudent(ls);          
@@ -83,15 +82,25 @@ int main(){
 				}                     
 				break;                            
 			case DOWN:              
-				if(selected < 4){        
+				if(selected < 4){                  
 					selected++;     
-					createMenu(selected);     
+					createMenu(selected);       
 				}  
 				break;       
 			case ESC:  
 				if(!createNotice("Ban chac chan muon thoat!", "")){
 					closegraph();
-					return 0;  
+					
+					saveDataSubject(lsj);
+					std::cout << "Complete save data subject." << std::endl;
+
+					recordFileClass(lcfs);
+					std::cout << "Save data class for subject." << std::endl;
+
+					recordFileGrade(lcfs);
+					std::cout << "Save data grade for subject." << std::endl;
+
+					return 0; 	 
 				}
 				createMenu(selected);
 				break;

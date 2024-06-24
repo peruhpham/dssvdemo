@@ -252,6 +252,71 @@ void mouseHighlightUpdate(int &on, int &selected){
 }
 
 
+void mouseHighlightUpdate2(int &on, int &selected){
+	setcolor(BLACK);
+	
+	if(clickInRange(mousex(), mousey(), TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140)){
+		if(on == 0){
+			setfillstyle(SOLID_FILL, LIGHTBLUE);
+			setbkcolor(LIGHTBLUE);   
+			bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+			outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin"); 
+			on = 1; 
+			selected = 1;
+		}   
+	}
+	else if(on == 1 && selected == 1){
+		setfillstyle(SOLID_FILL, LIGHTGRAY);
+		setbkcolor(LIGHTGRAY);
+		bar(TABLSPOINTX + 85, TABLLPOINTY + 100, TABLSPOINTX + 305, TABLLPOINTY + 140);
+		outtextxy(TABLSPOINTX + 115, TABLLPOINTY + 110, "Them thong tin");
+		on = 0;
+	}
+	
+	if(clickInRange(mousex(), mousey(), TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140)){
+		if(on == 0){
+			setfillstyle(SOLID_FILL, LIGHTBLUE);
+			setbkcolor(LIGHTBLUE);
+			bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+			outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+			on = 1;
+			selected = 2;
+		}
+	}
+	else if(on == 1 && selected == 2){
+		
+		setfillstyle(SOLID_FILL, LIGHTGRAY);
+		setbkcolor(LIGHTGRAY);
+		bar(TABLSPOINTX + 390, TABLLPOINTY + 100, TABLSPOINTX + 610, TABLLPOINTY + 140);
+		outtextxy(TABLSPOINTX + 420, TABLLPOINTY + 110, "Sua thong tin");
+		on = 0;
+	}
+	
+	if(clickInRange(mousex(), mousey(), TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140)){
+		if(on == 0){
+			setfillstyle(SOLID_FILL, LIGHTBLUE);
+			setbkcolor(LIGHTBLUE);
+			bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+			outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+			on = 1;	
+			selected = 3;
+		}
+	}
+	else if(on == 1 && selected == 3){
+		setfillstyle(SOLID_FILL, LIGHTGRAY);
+		setbkcolor(LIGHTGRAY);
+		bar(TABLSPOINTX + 695, TABLLPOINTY + 100, TABLSPOINTX + 915, TABLLPOINTY + 140);
+		outtextxy(TABLSPOINTX + 725, TABLLPOINTY + 110, "Xoa thong tin");
+		on = 0;
+	}
+	
+	if (on == 1 && selected == 4){
+		on = 0;
+	}
+	
+	setDefault();	
+}
+
 void mouseHighlightOpenClass(int &on, int &selected){
 	
 	// dua chuot vao box 1
@@ -1221,6 +1286,12 @@ void createBottom(){
 	line(BOTTSPOINTX, BOTTSPOINTY, BOTTLPOINTX, BOTTLPOINTY); // tao duong ke 
 	outtextxy(10, BOTTLPOINTY + 10, "Thong tin them : "); 
 	
+	setcolor(BLACK);
+	outtextxy(200, 610, "ESC             : Thoat cua so/ Thoat nhap.");
+	outtextxy(200, 630, "ENTER           : Chon muc/ Hoan thanh nhap."); 
+	outtextxy(200, 650, "UP/DOWN         : Di chuyen len/ xuong.");
+	outtextxy(200, 670, "CLICK           : Chon muc.");
+	
 	setDefault();
 }
 
@@ -1858,7 +1929,7 @@ void drawPrintRegisteredStudentListV2(ptrClassForSubject cfs){
 	outtextxy(X + 710, TEXTLPOINTY1 - 25, "GHI CHU");
 	
 	// tao duong ke ngnang
-	if(cfs != NULL){
+	if(cfs != NULL && cfs->studentMin <= cfs->lr->size){
 		int Y = TEXTLPOINTY1 + 30;
 		setcolor(LIGHTGRAY);
 		for(int i = 0; i < 11; i++){
@@ -1879,8 +1950,20 @@ void drawPrintRegisteredStudentListV2(ptrClassForSubject cfs){
 		setcolor(BLACK);
 		outtextxy(TEXTLPOINTX3 - 45, TEXTLPOINTY1 + 341, "LUU");
 	}
-	else{
+	else if (cfs != NULL){
 		//tao duong ke doc
+		setcolor(LIGHTGRAY);
+		line(X + 50, TEXTLPOINTY1 - 30, X + 50, TEXTLPOINTY1);
+		line(X + 200, TEXTLPOINTY1 - 30, X + 200, TEXTLPOINTY1);
+		line(X + 450, TEXTLPOINTY1 - 30, X + 450, TEXTLPOINTY1);
+		line(X + 600, TEXTLPOINTY1 - 30, X + 600, TEXTLPOINTY1);
+		line(X + 700, TEXTLPOINTY1 - 30, X + 700, TEXTLPOINTY1);
+		
+		setbkcolor(WHITE);
+		setcolor(LIGHTGRAY);
+		outtextxy(X + 330, TEXTLPOINTY1 + 5, "Chua du dien kien mo lop!");
+	}
+	else {
 		setcolor(LIGHTGRAY);
 		line(X + 50, TEXTLPOINTY1 - 30, X + 50, TEXTLPOINTY1);
 		line(X + 200, TEXTLPOINTY1 - 30, X + 200, TEXTLPOINTY1);
@@ -1892,7 +1975,6 @@ void drawPrintRegisteredStudentListV2(ptrClassForSubject cfs){
 		setcolor(LIGHTGRAY);
 		outtextxy(X + 330, TEXTLPOINTY1 + 5, "Chua co du lieu...");
 	}
-	
 	setDefault(); 
 
 }
@@ -2425,6 +2507,39 @@ void drawListClassForSubject(listClassForSubject &lcfs, listSubject &lsj, int cu
 	// ve cac duong ke trong danh sach lop
 	setDefault();
 }
+
+//void drawDeleteStudent(string text, int selected){
+//	
+//	setbkcolor(WHITE);
+//	setcolor(LIGHTRED);
+//	outtextxy(FORMSPOINTX + 10, FORMSPOINTY + 10, tochar(text));
+//	setcolor(BLACK);
+//	
+//	if(selected == 1){ /// tao muc yes / no 
+//		setbkcolor(LIGHTBLUE);
+//		setfillstyle(SOLID_FILL, LIGHTBLUE);
+//		bar(TABLSPOINTX + 695, FORMSPOINTY, TABLSPOINTX + 805, FORMLPOINTY);
+//		outtextxy(TABLSPOINTX + 735, FORMSPOINTY + 10, "Co");
+//		
+//		setbkcolor(LIGHTGRAY);
+//		setfillstyle(SOLID_FILL, LIGHTGRAY);
+//		bar(TABLSPOINTX + 805, FORMSPOINTY, TABLSPOINTX + 915, FORMLPOINTY);
+//		outtextxy(TABLSPOINTX + 825, FORMSPOINTY + 10, "Khong");
+//	}
+//	else if(selected == 2){
+//		setbkcolor(LIGHTGRAY);
+//		setfillstyle(SOLID_FILL, LIGHTGRAY);
+//		bar(TABLSPOINTX + 695, FORMSPOINTY, TABLSPOINTX + 805, FORMLPOINTY);
+//		outtextxy(TABLSPOINTX + 735, FORMSPOINTY + 10, "Co");
+//		
+//		setbkcolor(LIGHTBLUE);
+//		setfillstyle(SOLID_FILL, LIGHTBLUE);
+//		bar(TABLSPOINTX + 805, FORMSPOINTY, TABLSPOINTX + 915, FORMLPOINTY);
+//		outtextxy(TABLSPOINTX + 825, FORMSPOINTY + 10, "Khong");
+//	}
+//
+//	setDefault();
+//}
 
 void drawDeleteStudent(string text, int selected){
 	
